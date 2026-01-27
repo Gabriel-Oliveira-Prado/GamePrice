@@ -1,7 +1,16 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+﻿﻿document.addEventListener('DOMContentLoaded', () => {
+    // Bloqueia o scroll durante o carregamento
+    document.body.style.overflow = 'hidden';
+
     // --- Animação do Preloader com Anime.js ---
     const loaderTimeline = anime.timeline({
-        easing: 'easeInOutQuad'
+        easing: 'easeInOutQuad',
+        complete: () => {
+            // Libera o scroll e inicia as animações da página
+            document.body.style.overflow = '';
+            heroTimeline.play();
+            initScrollReveal();
+        }
     });
 
     loaderTimeline.add({
@@ -31,7 +40,7 @@
 
     // --- Animação Hero (Entrada inicial) ---
     const heroTimeline = anime.timeline({
-        delay: 800, // Espera o preloader
+        autoplay: false, // Aguarda o loader terminar
         easing: 'easeOutExpo'
     });
 
@@ -66,42 +75,44 @@
         el.style.transform = 'translateY(50px) scale(0.9)';
     });
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                anime({
-                    targets: entry.target,
-                    translateY: 0,
-                    scale: 1,
-                    opacity: 1,
-                    duration: 1200,
-                    easing: 'easeOutElastic(1, .6)'
-                });
-
-                // Animação de Contadores (se houver dentro do elemento revelado)
-                const counters = entry.target.querySelectorAll('.counter');
-                counters.forEach(counter => {
-                    const target = +counter.getAttribute('data-target');
-                    const count = { val: 0 };
-
+    const initScrollReveal = () => {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
                     anime({
-                        targets: count,
-                        val: [0, target],
-                        round: 1, // Garante números inteiros
-                        easing: 'easeOutExpo',
-                        duration: 5000,
-                        update: function () {
-                            counter.innerHTML = count.val;
-                        }
+                        targets: entry.target,
+                        translateY: 0,
+                        scale: 1,
+                        opacity: 1,
+                        duration: 1200,
+                        easing: 'easeOutElastic(1, .6)'
                     });
-                });
 
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15 });
+                    // Animação de Contadores (se houver dentro do elemento revelado)
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = { val: 0 };
 
-    revealElements.forEach(el => observer.observe(el));
+                        anime({
+                            targets: count,
+                            val: [0, target],
+                            round: 1, // Arredonda para números inteiros
+                            easing: 'easeOutExpo',
+                            duration: 5000,
+                            update: function () {
+                                counter.innerHTML = count.val;
+                            }
+                        });
+                    });
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => observer.observe(el));
+    };
 
     // --- Draggable & Animatable (Badge Interativo) ---
     const badge = document.querySelector('.hero-section .badge');
