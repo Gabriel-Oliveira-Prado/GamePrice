@@ -18,7 +18,7 @@
 
 /* Melhoria de leitura nos cards */
 .feature-card p {
-    color: #F1F5F9; /* Branco gelo para leitura clara */
+    color: #F1F5F9;
     line-height: 1.6;
 }
 

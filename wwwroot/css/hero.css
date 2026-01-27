@@ -82,7 +82,7 @@
 .stat-item {
     opacity: 0;
     transform: translateY(20px);
-    color: #F8FAFC; /* Texto quase branco para alta visibilidade */
+    color: #F8FAFC;
     font-weight: 500;
 }
 

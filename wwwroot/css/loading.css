@@ -33,8 +33,8 @@
 }
 
 .logo-path {
-    fill: transparent; /* Começa transparente para ser preenchido depois */
-    stroke: currentColor; /* Usa a cor definida na classe text-primary do pai */
+    fill: transparent;
+    stroke: currentColor;
     stroke-width: 10;
     stroke-linecap: round;
     stroke-linejoin: round;

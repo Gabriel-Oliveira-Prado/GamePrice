@@ -5,8 +5,8 @@
     --secondary: #7000FF;
     --accent: #FF0055;
     --text-main: #FFFFFF;
-    --text-muted: #CBD5E1; /* Cor mais clara para melhor leitura */
+    --text-muted: #CBD5E1;
     --glass: rgba(21, 26, 35, 0.7);
     --gradient-main: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
-    --glow-color: rgba(112, 0, 255, 0.15); /* Cor inicial do Glow */
+    --glow-color: rgba(112, 0, 255, 0.15);
 }
