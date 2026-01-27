@@ -1,0 +1,51 @@
+/* --- Marquee de Marcas --- */
+.brands-section {
+    padding: 3rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--bg-card);
+    overflow: hidden;
+}
+
+.marquee-content {
+    display: flex;
+    gap: 4rem;
+    animation: scroll 20s linear infinite;
+    width: max-content;
+    padding-right: 4rem; /* Garante o loop perfeito com o gap */
+}
+
+.brand-item {
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.brand-item:hover {
+    opacity: 1;
+    color: var(--text-main);
+    transform: scale(1.05);
+    text-shadow: 0 0 15px currentColor;
+}
+
+/* Cores das Marcas para Legibilidade */
+.brand-steam { color: #66c0f4; }
+.brand-ps { color: #0070d1; }
+.brand-xbox { color: #107c10; }
+.brand-epic { color: #ffffff; }
+.brand-itch { color: #fa5c5c; }
+.brand-gog { color: #a855f7; }
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+    .marquee-content { gap: 2rem; }
+}
