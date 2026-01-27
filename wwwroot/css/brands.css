@@ -9,10 +9,8 @@
 
 .marquee-content {
     display: flex;
-    gap: 4rem;
-    animation: scroll 15s linear infinite;
+    animation: scroll 40s linear infinite;
     width: max-content;
-    padding-right: 6rem;
 }
 
 .brand-item {
@@ -23,6 +21,7 @@
     align-items: center;
     gap: 0.5rem;
     opacity: 0.8;
+    margin-right: 4rem;
     transition: all 0.3s ease;
 }
 
