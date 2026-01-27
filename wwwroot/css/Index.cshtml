@@ -1,0 +1,233 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamePrice - O Melhor Preço para seu Jogo</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div class="loader-container">
+        <div class="loader-content text-center">
+            <svg class="logo-svg mb-3 text-primary me-2" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
+                <path class="logo-path" d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 168c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zm-32 128c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zM192 160v48h48c13.3 0 24 10.7 24 24s-10.7 24-24 24H192v48c0 13.3-10.7 24-24 24s-24-10.7-24-24V256H96c-13.3 0-24-10.7-24-24s10.7-24 24-24h48V160c0-13.3 10.7-24 24-24s24 10.7 24 24z"/>
+            </svg>
+            <h2 class="text-white fw-bold mb-3">Game<span class="text-primary">Price</span></h2>
+            <div class="loading-bar-container"><div class="loading-bar"></div></div>
+        </div>
+    </div>
+
+    <!-- Background Glow Interativo -->
+    <div class="hero-bg-glow"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand text-white" href="#"><i class="fas fa-gamepad text-primary me-2"></i>Game<span class="text-primary">Price</span>
+            </a>
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#features">Recursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#deals">Ofertas</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="app.html" class="btn btn-glow">Acessar App</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="hero-animation-container" id="hero-animation"></div>
+        <div class="container position-relative z-1">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="badge glass-effect text-primary px-3 py-2 rounded-pill mb-4 fade-in-up">
+                        <span class="pulse-dot"></span> Monitoramento em Tempo Real
+                    </div>
+                    <h1 class="hero-title text-white mb-4 fade-in-up">
+                        Não pague mais caro.<br>
+                        Encontre o <span class="text-gradient">menor preço</span>.
+                    </h1>
+                    <p class="lead text-muted mb-5 fade-in-up" style="max-width: 700px; margin: 0 auto;">
+                        Comparamos preços da Steam, Epic Games, PS Store, Xbox e Nintendo Eshop em segundos. Receba alertas de promoções imperdíveis.
+                    </p>
+                    
+                    <div class="search-container fade-in-up">
+                        <input type="text" class="search-input" placeholder="Qual jogo você está procurando?">
+                        <button class="search-btn" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+
+                    <div class="mt-5 d-flex justify-content-center gap-4 small fade-in-up">
+                        <span class="stat-item gs-reveal"><i class="fas fa-store text-primary me-1"></i> <strong>+<span class="counter" data-target="50">0</span></strong> Lojas</span>
+                        <span class="stat-item gs-reveal"><i class="fas fa-history text-primary me-1"></i> Histórico de <strong><span class="counter" data-target="365">0</span> dias</strong></span>
+                        <span class="stat-item gs-reveal"><i class="fas fa-envelope text-primary me-1"></i> Alertas via <strong>Email</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Marquee -->
+    <section class="brands-section">
+        <div class="marquee-content">
+            <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
+            <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
+            <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
+            <div class="brand-item brand-epic"><i class="fas fa-gamepad"></i> EPIC GAMES</div>
+            <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
+            <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
+            <!-- Repetir para efeito infinito -->
+            <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
+            <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
+            <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
+            <div class="brand-item brand-epic"><i class="fas fa-gamepad"></i> EPIC GAMES</div>
+            <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
+            <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card gs-reveal">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Comparação Instantânea</h3>
+                        <p>Nossos bots varrem todas as lojas digitais em tempo real para garantir que você veja o preço atualizado.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card gs-reveal">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Histórico de Preços</h3>
+                        <p>Saiba se a promoção é real. Visualize o gráfico de preços dos últimos 12 meses antes de comprar.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card gs-reveal">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Alertas Inteligentes</h3>
+                        <p>Defina o preço que quer pagar e nós te avisamos instantaneamente quando o jogo atingir esse valor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter (Nova Seção) -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-card text-center gs-reveal">
+                <h2 class="text-white mb-3">Não perca nenhuma promoção</h2>
+                <p class="newsletter-text mb-4">Receba alertas de preços baixos diretamente no seu email.</p>
+                <div class="newsletter-form-container">
+                    <input type="email" class="newsletter-input" placeholder="Seu melhor email">
+                    <button class="btn btn-glow rounded-pill px-4">Inscrever-se</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6">
+                    <a class="footer-brand text-white text-decoration-none" href="#">
+                        <i class="fas fa-gamepad text-primary me-2"></i>Game<span class="text-primary">Price</span>
+                    </a>
+                    <p class="footer-text">
+                        Sua plataforma definitiva para encontrar os melhores preços de jogos digitais. Economize em cada compra e jogue mais.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-subtitle">Navegação</h5>
+                    <ul class="footer-links">
+                        <li><a href="#features">Recursos</a></li>
+                        <li><a href="#deals">Ofertas</a></li>
+                        <li><a href="app.html">App Mobile</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-subtitle">Suporte</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-subtitle">Contato</h5>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>Gabrieloliveira.prado@hotmail.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+55 81 8510-2009</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Recife, Brasil</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="footer-copyright mb-0">&copy; 2025 GamePrice. Todos os direitos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <p class="footer-copyright mb-0">Feito com <i class="fas fa-heart text-primary"></i> para gamers.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="~/js/site.js"></script>
+</body>
+</html>
