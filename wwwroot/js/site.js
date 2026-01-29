@@ -1,4 +1,4 @@
-﻿﻿document.addEventListener('DOMContentLoaded', () => {
+﻿﻿﻿﻿document.addEventListener('DOMContentLoaded', () => {
     // Bloqueia o scroll durante o carregamento
     document.body.style.overflow = 'hidden';
 
@@ -10,6 +10,7 @@
             document.body.style.overflow = '';
             heroTimeline.play();
             initScrollReveal();
+            initSearch(); // Initialize search functionality
         }
     });
 
@@ -234,3 +235,68 @@
         });
     }
 });
+
+// --- Search Functionality ---
+function initSearch() {
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    const resultsContainer = document.getElementById('search-results');
+
+    if (!searchInput || !searchBtn) return;
+
+    const performSearch = async () => {
+        const query = searchInput.value.trim();
+        if (!query) return;
+
+        // UI Loading State
+        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        searchBtn.disabled = true;
+        resultsContainer.style.display = 'block';
+        resultsContainer.innerHTML = '<div class="text-center text-white p-3">Buscando melhores preços...</div>';
+
+        try {
+            // Call MVC Backend -> which calls API -> which calls Scraper
+            const response = await fetch(`/Search/SearchGame?query=${encodeURIComponent(query)}`);
+            const data = await response.json();
+
+            renderResults(data);
+        } catch (error) {
+            console.error('Search error:', error);
+            resultsContainer.innerHTML = '<div class="text-center text-danger p-3">Erro ao buscar jogos. Tente novamente.</div>';
+        } finally {
+            searchBtn.innerHTML = '<i class="fas fa-search"></i>';
+            searchBtn.disabled = false;
+        }
+    };
+
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch();
+    });
+
+    function renderResults(games) {
+        if (!games || games.length === 0) {
+            resultsContainer.innerHTML = '<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>';
+            return;
+        }
+
+        let html = '<div class="list-group">';
+        games.forEach(game => {
+            html += `
+                <a href="${game.link}" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center bg-dark text-white border-secondary mb-2 rounded">
+                    <img src="${game.image}" alt="${game.title}" class="rounded me-3" style="width: 80px; height: 45px; object-fit: cover;">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-bold">${game.title}</h6>
+                        <small class="text-muted"><i class="fab fa-steam"></i> ${game.store}</small>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge bg-primary rounded-pill fs-6">${game.price}</span>
+                    </div>
+                </a>
+            `;
+        });
+        html += '</div>';
+        
+        resultsContainer.innerHTML = html;
+    }
+}
