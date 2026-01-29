@@ -1,0 +1,39 @@
+services:
+  # 1. Scraper (Python)
+  scraper:
+    build: ./GamePrice.Scraper
+    container_name: gameprice-scraper
+    ports:
+      - "8000:8000"
+    networks:
+      - gameprice-net
+
+  # 2. API (C# Backend)
+  api:
+    build: ./GamePrice.Api
+    container_name: gameprice-api
+    environment:
+      - SCRAPER_URL=http://scraper:8000
+    ports:
+      - "5200:5200"
+    depends_on:
+      - scraper
+    networks:
+      - gameprice-net
+
+  # 3. MVC (C# Frontend)
+  mvc:
+    build: ./GamePrice
+    container_name: gameprice-mvc
+    environment:
+      - API_URL=http://api:5200
+    ports:
+      - "5000:80" # Acessar no navegador via http://localhost:5000
+    depends_on:
+      - api
+    networks:
+      - gameprice-net
+
+networks:
+  gameprice-net:
+    driver: bridge
