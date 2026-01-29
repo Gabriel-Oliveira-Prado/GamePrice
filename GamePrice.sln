@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePrice", "GamePrice.csproj", "{C6DE5C51-9CAF-42A5-9C8E-7E7BB3A450DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePrice.Api", "..\GamePrice.Api\GamePrice.Api.csproj", "{BA2353B2-EAF8-402A-B96C-5BBA39090302}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GamePrice.Scraper", "..\GamePrice.Scraper\GamePrice.Scraper.pyproj", "{605E7687-F72D-46A1-8799-A772A4A56985}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,12 @@ Global
 		{C6DE5C51-9CAF-42A5-9C8E-7E7BB3A450DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6DE5C51-9CAF-42A5-9C8E-7E7BB3A450DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6DE5C51-9CAF-42A5-9C8E-7E7BB3A450DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA2353B2-EAF8-402A-B96C-5BBA39090302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA2353B2-EAF8-402A-B96C-5BBA39090302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA2353B2-EAF8-402A-B96C-5BBA39090302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA2353B2-EAF8-402A-B96C-5BBA39090302}.Release|Any CPU.Build.0 = Release|Any CPU
+		{605E7687-F72D-46A1-8799-A772A4A56985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{605E7687-F72D-46A1-8799-A772A4A56985}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
