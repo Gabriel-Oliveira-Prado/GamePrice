@@ -1,41 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.Net.Http.Json;
+using GamePrice.Api.DTOs;
 
-namespace GamePrice.Controllers
+public class SearchController : Controller
 {
-    public class SearchController : Controller
+    private readonly HttpClient _http;
+
+    public SearchController(HttpClient http)
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        _http = http;
+    }
 
-        public SearchController(IHttpClientFactory httpClientFactory)
+    [HttpGet("Search/SearchGame")]
+    public async Task<IActionResult> SearchGame([FromQuery] string query)
+    {
+        if (string.IsNullOrEmpty(query))
+            return BadRequest("Informe o nome do jogo");
+
+        try
         {
-            _httpClientFactory = httpClientFactory;
+            // Chama a API GamePrice.Api na porta 5098
+            var apiUrl = $"http://localhost:5098/api/scraper/price?gameName={Uri.EscapeDataString(query)}";
+            var data = await _http.GetFromJsonAsync<GamePriceDto>(apiUrl);
+
+            if (data == null)
+                return NotFound("Jogo não encontrado");
+
+            return Json(data); // Retorna JSON para o JS
         }
-
-        [HttpGet]
-        public async Task<IActionResult> SearchGame(string query)
+        catch
         {
-            if (string.IsNullOrWhiteSpace(query))
-                return BadRequest("Query cannot be empty");
-
-            // Flow: MVC -> API -> Scraper
-            // Tenta pegar a URL do Docker (Env Var), senão usa localhost
-            var baseUrl = Environment.GetEnvironmentVariable("API_URL") ?? "http://localhost:5200";
-            var apiUrl = $"{baseUrl}/Search?query={query}";
-            
-            var client = _httpClientFactory.CreateClient();
-            
-            try 
-            {
-                var response = await client.GetStringAsync(apiUrl);
-                return Content(response, "application/json");
-            }
-            catch
-            {
-                return StatusCode(500, new { error = "Falha ao conectar com a API GamePrice." });
-            }
+            return StatusCode(500, "Erro ao buscar jogos. Tente novamente.");
         }
     }
 }
