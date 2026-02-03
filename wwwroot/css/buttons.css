@@ -1,35 +1,22 @@
 .btn-glow {
-    background: var(--gradient-main);
+    background-color: #0d6efd;
     border: none;
     color: white;
     padding: 0.8rem 2rem;
     border-radius: 50px;
     font-weight: 600;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
 }
 
-.btn-glow::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    z-index: -1;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-}
+    .btn-glow:hover {
+        background-color: #0b5ed7;
+        box-shadow: 0 0 20px rgba(13, 110, 253, 0.8);
+        filter: brightness(1.15);
+        color: white;
+    }
 
-.btn-glow:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
-    color: white;
-}
 
-.btn-glow:hover::before {
-    opacity: 1;
-}
 
 .search-btn {
     position: absolute;
@@ -39,11 +26,22 @@
     background: transparent;
     border: none;
     color: var(--primary);
-    padding: 0.8rem;
+    width: 45px; /* Tamanho fixo para evitar redimensionamento */
+    height: 45px;
+    display: flex; /* Centraliza o ícone perfeitamente */
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     transition: all 0.3s ease;
 }
 
-.search-btn:hover {
-    transform: translateY(-50%) scale(1.1);
-    color: var(--text-main);
-}
+    .search-btn:hover {
+        transform: translateY(-50%) scale(1.1);
+        color: var(--text-main);
+    }
+
+    /* Mantém o botão estável enquanto carrega */
+    .search-btn:disabled {
+        transform: translateY(-50%) !important; /* Impede o scale no hover */
+        cursor: wait;
+    }

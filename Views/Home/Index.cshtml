@@ -1,113 +1,114 @@
 ﻿@{
     ViewData["Title"] = "GamePrice - O Melhor Preço para seu Jogo";
 }
-    <!-- Hero Section -->
-    <section class="hero-section text-center">
-        <div class="hero-animation-container" id="hero-animation"></div>
-        <div class="container position-relative z-1">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="badge glass-effect text-primary px-3 py-2 rounded-pill mb-4 fade-in-up">
-                        <span class="pulse-dot"></span> Monitoramento em Tempo Real
-                    </div>
-                    <h1 class="hero-title text-white mb-4 fade-in-up">Não pague mais caro.<br>Encontre o <span class="text-gradient">menor preço</span>.
-                    </h1>
-                    <p class="lead text-muted mb-5 fade-in-up" style="max-width: 700px; margin: 0 auto;">Comparamos preços da Steam, Epic Games, PS Store, Xbox e Nintendo Eshop em segundos. Receba alertas de promoções imperdíveis.</p>
-                    <div class="search-container fade-in-up">
+<!-- Hero Section -->
+<section class="hero-section text-center">
+    <div class="hero-animation-container" id="hero-animation"></div>
+    <div class="container position-relative z-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="badge glass-effect text-primary px-3 py-2 rounded-pill mb-4 fade-in-up">
+                    <span class="pulse-dot"></span> Monitoramento em Tempo Real
+                </div>
+                <h1 class="hero-title text-white mb-4 fade-in-up">
+                    Não pague mais caro.<br>Encontre o <span class="text-gradient">menor preço</span>.
+                </h1>
+                <p class="lead text-muted mb-5 fade-in-up" style="max-width: 700px; margin: 0 auto;">Comparamos preços da Steam, Epic Games, PS Store, Xbox e Nintendo Eshop em segundos. Receba alertas de promoções imperdíveis.</p>
+                <div class="search-container fade-in-up">
+                    <div class="position-relative">
                         <input type="text" class="search-input" placeholder="Qual jogo você está procurando?">
                         <button class="search-btn" type="button"><i class="fas fa-search"></i></button>
-                        
-                        <!-- Search Results Container -->
-                        <div id="search-results" class="mt-3 text-start" style="display: none;"></div>
                     </div>
-                    <div class="mt-5 d-flex justify-content-center gap-4 small fade-in-up">
-                        <span class="stat-item gs-reveal"><i class="fas fa-store text-primary me-1"></i> <strong>+<span class="counter" data-target="50">0</span></strong> Lojas</span>
-                        <span class="stat-item gs-reveal"><i class="fas fa-history text-primary me-1"></i> Histórico de <strong><span class="counter" data-target="365">0</span> dias</strong></span>
-                        <span class="stat-item gs-reveal"><i class="fas fa-envelope text-primary me-1"></i> Alertas via <strong>Email</strong></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Brands Marquee -->
-    <section class="brands-section">
-        <div class="marquee-content">
-            <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
-            <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
-            <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
-            <div class="brand-item brand-epic"><i class="fab fa-epic-games"></i> EPIC GAMES</div>
-            <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
-            <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
-            <!-- Repetir para efeito infinito -->
-            <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
-            <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
-            <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
-            <div class="brand-item brand-epic"><i class="fab fa-epic-games"></i> EPIC GAMES</div>
-            <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
-            <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
-            <!-- Mais repetições para garantir o loop em telas grandes -->
-            <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
-            <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
-            <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
-            <div class="brand-item brand-epic"><i class="fab fa-epic-games"></i> EPIC GAMES</div>
-            <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
-            <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
-            <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
-            <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
-            <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
-            <div class="brand-item brand-epic"><i class="fab fa-epic-games"></i> EPIC GAMES</div>
-            <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
-            <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
-        </div>
-    </section>
-    <!-- Features Grid -->
-    <section id="features" class="py-5">
-        <div class="container py-5">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card gs-reveal">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3 class="h4 text-white mb-3">Comparação Instantânea</h3>
-                        <p>Nossos bots varrem todas as lojas digitais em tempo real para garantir que você veja o preço atualizado.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card gs-reveal">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="h4 text-white mb-3">Histórico de Preços</h3>
-                        <p>Saiba se a promoção é real. Visualize o gráfico de preços dos últimos 12 meses antes de comprar.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card gs-reveal">
-                        <div class="feature-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <h3 class="h4 text-white mb-3">Alertas Inteligentes</h3>
-                        <p>Defina o preço que quer pagar e nós te avisamos instantaneamente quando o jogo atingir esse valor.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Newsletter -->
-    <section class="newsletter-section">
-        <div class="container">
-            <div class="newsletter-card text-center gs-reveal">
-                <h2 class="text-white mb-3">Não perca nenhuma promoção</h2>
-                <p class="newsletter-text mb-4">Receba alertas de preços baixos diretamente no seu email.</p>
-                <div class="newsletter-form-container">
-                    <input type="email" class="newsletter-input" placeholder="Seu melhor email">
-                    <button class="btn btn-glow rounded-pill px-3 px-sm-4">
-                        <span class="d-none d-sm-inline">Inscrever-se</span><i class="fas fa-arrow-right d-sm-none"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
 
-
+                    <!-- Search Results Container -->
+                    <div id="search-results" class="mt-3 text-start" style="display: none;"></div>
+                </div>
+                <div class="mt-5 d-flex justify-content-center gap-4 small fade-in-up">
+                    <span class="stat-item gs-reveal"><i class="fas fa-store text-primary me-1"></i> <strong>+<span class="counter" data-target="50">0</span></strong> Lojas</span>
+                    <span class="stat-item gs-reveal"><i class="fas fa-history text-primary me-1"></i> Histórico de <strong><span class="counter" data-target="365">0</span> dias</strong></span>
+                    <span class="stat-item gs-reveal"><i class="fas fa-envelope text-primary me-1"></i> Alertas via <strong>Email</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Brands Marquee -->
+<section class="brands-section">
+    <div class="marquee-content">
+        <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
+        <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
+        <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
+        <div class="brand-item brand-epic"><i class="fab fa-epic-games"></i> EPIC GAMES</div>
+        <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
+        <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
+        <!-- Repetir para efeito infinito -->
+        <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
+        <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
+        <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
+        <div class="brand-item brand-epic"><i class="fab fa-epic-games"></i> EPIC GAMES</div>
+        <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
+        <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
+        <!-- Mais repetições para garantir o loop em telas grandes -->
+        <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
+        <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
+        <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
+        <div class="brand-item brand-epic"><i class="fab fa-epic-games"></i> EPIC GAMES</div>
+        <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
+        <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
+        <div class="brand-item brand-steam"><i class="fab fa-steam"></i> STEAM</div>
+        <div class="brand-item brand-ps"><i class="fab fa-playstation"></i> PLAYSTATION</div>
+        <div class="brand-item brand-xbox"><i class="fab fa-xbox"></i> XBOX</div>
+        <div class="brand-item brand-epic"><i class="fab fa-epic-games"></i> EPIC GAMES</div>
+        <div class="brand-item brand-itch"><i class="fab fa-itch-io"></i> ITCH.IO</div>
+        <div class="brand-item brand-gog"><i class="fab fa-google-play"></i> GOG.COM</div>
+    </div>
+</section>
+<!-- Features Grid -->
+<section id="features" class="py-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card gs-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="h4 text-white mb-3">Comparação Instantânea</h3>
+                    <p>Nossos bots varrem todas as lojas digitais em tempo real para garantir que você veja o preço atualizado.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card gs-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="h4 text-white mb-3">Histórico de Preços</h3>
+                    <p>Saiba se a promoção é real. Visualize o gráfico de preços dos últimos 12 meses antes de comprar.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card gs-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 class="h4 text-white mb-3">Alertas Inteligentes</h3>
+                    <p>Defina o preço que quer pagar e nós te avisamos instantaneamente quando o jogo atingir esse valor.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Newsletter -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-card text-center gs-reveal">
+            <h2 class="text-white mb-3">Não perca nenhuma promoção</h2>
+            <p class="newsletter-text mb-4">Receba alertas de preços baixos diretamente no seu email.</p>
+            <div class="newsletter-form-container">
+                <input type="email" class="newsletter-input" placeholder="Seu melhor email">
+                <button class="btn btn-glow rounded-pill px-3 px-sm-4">
+                    <span class="d-none d-sm-inline">Inscrever-se</span><i class="fas fa-arrow-right d-sm-none"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>

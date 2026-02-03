@@ -1,4 +1,4 @@
-﻿﻿﻿﻿document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
     // Bloqueia o scroll durante o carregamento
     document.body.style.overflow = 'hidden';
 
@@ -198,8 +198,11 @@
         anime.set(bgGlow, { translateX: '-50%', translateY: '-50%' });
 
         // Estado da cor para animação
-        const glowState = { color: 'rgba(112, 0, 255, 0.15)' };
+        const glowState = { color: 'rgba(112, 0, 255, 0.35)' };
         let currentSection = 'hero';
+
+        // Define a cor inicial
+        bgGlow.style.setProperty('--glow-color', glowState.color);
 
         window.addEventListener('mousemove', (e) => {
             const mouseX = e.clientX;
@@ -220,7 +223,7 @@
 
             if (targetSection !== currentSection) {
                 currentSection = targetSection;
-                const targetColor = isHero ? 'rgba(112, 0, 255, 0.15)' : 'rgba(0, 229, 255, 0.15)'; // Roxo vs Ciano
+                const targetColor = isHero ? 'rgba(112, 0, 255, 0.35)' : 'rgba(0, 229, 255, 0.35)'; // Roxo vs Ciano
 
                 anime({
                     targets: glowState,
