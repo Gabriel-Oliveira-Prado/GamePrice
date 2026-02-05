@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using GamePrice.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace GamePrice.Controllers
 {

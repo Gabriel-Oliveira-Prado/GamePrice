@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Json;
 using GamePrice.Api.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 public class SearchController : Controller
 {
