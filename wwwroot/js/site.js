@@ -197,6 +197,12 @@
         // Configuração inicial
         anime.set(bgGlow, { translateX: '-50%', translateY: '-50%' });
 
+        // Variáveis para o loop de animação (Lerp)
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let currentX = targetX;
+        let currentY = targetY;
+
         // Estado da cor para animação
         const glowState = { color: 'rgba(112, 0, 255, 0.35)' };
         let currentSection = 'hero';
@@ -205,17 +211,9 @@
         bgGlow.style.setProperty('--glow-color', glowState.color);
 
         window.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-
-            // Movimento mais rápido (600ms)
-            anime({
-                targets: bgGlow,
-                left: mouseX,
-                top: mouseY,
-                duration: 600,
-                easing: 'easeOutExpo'
-            });
+            // Apenas atualiza as coordenadas alvo (muito leve)
+            targetX = e.clientX;
+            targetY = e.clientY;
 
             // Detecção de seção para troca de cor
             const isHero = e.target.closest('.hero-section');
@@ -223,7 +221,7 @@
 
             if (targetSection !== currentSection) {
                 currentSection = targetSection;
-                const targetColor = isHero ? 'rgba(112, 0, 255, 0.35)' : 'rgba(0, 229, 255, 0.35)'; // Roxo vs Ciano
+                const targetColor = isHero ? 'rgba(112, 0, 255, 0.35)' : 'rgba(13, 110, 253, 0.35)'; // Roxo vs Azul
 
                 anime({
                     targets: glowState,
@@ -236,6 +234,19 @@
                 });
             }
         });
+
+        // Loop de animação independente (60fps)
+        function animateGlow() {
+            // Interpolação Linear (Lerp) para suavidade: 0.1 é a velocidade (similar a duration: 600ms)
+            currentX += (targetX - currentX) * 0.1;
+            currentY += (targetY - currentY) * 0.1;
+
+            bgGlow.style.left = `${currentX}px`;
+            bgGlow.style.top = `${currentY}px`;
+
+            requestAnimationFrame(animateGlow);
+        }
+        animateGlow();
     }
 });
 
@@ -268,10 +279,23 @@ function initSearch() {
 
                 // Renderiza os resultados
                 const html = `
-                    <div class="card p-3 mb-2 bg-dark text-white rounded">
-                        <h5 class="mb-1">${data.title}</h5>
-                        <p class="mb-1">Preço: <strong>${data.price}</strong></p>
-                        <a href="${data.url}" target="_blank" class="text-primary">Ver na loja</a>
+                    <div class="card border-0 mb-3 bg-dark text-white rounded-3 shadow-lg overflow-hidden" style="border: 1px solid rgba(255,255,255,0.1) !important;">
+                        <div class="d-flex align-items-center p-3">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle text-primary">
+                                    <i class="fas fa-gamepad fa-2x"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1 fw-bold">${data.title}</h5>
+                                <div class="badge bg-success bg-opacity-75 fs-6 mt-1">R$ ${data.price}</div>
+                            </div>
+                            <div class="ms-3">
+                                <a href="${data.url}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                    Ver Loja <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 `;
                 $resultsContainer.html(html);

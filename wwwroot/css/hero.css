@@ -48,6 +48,27 @@
     margin-bottom: 1.5rem;
 }
 
+/* Efeito de Texto Gradiente */
+.text-gradient {
+    background: linear-gradient(135deg, #0d6efd 0%, #0d6efd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Efeito de Vidro (Glassmorphism) */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    /* Otimização de Performance */
+    -webkit-transform: translateZ(0); /* Força aceleração de hardware */
+    transform: translateZ(0);
+    will-change: transform; /* Avisa o navegador que este elemento vai se mover */
+}
+
 /* Melhoria na legibilidade do texto Hero */
 .hero-section p.lead {
     color: #E2E8F0 !important;
@@ -72,11 +93,25 @@
     transition: all 0.3s ease;
 }
 
-.search-input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.1);
+    .search-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+    }
+
+/* Botão com Brilho */
+.btn-glow {
+    background: #0d6efd;
+    color: white;
+    box-shadow: 0 0 15px rgba(13, 110, 253, 0.5);
+    transition: all 0.3s ease;
+    border: none;
 }
+
+    .btn-glow:hover {
+        box-shadow: 0 0 25px rgba(13, 110, 253, 0.8);
+        color: white;
+    }
 
 /* --- Stats Animados --- */
 .stat-item {
@@ -86,6 +121,51 @@
     font-weight: 500;
 }
 
+/* --- Brands Marquee (Carrossel Infinito) --- */
+.brands-section {
+    overflow: hidden;
+    padding: 2rem 0;
+    background: rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+    position: relative;
+}
+
+    .brands-section::before,
+    .brands-section::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100px;
+        height: 100%;
+        z-index: 2;
+    }
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+}
+
+.brand-item {
+    display: inline-block;
+    margin: 0 2rem;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 700;
+    transition: color 0.3s;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
 @media (max-width: 768px) {
-    .hero-title { font-size: 2.5rem; }
+    .hero-title {
+        font-size: 2.5rem;
+    }
 }
