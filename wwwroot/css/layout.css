@@ -18,9 +18,9 @@
     transition: color 0.3s ease;
 }
 
-.nav-link:hover, .nav-link.active {
-    color: var(--primary) !important;
-}
+    .nav-link:hover, .nav-link.active {
+        color: var(--primary) !important;
+    }
 
 /* --- App Dashboard Styles --- */
 .app-layout {
@@ -55,11 +55,11 @@
     font-size: 1.2rem;
 }
 
-.sidebar-link:hover, .sidebar-link.active {
-    background: var(--primary);
-    color: var(--bg-dark);
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-}
+    .sidebar-link:hover, .sidebar-link.active {
+        background: var(--primary);
+        color: var(--bg-dark);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    }
 
 .main-content {
     flex: 1;
@@ -109,13 +109,13 @@
     text-decoration: none;
 }
 
-.social-link:hover {
-    background: var(--primary);
-    color: var(--bg-dark);
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-    transform: translateY(-3px);
-    border-color: var(--primary);
-}
+    .social-link:hover {
+        background: var(--primary);
+        color: var(--bg-dark);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        transform: translateY(-3px);
+        border-color: var(--primary);
+    }
 
 .footer-subtitle {
     color: var(--text-main);
@@ -126,57 +126,57 @@
     display: inline-block;
 }
 
-.footer-subtitle::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background: var(--primary);
-    border-radius: 1px;
-}
+    .footer-subtitle::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: var(--primary);
+        border-radius: 1px;
+    }
 
 .footer-links {
     list-style: none;
     padding: 0;
 }
 
-.footer-links li {
-    margin-bottom: 0.8rem;
-}
+    .footer-links li {
+        margin-bottom: 0.8rem;
+    }
 
-.footer-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
+    .footer-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
 
-.footer-links a:hover {
-    color: var(--primary);
-    transform: translateX(5px);
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
-}
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+        }
 
 .footer-contact {
     list-style: none;
     padding: 0;
 }
 
-.footer-contact li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
+    .footer-contact li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
 
-.footer-contact i {
-    color: var(--primary);
-    margin-top: 4px;
-}
+    .footer-contact i {
+        color: var(--primary);
+        margin-top: 4px;
+    }
 
 .footer-divider {
     border-color: rgba(255, 255, 255, 0.05);
@@ -191,24 +191,40 @@
 
 /* Responsividade Layout */
 @media (max-width: 768px) {
-    .sidebar { 
-        width: 100%; 
-        height: auto; 
-        bottom: 0; 
-        top: auto; 
-        flex-direction: row; 
+    .sidebar {
+        width: 100%;
+        height: auto;
+        bottom: 0;
+        top: auto;
+        flex-direction: row;
         justify-content: space-around;
         padding: 1rem;
         border-top: 1px solid rgba(255,255,255,0.1);
         border-right: none;
     }
-    .sidebar-link { margin-bottom: 0; }
-    .main-content { margin-left: 0; margin-bottom: 80px; }
+
+    .sidebar-link {
+        margin-bottom: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-bottom: 80px;
+    }
 
     /* Footer Mobile */
-    .footer { text-align: center; }
-    .social-links { justify-content: center; }
-    .footer-contact li { justify-content: center; }
+    .footer {
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .footer-contact li {
+        justify-content: center;
+    }
+
     .footer-subtitle::after {
         left: 50%;
         transform: translateX(-50%);

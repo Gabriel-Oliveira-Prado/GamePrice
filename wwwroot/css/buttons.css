@@ -1,4 +1,4 @@
-.btn-glow {
+ï»¿.btn-glow {
     background-color: #0d6efd;
     border: none;
     color: white;
@@ -28,7 +28,7 @@
     color: var(--primary);
     width: 45px; /* Tamanho fixo para evitar redimensionamento */
     height: 45px;
-    display: flex; /* Centraliza o ícone perfeitamente */
+    display: flex; /* Centraliza o ï¿½cone perfeitamente */
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -40,7 +40,7 @@
         color: var(--text-main);
     }
 
-    /* Mantém o botão estável enquanto carrega */
+    /* Mantï¿½m o botï¿½o estï¿½vel enquanto carrega */
     .search-btn:disabled {
         transform: translateY(-50%) !important; /* Impede o scale no hover */
         cursor: wait;

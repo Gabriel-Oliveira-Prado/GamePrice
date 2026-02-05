@@ -10,17 +10,17 @@
     overflow: hidden;
 }
 
-.feature-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--primary);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
+    .feature-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
 
-/* Melhoria de leitura nos cards */
-.feature-card p {
-    color: #F1F5F9;
-    line-height: 1.6;
-}
+    /* Melhoria de leitura nos cards */
+    .feature-card p {
+        color: #F1F5F9;
+        line-height: 1.6;
+    }
 
 .feature-icon {
     width: 60px;
@@ -44,11 +44,11 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.game-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    border-color: var(--secondary);
-}
+    .game-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        border-color: var(--secondary);
+    }
 
 .game-thumb {
     height: 180px;
@@ -79,9 +79,9 @@
     font-size: 0.9rem;
 }
 
-.store-price:last-child {
-    border-bottom: none;
-}
+    .store-price:last-child {
+        border-bottom: none;
+    }
 
 .price-old {
     text-decoration: line-through;
