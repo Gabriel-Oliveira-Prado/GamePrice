@@ -25,8 +25,8 @@
     /* Hover Feature Card */
     .feature-card:hover {
         transform: translateY(-10px);
-        border-color: rgba(0, 229, 255, 0.6);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 229, 255, 0.25);
+        border-color: rgba(13, 110, 253, 0.6);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 20px rgba(13, 110, 253, 0.25);
     }
 
     /* Melhoria de leitura */
@@ -155,7 +155,7 @@
     -webkit-backdrop-filter: blur(10px);
     border-top: none;
     /* Curva estilizada no topo */
-    border-radius: 10% 10% 0 0 / 4rem 4rem 0 0;
+    border-radius: 50% 50% 0 0 / 4rem 4rem 0 0;
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
