@@ -57,8 +57,13 @@
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 /* Efeito de Texto Gradiente */
@@ -96,7 +101,9 @@
 }
 
 .search-input {
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
     padding: 1.2rem 1.5rem;
@@ -132,49 +139,6 @@
     transform: translateY(20px);
     color: #F8FAFC;
     font-weight: 500;
-}
-
-/* --- Brands Marquee (Carrossel Infinito) --- */
-.brands-section {
-    overflow: hidden;
-    padding: 2rem 0;
-    background: rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
-    position: relative;
-}
-
-    .brands-section::before,
-    .brands-section::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        width: 100px;
-        height: 100%;
-        z-index: 2;
-    }
-
-.marquee-content {
-    display: inline-block;
-    animation: marquee 40s linear infinite;
-}
-
-.brand-item {
-    display: inline-block;
-    margin: 0 2rem;
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 700;
-    transition: color 0.3s;
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
 }
 
 @media (max-width: 768px) {

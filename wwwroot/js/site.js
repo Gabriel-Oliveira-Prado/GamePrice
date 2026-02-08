@@ -144,11 +144,15 @@
         let startX, startY;
         let initialTranslateX = 0;
         let initialTranslateY = 0;
+        let currentTranslateX = 0;
+        let currentTranslateY = 0;
+        let vx = 0, vy = 0, lastX = 0, lastY = 0, lastTime = 0;
 
         const startDrag = (e) => {
             isDragging = true;
             startX = (e.clientX || e.touches[0].clientX);
             startY = (e.clientY || e.touches[0].clientY);
+            lastX = startX; lastY = startY; lastTime = Date.now();
 
             // Obtém a posição atual da transformação para evitar reset/pulo
             const style = window.getComputedStyle(badge);
@@ -166,9 +170,23 @@
             const currentX = (e.clientX || e.touches[0].clientX) - startX;
             const currentY = (e.clientY || e.touches[0].clientY) - startY;
 
-            // Move o elemento diretamente para performance
-            // Soma o delta do movimento atual com a posição inicial capturada
-            badge.style.transform = `translate(${initialTranslateX + currentX}px, ${initialTranslateY + currentY}px)`;
+            // Cálculo de velocidade para inércia
+            const now = Date.now();
+            const dt = now - lastTime;
+            const clientX = (e.clientX || e.touches[0].clientX);
+            const clientY = (e.clientY || e.touches[0].clientY);
+
+            if (dt > 0) {
+                vx = (clientX - lastX) / dt;
+                vy = (clientY - lastY) / dt;
+            }
+            lastX = clientX; lastY = clientY; lastTime = now;
+
+            // Atualiza posição
+            currentTranslateX = initialTranslateX + currentX;
+            currentTranslateY = initialTranslateY + currentY;
+
+            badge.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px)`;
         };
 
         const endDrag = () => {
@@ -176,13 +194,27 @@
             isDragging = false;
             badge.style.cursor = 'grab';
 
-            // Efeito de mola (Spring) para voltar ao lugar
+            // Efeito de Inércia (Momentum) antes de voltar
+            const inertiaFactor = 150; // Força do arremesso
+            const targetX = currentTranslateX + (vx * inertiaFactor);
+            const targetY = currentTranslateY + (vy * inertiaFactor);
+
             anime({
                 targets: badge,
-                translateX: 0,
-                translateY: 0,
-                duration: 800,
-                easing: 'spring(1, 80, 10, 0)'
+                translateX: targetX,
+                translateY: targetY,
+                duration: 600,
+                easing: 'easeOutExpo',
+                complete: () => {
+                    // Volta para o lugar (Spring)
+                    anime({
+                        targets: badge,
+                        translateX: 0,
+                        translateY: 0,
+                        duration: 800,
+                        easing: 'spring(1, 80, 10, 0)'
+                    });
+                }
             });
         };
 
@@ -195,19 +227,26 @@
     }
 
     // --- Eventos de Scroll (Parallax e Navbar) ---
-    window.onscroll = () => {
-        const scrollY = window.scrollY;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
 
-        // Parallax no título
-        const heroTitle = document.querySelector('.hero-title');
-        if (heroTitle) {
-            anime.set(heroTitle, { translateY: scrollY * 0.4 });
+                // Parallax no título
+                const heroTitle = document.querySelector('.hero-title');
+                if (heroTitle) {
+                    anime.set(heroTitle, { translateY: scrollY * 0.4 });
+                }
+                const heroLead = document.querySelector('.hero-section p.lead');
+                if (heroLead) {
+                    anime.set(heroLead, { translateY: scrollY * 0.4 });
+                }
+                ticking = false;
+            });
+            ticking = true;
         }
-        const heroLead = document.querySelector('.hero-section p.lead');
-        if (heroLead) {
-            anime.set(heroLead, { translateY: scrollY * 0.4 });
-        }
-    };
+    });
 
     // --- Background Interativo (Seguir Mouse) ---
     const bgGlow = document.querySelector('.hero-bg-glow');
@@ -282,7 +321,24 @@ function initSearch() {
         if (!query) return;
 
         // UI Loading
-        $resultsContainer.html('<div class="text-center text-white p-3">Buscando melhores preços...</div>').show();
+        // Skeleton Loading Structure
+        const skeletonHtml = `
+            <div class="card border-0 mb-3 bg-dark text-white rounded-3 shadow-lg overflow-hidden" style="border: 1px solid rgba(255,255,255,0.1) !important;">
+                <div class="d-flex align-items-center p-3">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="skeleton rounded-circle" style="width: 60px; height: 60px;"></div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                        <div class="skeleton skeleton-text" style="width: 30%;"></div>
+                    </div>
+                    <div class="ms-3">
+                         <div class="skeleton rounded-pill" style="width: 100px; height: 35px;"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        $resultsContainer.html(skeletonHtml).show();
         $searchBtn.prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i>');
 
         $.ajax({
@@ -334,6 +390,10 @@ function initSearch() {
     $searchInput.off("keypress").on("keypress", function (e) {
         if (e.which === 13) performSearch();
     });
+    // Navegação por teclado: Fechar com ESC
+    $searchInput.on("keydown", function (e) {
+        if (e.key === "Escape") $resultsContainer.hide();
+    });
 }
 
 // --- Features Swiper ---
@@ -347,6 +407,10 @@ function initFeaturesSwiper() {
         slideToClickedSlide: true, // Permite clicar no card para navegar (voltar ou passar)
         speed: 800, // Transição mais suave para o efeito infinito
         slidesPerView: 1,
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
         coverflowEffect: {
             rotate: 50,
             stretch: 0,
@@ -388,7 +452,7 @@ function initTypewriter() {
 
     function type() {
         const currentPhrase = phrases[phraseIndex];
-        
+
         if (isDeleting) {
             textElement.textContent = currentPhrase.substring(0, charIndex - 1);
             charIndex--;
