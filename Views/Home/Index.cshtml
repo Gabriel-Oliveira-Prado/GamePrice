@@ -11,7 +11,7 @@
                     <span class="pulse-dot"></span> Monitoramento em Tempo Real
                 </div>
                 <h1 class="hero-title text-white mb-4 fade-in-up">
-                    Não pague mais caro.<br>Encontre o <span class="text-gradient">menor preço</span>.
+                    Não pague mais caro.<br>Encontre o <span class="text-gradient" id="typewriter-text" style="display: inline-block; min-width: 10px;"></span><span class="typewriter-cursor">|</span>
                 </h1>
                 <p class="lead text-muted mb-5 fade-in-up" style="max-width: 700px; margin: 0 auto;">Comparamos preços da Steam, Epic Games, PS Store, Xbox e Nintendo Eshop em segundos. Receba alertas de promoções imperdíveis.</p>
                 <div class="search-container fade-in-up">
@@ -23,7 +23,7 @@
                     <!-- Search Results Container -->
                     <div id="search-results" class="mt-3 text-start" style="display: none;"></div>
                 </div>
-                <div class="mt-5 d-flex justify-content-center gap-4 small fade-in-up">
+                <div class="mt-5 d-flex flex-wrap justify-content-center gap-3 gap-md-4 small fade-in-up">
                     <span class="stat-item gs-reveal"><i class="fas fa-store text-primary me-1"></i> <strong>+<span class="counter" data-target="50">0</span></strong> Lojas</span>
                     <span class="stat-item gs-reveal"><i class="fas fa-history text-primary me-1"></i> Histórico de <strong><span class="counter" data-target="365">0</span> dias</strong></span>
                     <span class="stat-item gs-reveal"><i class="fas fa-envelope text-primary me-1"></i> Alertas via <strong>Email</strong></span>
@@ -66,34 +66,65 @@
 <!-- Features Grid -->
 <section id="features" class="py-5">
     <div class="container py-5">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="feature-card gs-reveal">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
+        <div class="swiper features-swiper pb-5">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide h-auto">
+                    <div class="feature-card gs-reveal h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Comparação Instantânea</h3>
+                        <p>Nossos bots varrem todas as lojas digitais em tempo real para garantir que você veja o preço atualizado.</p>
                     </div>
-                    <h3 class="h4 text-white mb-3">Comparação Instantânea</h3>
-                    <p>Nossos bots varrem todas as lojas digitais em tempo real para garantir que você veja o preço atualizado.</p>
+                </div>
+                <div class="swiper-slide h-auto">
+                    <div class="feature-card gs-reveal h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Histórico de Preços</h3>
+                        <p>Saiba se a promoção é real. Visualize o gráfico de preços dos últimos 12 meses antes de comprar.</p>
+                    </div>
+                </div>
+                <div class="swiper-slide h-auto">
+                    <div class="feature-card gs-reveal h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Alertas Inteligentes</h3>
+                        <p>Defina o preço que quer pagar e nós te avisamos instantaneamente quando o jogo atingir esse valor.</p>
+                    </div>
+                </div>
+                <!-- Slides duplicados para garantir o loop infinito visualmente perfeito -->
+                <div class="swiper-slide h-auto">
+                    <div class="feature-card gs-reveal h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Comparação Instantânea</h3>
+                        <p>Nossos bots varrem todas as lojas digitais em tempo real para garantir que você veja o preço atualizado.</p>
+                    </div>
+                </div>
+                <div class="swiper-slide h-auto">
+                    <div class="feature-card gs-reveal h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Histórico de Preços</h3>
+                        <p>Saiba se a promoção é real. Visualize o gráfico de preços dos últimos 12 meses antes de comprar.</p>
+                    </div>
+                </div>
+                <div class="swiper-slide h-auto">
+                    <div class="feature-card gs-reveal h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3 class="h4 text-white mb-3">Alertas Inteligentes</h3>
+                        <p>Defina o preço que quer pagar e nós te avisamos instantaneamente quando o jogo atingir esse valor.</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="feature-card gs-reveal">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="h4 text-white mb-3">Histórico de Preços</h3>
-                    <p>Saiba se a promoção é real. Visualize o gráfico de preços dos últimos 12 meses antes de comprar.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card gs-reveal">
-                    <div class="feature-icon">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <h3 class="h4 text-white mb-3">Alertas Inteligentes</h3>
-                    <p>Defina o preço que quer pagar e nós te avisamos instantaneamente quando o jogo atingir esse valor.</p>
-                </div>
-            </div>
+            <div class="swiper-pagination"></div>
         </div>
     </div>
 </section>
@@ -105,8 +136,8 @@
             <p class="newsletter-text mb-4">Receba alertas de preços baixos diretamente no seu email.</p>
             <div class="newsletter-form-container">
                 <input type="email" class="newsletter-input" placeholder="Seu melhor email">
-                <button class="btn btn-glow rounded-pill px-3 px-sm-4">
-                    <span class="d-none d-sm-inline">Inscrever-se</span><i class="fas fa-arrow-right d-sm-none"></i>
+                <button class="btn btn-glow rounded-pill px-4 newsletter-btn">
+                    Inscrever-se
                 </button>
             </div>
         </div>

@@ -5,7 +5,6 @@
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: all 0.4s ease;
-    height: 100%;
     position: relative;
     overflow: hidden;
 }
@@ -93,4 +92,13 @@
 .price-new {
     color: var(--primary);
     font-weight: 600;
+}
+
+/* Swiper Pagination Customization */
+.swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--primary);
 }

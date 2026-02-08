@@ -42,10 +42,23 @@
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: clamp(2rem, 5vw + 1rem, 4.5rem); /* Escala suavemente entre 2rem e 4.5rem */
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
+}
+
+.typewriter-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--primary);
+    animation: blink 1s infinite;
+    font-weight: 400;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 /* Efeito de Texto Gradiente */
@@ -165,7 +178,21 @@
 }
 
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.5rem;
+    .hero-section {
+        height: auto; /* Permite crescer se o conteúdo for alto */
+        min-height: 100vh;
+        padding-top: 100px;
+        padding-bottom: 6rem;
+    }
+
+    .search-input {
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section p.lead {
+        font-size: 1rem;
     }
 }

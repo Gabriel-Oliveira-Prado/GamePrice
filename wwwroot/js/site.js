@@ -2,6 +2,23 @@
     // Bloqueia o scroll durante o carregamento
     document.body.style.overflow = 'hidden';
 
+    // --- SEGURANÇA: Força o site a aparecer se o loader travar ---
+    setTimeout(() => {
+        const loader = document.querySelector('.loader-container');
+        if (loader && getComputedStyle(loader).display !== 'none') {
+            console.warn("Loader demorou muito. Forçando exibição.");
+            loader.style.display = 'none';
+            document.body.style.overflow = '';
+            // Garante que elementos ocultos apareçam
+            document.querySelectorAll('.gs-reveal').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+            // Tenta iniciar animações críticas
+            if (typeof heroTimeline !== 'undefined') heroTimeline.play();
+        }
+    }, 3000); // 3 segundos de tolerância máxima
+
     // --- Animação do Preloader com Anime.js ---
     const loaderTimeline = anime.timeline({
         easing: 'easeInOutQuad',
@@ -11,6 +28,8 @@
             heroTimeline.play();
             initScrollReveal();
             initSearch(); // Initialize search functionality
+            initFeaturesSwiper(); // Initialize Features Swiper
+            initTypewriter(); // Initialize Typewriter Effect
         }
     });
 
@@ -315,4 +334,82 @@ function initSearch() {
     $searchInput.off("keypress").on("keypress", function (e) {
         if (e.which === 13) performSearch();
     });
+}
+
+// --- Features Swiper ---
+function initFeaturesSwiper() {
+    if (typeof Swiper === 'undefined') return; // Evita erro se o Swiper não carregar
+    new Swiper('.features-swiper', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        loop: true,
+        slideToClickedSlide: true, // Permite clicar no card para navegar (voltar ou passar)
+        speed: 800, // Transição mais suave para o efeito infinito
+        slidesPerView: 1,
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+        },
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: false, // Permite que o autoplay continue (resete o timer) após interação
+            pauseOnMouseEnter: true,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            dynamicBullets: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            }
+        }
+    });
+}
+
+// --- Typewriter Effect ---
+function initTypewriter() {
+    const textElement = document.getElementById('typewriter-text');
+    if (!textElement) return;
+
+    const phrases = ["menor preço.", "melhor desconto.", "jogo favorito."];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function type() {
+        const currentPhrase = phrases[phraseIndex];
+        
+        if (isDeleting) {
+            textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            typeSpeed = 50; // Mais rápido ao apagar
+        } else {
+            textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            typeSpeed = 100; // Velocidade normal de digitação
+        }
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            isDeleting = true;
+            typeSpeed = 2000; // Pausa antes de apagar
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 500; // Pausa antes de começar o próximo
+        }
+
+        setTimeout(type, typeSpeed);
+    }
+
+    type();
 }
