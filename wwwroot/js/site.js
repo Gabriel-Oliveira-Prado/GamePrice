@@ -1,38 +1,31 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-    // Bloqueia o scroll durante o carregamento
     document.body.style.overflow = 'hidden';
-
-    // --- SEGURANÇA: Força o site a aparecer se o loader travar ---
+    // --- SEGURANÇA ---
     setTimeout(() => {
         const loader = document.querySelector('.loader-container');
         if (loader && getComputedStyle(loader).display !== 'none') {
             console.warn("Loader demorou muito. Forçando exibição.");
             loader.style.display = 'none';
             document.body.style.overflow = '';
-            // Garante que elementos ocultos apareçam
             document.querySelectorAll('.gs-reveal').forEach(el => {
                 el.style.opacity = '1';
                 el.style.transform = 'none';
             });
-            // Tenta iniciar animações críticas
             if (typeof heroTimeline !== 'undefined') heroTimeline.play();
         }
-    }, 3000); // 3 segundos de tolerância máxima
-
-    // --- Animação do Preloader com Anime.js ---
+    }, 3000);
+    // --- Preloader ---
     const loaderTimeline = anime.timeline({
         easing: 'easeInOutQuad',
         complete: () => {
-            // Libera o scroll e inicia as animações da página
             document.body.style.overflow = '';
             heroTimeline.play();
             initScrollReveal();
-            initSearch(); // Initialize search functionality
-            initFeaturesSwiper(); // Initialize Features Swiper
-            initTypewriter(); // Initialize Typewriter Effect
+            initSearch();
+            initFeaturesSwiper();
+            initTypewriter();
         }
     });
-
     loaderTimeline.add({
         targets: '.logo-path',
         strokeDashoffset: [anime.setDashoffset, 0],
@@ -41,7 +34,7 @@
     })
         .add({
             targets: '.logo-path',
-            fill: '#0d6efd', // Cor text-primary do Bootstrap (Azul)
+            fill: '#0d6efd',
             duration: 800,
             easing: 'easeOutExpo'
         })
@@ -57,20 +50,18 @@
             duration: 500,
             delay: 100
         });
-
-    // --- Animação Hero (Entrada inicial) ---
+    // --- Hero ---
     const heroTimeline = anime.timeline({
-        autoplay: false, // Aguarda o loader terminar
+        autoplay: false,
         easing: 'easeOutExpo'
     });
-
     heroTimeline.add({
-        targets: [".hero-title", ".hero-section p.lead"], // Alvos sincronizados
+        targets: [".hero-title", ".hero-section p.lead"],
         translateY: [100, 0],
         opacity: [0, 1],
         duration: 1200,
-        delay: anime.stagger(100), // Leve atraso entre eles para fluidez
-        easing: 'easeOutElastic(1, .6)' // Efeito elástico bem animado
+        delay: anime.stagger(100),
+        easing: 'easeOutElastic(1, .6)'
     })
         .add({
             targets: ".search-container",
@@ -85,16 +76,12 @@
             opacity: [0, 1],
             duration: 500
         }, '-=800');
-
-    // --- Scroll Reveal (Substituindo ScrollTrigger) ---
+    // --- Scroll Reveal ---
     const revealElements = document.querySelectorAll('.gs-reveal');
-
-    // Configuração inicial dos elementos
     revealElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(50px) scale(0.9)';
     });
-
     const initScrollReveal = () => {
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -104,42 +91,35 @@
                         translateY: 0,
                         scale: 1,
                         opacity: 1,
-                        duration: 1200,
-                        easing: 'easeOutElastic(1, .6)'
+                        duration: 800,
+                        easing: 'easeOutQuad'
                     });
-
-                    // Animação de Contadores (se houver dentro do elemento revelado)
                     const counters = entry.target.querySelectorAll('.counter');
                     counters.forEach(counter => {
                         const target = +counter.getAttribute('data-target');
                         const count = { val: 0 };
-
                         anime({
                             targets: count,
                             val: [0, target],
-                            round: 1, // Arredonda para números inteiros
+                            round: 1,
                             easing: 'easeOutExpo',
                             duration: 5000,
                             update: function () {
-                                counter.innerHTML = count.val;
+                                counter.textContent = count.val;
                             }
                         });
                     });
-
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.15 });
-
         revealElements.forEach(el => observer.observe(el));
     };
-
-    // --- Draggable & Animatable (Badge Interativo) ---
+    // --- Badge Interativo ---
     const badge = document.querySelector('.hero-section .badge');
     if (badge) {
         badge.style.cursor = 'grab';
         badge.style.userSelect = 'none';
-
         let isDragging = false;
         let startX, startY;
         let initialTranslateX = 0;
@@ -147,58 +127,43 @@
         let currentTranslateX = 0;
         let currentTranslateY = 0;
         let vx = 0, vy = 0, lastX = 0, lastY = 0, lastTime = 0;
-
         const startDrag = (e) => {
             isDragging = true;
             startX = (e.clientX || e.touches[0].clientX);
             startY = (e.clientY || e.touches[0].clientY);
             lastX = startX; lastY = startY; lastTime = Date.now();
-
-            // Obtém a posição atual da transformação para evitar reset/pulo
             const style = window.getComputedStyle(badge);
             const matrix = new DOMMatrix(style.transform);
             initialTranslateX = matrix.m41;
             initialTranslateY = matrix.m42;
-
             badge.style.cursor = 'grabbing';
-            anime.remove(badge); // Para animações anteriores
+            anime.remove(badge);
         };
-
         const onDrag = (e) => {
             if (!isDragging) return;
-            e.preventDefault(); // Evita scroll em touch devices
+            e.preventDefault();
             const currentX = (e.clientX || e.touches[0].clientX) - startX;
             const currentY = (e.clientY || e.touches[0].clientY) - startY;
-
-            // Cálculo de velocidade para inércia
             const now = Date.now();
             const dt = now - lastTime;
             const clientX = (e.clientX || e.touches[0].clientX);
             const clientY = (e.clientY || e.touches[0].clientY);
-
             if (dt > 0) {
                 vx = (clientX - lastX) / dt;
                 vy = (clientY - lastY) / dt;
             }
             lastX = clientX; lastY = clientY; lastTime = now;
-
-            // Atualiza posição
             currentTranslateX = initialTranslateX + currentX;
             currentTranslateY = initialTranslateY + currentY;
-
             badge.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px)`;
         };
-
         const endDrag = () => {
             if (!isDragging) return;
             isDragging = false;
             badge.style.cursor = 'grab';
-
-            // Efeito de Inércia (Momentum) antes de voltar
-            const inertiaFactor = 150; // Força do arremesso
+            const inertiaFactor = 30;
             const targetX = currentTranslateX + (vx * inertiaFactor);
             const targetY = currentTranslateY + (vy * inertiaFactor);
-
             anime({
                 targets: badge,
                 translateX: targetX,
@@ -206,18 +171,16 @@
                 duration: 600,
                 easing: 'easeOutExpo',
                 complete: () => {
-                    // Volta para o lugar (Spring)
                     anime({
                         targets: badge,
                         translateX: 0,
                         translateY: 0,
                         duration: 800,
-                        easing: 'spring(1, 80, 10, 0)'
+                        easing: 'spring(1, 60, 15, 0)'
                     });
                 }
             });
         };
-
         badge.addEventListener('mousedown', startDrag);
         badge.addEventListener('touchstart', startDrag);
         window.addEventListener('mousemove', onDrag);
@@ -225,103 +188,84 @@
         window.addEventListener('mouseup', endDrag);
         window.addEventListener('touchend', endDrag);
     }
-
-    // --- Eventos de Scroll (Parallax e Navbar) ---
+    // --- Scroll ---
     let ticking = false;
+    const heroTitle = document.querySelector('.hero-title');
+    const heroLead = document.querySelector('.hero-section p.lead');
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrollY = window.scrollY;
-
-                // Parallax no título
-                const heroTitle = document.querySelector('.hero-title');
                 if (heroTitle) {
-                    anime.set(heroTitle, { translateY: scrollY * 0.4 });
+                    heroTitle.style.transform = `translateY(${scrollY * 0.4}px)`;
                 }
-                const heroLead = document.querySelector('.hero-section p.lead');
                 if (heroLead) {
-                    anime.set(heroLead, { translateY: scrollY * 0.4 });
+                    heroLead.style.transform = `translateY(${scrollY * 0.4}px)`;
                 }
                 ticking = false;
             });
             ticking = true;
         }
     });
-
-    // --- Background Interativo (Seguir Mouse) ---
+    // --- Background Glow ---
     const bgGlow = document.querySelector('.hero-bg-glow');
-
     if (bgGlow) {
-        // Configuração inicial
-        anime.set(bgGlow, { translateX: '-50%', translateY: '-50%' });
-
-        // Variáveis para o loop de animação (Lerp)
+        bgGlow.style.willChange = 'transform';
+        bgGlow.style.top = '0';
+        bgGlow.style.left = '0';
         let targetX = window.innerWidth / 2;
         let targetY = window.innerHeight / 2;
         let currentX = targetX;
         let currentY = targetY;
-
-        // Estado da cor para animação
         const glowState = { color: 'rgba(112, 0, 255, 0.35)' };
         let currentSection = 'hero';
-
-        // Define a cor inicial
-        bgGlow.style.setProperty('--glow-color', glowState.color);
+        bgGlow.style.setProperty('--glow-color', glowState.color);       
+        let lastCheck = 0;
 
         window.addEventListener('mousemove', (e) => {
-            // Apenas atualiza as coordenadas alvo (muito leve)
             targetX = e.clientX;
             targetY = e.clientY;
 
-            // Detecção de seção para troca de cor
-            const isHero = e.target.closest('.hero-section');
-            const targetSection = isHero ? 'hero' : 'other';
-
-            if (targetSection !== currentSection) {
-                currentSection = targetSection;
-                const targetColor = isHero ? 'rgba(112, 0, 255, 0.35)' : 'rgba(13, 110, 253, 0.35)'; // Roxo vs Azul
-
-                anime({
-                    targets: glowState,
-                    color: targetColor,
-                    duration: 500,
-                    easing: 'linear',
-                    update: () => {
-                        bgGlow.style.setProperty('--glow-color', glowState.color);
-                    }
-                });
+            // Verifica a mudança de seção apenas a cada 100ms para evitar travamentos
+            const now = Date.now();
+            if (now - lastCheck > 100) {
+                lastCheck = now;
+                const isHero = e.target.closest('.hero-section');
+                const targetSection = isHero ? 'hero' : 'other';
+                if (targetSection !== currentSection) {
+                    currentSection = targetSection;
+                    const targetColor = isHero ? 'rgba(112, 0, 255, 0.35)' : 'rgba(13, 110, 253, 0.5)';
+                    anime.remove(glowState);
+                    anime({
+                        targets: glowState,
+                        color: targetColor,
+                        duration: 500,
+                        easing: 'linear',
+                        update: () => {
+                            bgGlow.style.setProperty('--glow-color', glowState.color);
+                        }
+                    });
+                }
             }
         });
-
-        // Loop de animação independente (60fps)
         function animateGlow() {
-            // Interpolação Linear (Lerp) para suavidade: 0.1 é a velocidade (similar a duration: 600ms)
             currentX += (targetX - currentX) * 0.1;
             currentY += (targetY - currentY) * 0.1;
-
-            bgGlow.style.left = `${currentX}px`;
-            bgGlow.style.top = `${currentY}px`;
-
+            bgGlow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
             requestAnimationFrame(animateGlow);
         }
         animateGlow();
     }
 });
-
-// --- Search Functionality ---
+// --- Search ---
 function initSearch() {
     const $searchInput = $(".search-input");
     const $searchBtn = $(".search-btn");
     const $resultsContainer = $("#search-results");
-
     if (!$searchInput.length || !$searchBtn.length) return;
-
     const performSearch = () => {
         const query = $searchInput.val().trim();
         if (!query) return;
-
-        // UI Loading
-        // Skeleton Loading Structure
         const skeletonHtml = `
             <div class="card border-0 mb-3 bg-dark text-white rounded-3 shadow-lg overflow-hidden" style="border: 1px solid rgba(255,255,255,0.1) !important;">
                 <div class="d-flex align-items-center p-3">
@@ -340,10 +284,9 @@ function initSearch() {
         `;
         $resultsContainer.html(skeletonHtml).show();
         $searchBtn.prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i>');
-
         $.ajax({
             url: "/Search/SearchGame",
-            method: "GET", // ou POST se você quiser mudar
+            method: "GET",
             data: { query: query },
             dataType: "json",
             success: function (data) {
@@ -351,8 +294,6 @@ function initSearch() {
                     $resultsContainer.html('<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>');
                     return;
                 }
-
-                // Renderiza os resultados
                 const html = `
                     <div class="card border-0 mb-3 bg-dark text-white rounded-3 shadow-lg overflow-hidden" style="border: 1px solid rgba(255,255,255,0.1) !important;">
                         <div class="d-flex align-items-center p-3">
@@ -384,43 +325,39 @@ function initSearch() {
             }
         });
     };
-
-    // Eventos
     $searchBtn.off("click").on("click", performSearch);
     $searchInput.off("keypress").on("keypress", function (e) {
         if (e.which === 13) performSearch();
     });
-    // Navegação por teclado: Fechar com ESC
     $searchInput.on("keydown", function (e) {
         if (e.key === "Escape") $resultsContainer.hide();
     });
 }
-
 // --- Features Swiper ---
 function initFeaturesSwiper() {
-    if (typeof Swiper === 'undefined') return; // Evita erro se o Swiper não carregar
+    if (typeof Swiper === 'undefined') return;
     new Swiper('.features-swiper', {
         effect: 'coverflow',
         grabCursor: true,
         centeredSlides: true,
         loop: true,
-        slideToClickedSlide: true, // Permite clicar no card para navegar (voltar ou passar)
-        speed: 800, // Transição mais suave para o efeito infinito
+        slideToClickedSlide: true,
+        speed: 800,
         slidesPerView: 1,
         keyboard: {
             enabled: true,
             onlyInViewport: true,
         },
         coverflowEffect: {
-            rotate: 50,
+            rotate: 35,
             stretch: 0,
             depth: 100,
             modifier: 1,
-            slideShadows: true,
+            slideShadows: false,
         },
         autoplay: {
             delay: 6000,
-            disableOnInteraction: false, // Permite que o autoplay continue (resete o timer) após interação
+            disableOnInteraction: false,
             pauseOnMouseEnter: true,
         },
         pagination: {
@@ -438,42 +375,35 @@ function initFeaturesSwiper() {
         }
     });
 }
-
-// --- Typewriter Effect ---
+// --- Typewriter ---
 function initTypewriter() {
     const textElement = document.getElementById('typewriter-text');
     if (!textElement) return;
-
     const phrases = ["menor preço.", "melhor desconto.", "jogo favorito."];
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
     let typeSpeed = 100;
-
     function type() {
         const currentPhrase = phrases[phraseIndex];
-
         if (isDeleting) {
             textElement.textContent = currentPhrase.substring(0, charIndex - 1);
             charIndex--;
-            typeSpeed = 50; // Mais rápido ao apagar
+            typeSpeed = 50;
         } else {
             textElement.textContent = currentPhrase.substring(0, charIndex + 1);
             charIndex++;
-            typeSpeed = 100; // Velocidade normal de digitação
+            typeSpeed = 100;
         }
-
         if (!isDeleting && charIndex === currentPhrase.length) {
             isDeleting = true;
-            typeSpeed = 2000; // Pausa antes de apagar
+            typeSpeed = 2000;
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            typeSpeed = 500; // Pausa antes de começar o próximo
+            typeSpeed = 500;
         }
-
         setTimeout(type, typeSpeed);
     }
-
     type();
 }

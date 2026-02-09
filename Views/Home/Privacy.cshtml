@@ -1,6 +1,53 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Política de Privacidade";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<section class="hero-section">
+    <div class="container position-relative z-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="glass-effect p-5 rounded-4 position-relative overflow-hidden gs-reveal">
+                    
+                    <div class="text-center mb-5">
+                        <div class="mb-4 text-primary">
+                            <i class="fas fa-user-shield fa-4x"></i>
+                        </div>
+                        <h1 class="fw-bold text-white mb-3">Política de Privacidade</h1>
+                        <p class="lead text-muted">
+                            Sua segurança é nossa prioridade. Entenda como o <strong>GamePrice</strong> cuida dos seus dados.
+                        </p>
+                    </div>
+
+                    <div class="text-white-50">
+                        <h4 class="text-white mb-3"><i class="fas fa-database me-2 text-primary"></i>Coleta de Dados</h4>
+                        <p>
+                            Nós coletamos apenas o necessário para melhorar sua experiência de busca de preços. 
+                            Isso pode incluir cookies de preferência e dados anônimos de navegação para estatísticas de acesso.
+                        </p>
+
+                        <hr class="border-secondary my-4 opacity-25">
+
+                        <h4 class="text-white mb-3"><i class="fas fa-link me-2 text-primary"></i>Links Externos</h4>
+                        <p>
+                            O GamePrice atua como um comparador. Ao clicar em uma oferta, você será redirecionado para lojas parceiras 
+                            (Steam, Epic Games, PS Store, etc.). Recomendamos ler a política de privacidade dessas plataformas ao realizar uma compra.
+                        </p>
+
+                        <hr class="border-secondary my-4 opacity-25">
+
+                        <h4 class="text-white mb-3"><i class="fas fa-envelope me-2 text-primary"></i>Contato</h4>
+                        <p>
+                            Se tiver dúvidas sobre seus dados ou quiser solicitar a exclusão de informações, entre em contato conosco pelo email: 
+                            <a href="mailto:privacidade@gameprice.com" class="text-primary text-decoration-none">privacidade@gameprice.com</a>
+                        </p>
+                    </div>
+
+                    <div class="mt-5 text-center">
+                        <small class="text-muted">Última atualização: @DateTime.Now.ToString("MMMM yyyy")</small>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

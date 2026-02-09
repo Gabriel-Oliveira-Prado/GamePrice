@@ -1,4 +1,5 @@
-﻿.btn-glow {
+﻿/* Botões */
+.btn-glow {
     background-color: #0d6efd;
     border: none;
     color: white;
@@ -8,16 +9,13 @@
     box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
     transition: background-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
 }
-
     .btn-glow:hover {
         background-color: #0b5ed7;
         box-shadow: 0 0 20px rgba(13, 110, 253, 0.8);
         filter: brightness(1.15);
         color: white;
     }
-
-
-
+/* Searchbar */
 .search-btn {
     position: absolute;
     right: 10px;
@@ -26,22 +24,19 @@
     background: transparent;
     border: none;
     color: var(--primary);
-    width: 45px; /* Tamanho fixo para evitar redimensionamento */
+    width: 45px;
     height: 45px;
-    display: flex; /* Centraliza o �cone perfeitamente */
+    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     transition: all 0.3s ease;
 }
-
     .search-btn:hover {
         transform: translateY(-50%) scale(1.1);
         color: var(--text-main);
     }
-
-    /* Mant�m o bot�o est�vel enquanto carrega */
     .search-btn:disabled {
-        transform: translateY(-50%) !important; /* Impede o scale no hover */
+        transform: translateY(-50%) !important;
         cursor: wait;
     }
