@@ -341,6 +341,7 @@ function initFeaturesSwiper() {
         grabCursor: true,
         centeredSlides: true,
         loop: true,
+        autoHeight: true,
         slideToClickedSlide: true,
         speed: 800,
         slidesPerView: 1,
