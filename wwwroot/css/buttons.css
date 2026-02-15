@@ -1,42 +1,12 @@
-﻿/* Botões */
-.btn-glow {
-    background-color: #0d6efd;
-    border: none;
+﻿.btn-glow {
+    background: #0d6efd;
     color: white;
-    padding: 0.8rem 2rem;
-    border-radius: 50px;
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-}
-    .btn-glow:hover {
-        background-color: #0b5ed7;
-        box-shadow: 0 0 20px rgba(13, 110, 253, 0.8);
-        filter: brightness(1.15);
-        color: white;
-    }
-/* Searchbar */
-.search-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    color: var(--primary);
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(13, 110, 253, 0.5);
     transition: all 0.3s ease;
+    border: none;
 }
-    .search-btn:hover {
-        transform: translateY(-50%) scale(1.1);
-        color: var(--text-main);
-    }
-    .search-btn:disabled {
-        transform: translateY(-50%) !important;
-        cursor: wait;
+
+    .btn-glow:hover {
+        box-shadow: 0 0 25px rgba(13, 110, 253, 0.8);
+        color: white;
     }

@@ -1,4 +1,5 @@
-﻿﻿<!DOCTYPE html>
+﻿﻿﻿
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
@@ -17,8 +18,8 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="/css/cards.css" asp-append-version="true" />
     <link rel="stylesheet" href="/css/buttons.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
 
