@@ -1,25 +1,102 @@
 /* --- Navbar --- */
-.navbar {
-    background: rgba(11, 14, 20, 0.8);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1rem 0;
-}
-
 .navbar-brand {
     font-weight: 700;
-    font-size: 1.5rem;
-    letter-spacing: -0.5px;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
 }
 
 .nav-link {
-    color: var(--text-muted) !important;
-    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 600;
+    font-size: 1rem;
     transition: color 0.3s ease;
 }
-
     .nav-link:hover, .nav-link.active {
         color: var(--primary) !important;
+    }
+
+.btn-login {
+    border-radius: 50px;
+    padding: 0.5rem 2rem;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+    transition: all 0.3s ease;
+}
+
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
+    }
+
+/* Animação da Navbar */
+.floating-navbar {
+    width: 100%;
+    max-width: none;
+    background: rgba(15, 15, 20, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    
+    /* Borda e Estilo */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    
+    padding: 0.7rem 1rem;
+    z-index: 1030;
+    
+    /* Animação */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Efeito suave */
+    transform: translateY(0);
+    will-change: transform;
+}
+
+    .floating-navbar.navbar-hidden {
+        transform: translateY(-100%); /* Esconde movendo para cima */
+    }
+
+/* Ajustes Mobile */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: transparent;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 1rem;
+    }
+
+    .nav-link {
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .btn-login {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}
+
+/* --- Deal Cards (Ofertas) --- */
+.deal-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efeito elástico suave */
+    position: relative;
+    cursor: pointer;
+}
+
+    .deal-card:hover {
+        transform: translateY(-10px) scale(1.03); /* Levanta e dá Zoom */
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--primary);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(13, 110, 253, 0.2);
+        z-index: 10;
+    }
+
+    .deal-card img {
+        transition: transform 0.5s ease;
     }
 
 /* --- App Dashboard Styles --- */
@@ -119,7 +196,7 @@
 
 .footer-subtitle {
     color: var(--text-main);
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
     position: relative;
@@ -131,7 +208,7 @@
         position: absolute;
         bottom: -5px;
         left: 0;
-        width: 40px;
+        width: 100%;
         height: 2px;
         background: var(--primary);
         border-radius: 1px;
@@ -210,23 +287,5 @@
     .main-content {
         margin-left: 0;
         margin-bottom: 80px;
-    }
-
-    /* Footer Mobile */
-    .footer {
-        text-align: center;
-    }
-
-    .social-links {
-        justify-content: center;
-    }
-
-    .footer-contact li {
-        justify-content: center;
-    }
-
-    .footer-subtitle::after {
-        left: 50%;
-        transform: translateX(-50%);
     }
 }

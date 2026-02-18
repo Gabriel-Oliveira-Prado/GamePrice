@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "GamePrice - O Melhor Preço para seu Jogo";
 }
+<style>
+    .newsletter-input::placeholder {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+</style>
 
 <!-- Hero Section -->
 <section class="hero-section text-center">
@@ -85,11 +90,53 @@
 
         <!-- Grid de Cards -->
         <div class="row g-4" id="deals-grid">
-            <!-- O conteúdo será injetado via JavaScript (Skeleton -> Cards) -->
+            <!-- Exemplo de Card Estático para Visualização (Substitua pelo JS depois se necessário) -->
+            <div class="col-md-4 col-lg-3">
+                <div class="deal-card h-100">
+                    <div class="position-relative">
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">-50%</span>
+                        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg" class="card-img-top" alt="Cyberpunk 2077" style="height: 180px; object-fit: cover;">
+                    </div>
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="text-white fw-bold mb-0 text-truncate">Cyberpunk 2077</h5>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fab fa-steam text-white-50 me-2"></i>
+                            <small class="text-white-50">Steam</small>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <div>
+                                <small class="text-decoration-line-through text-white-50 d-block">R$ 199,90</small>
+                                <span class="text-primary fw-bold fs-4">R$ 99,95</span>
+                            </div>
+                            <!-- stretched-link torna o card todo clicável -->
+                            <a href="#" class="btn btn-sm btn-primary rounded-pill stretched-link"><i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-lg-3">
+                <div class="deal-card h-100">
+                    <div class="position-relative">
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">-75%</span>
+                        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/271590/header.jpg" class="card-img-top" alt="GTA V" style="height: 180px; object-fit: cover;">
+                    </div>
+                    <div class="p-4">
+                        <h5 class="text-white fw-bold mb-2">Grand Theft Auto V</h5>
+                        <div class="d-flex align-items-center mb-3"><i class="fab fa-epic-games text-white-50 me-2"></i> <small class="text-white-50">Epic Games</small></div>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <div><small class="text-decoration-line-through text-white-50 d-block">R$ 89,90</small><span class="text-primary fw-bold fs-4">R$ 22,47</span></div>
+                            <a href="#" class="btn btn-sm btn-primary rounded-pill stretched-link"><i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="text-center mt-5">
-            <a href="#" class="btn btn-outline-primary rounded-pill px-5 py-2 btn-glow">Ver Todas as Ofertas</a>
+            <a href="#" class="btn btn-outline-primary rounded-pill px-5 py-2 btn-glow">Ver Mais Ofertas</a>
         </div>
     </div>
 </section>
@@ -132,16 +179,30 @@
     </div>
 </section>
 <!-- Newsletter -->
-<section class="newsletter-section">
+<section class="newsletter-section mb-5 pb-5">
     <div class="container">
         <div class="newsletter-card text-center gs-reveal">
-            <h2 class="text-white mb-3">Não perca nenhuma promoção</h2>
-            <p class="newsletter-text mb-4">Receba alertas de preços baixos diretamente no seu email.</p>
-            <div class="newsletter-form-container">
-                <input type="email" class="newsletter-input" placeholder="Seu melhor email">
-                <button class="btn btn-glow rounded-pill px-4 newsletter-btn">
-                    Inscrever-se
-                </button>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="mb-4">
+                        <i class="fas fa-paper-plane fa-3x text-primary mb-3"></i>
+                        <h2 class="text-white fw-bold mb-3">Não perca nenhuma promoção</h2>
+                        <p class="text-white-50 mb-4">Receba alertas de preços baixos diretamente no seu email.</p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="input-group mb-3 bg-white bg-opacity-10 rounded-pill p-1">
+                                <span class="input-group-text bg-transparent border-0 text-primary ps-3"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control bg-transparent border-0 text-white py-2 shadow-none newsletter-input" placeholder="Digite seu melhor email..." style="box-shadow: none;">
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-glow rounded-pill py-2 fw-bold">
+                                    Inscrever-se
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

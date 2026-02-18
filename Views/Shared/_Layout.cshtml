@@ -1,5 +1,4 @@
-﻿﻿﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
@@ -7,7 +6,7 @@
     <title>@ViewData["Title"] - GamePrice</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap & Icons -->
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -18,10 +17,9 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="/css/buttons.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <!-- Preloader -->
     <div class="loader-container">
@@ -38,20 +36,20 @@
     <div class="hero-bg-glow"></div>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top floating-navbar">
         <div class="container">
-            <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">
+            <a class="navbar-brand text-white text-uppercase" asp-area="" asp-controller="Home" asp-action="Index">
                 <i class="fas fa-gamepad text-primary me-2"></i>Game<span class="text-primary">Price</span>
             </a>
-            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler navbar-dark border-0 p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="#features">Recursos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#deals">Ofertas</a></li>
-                    <li class="nav-item ms-lg-3">
-                        <a href="#" class="btn btn-glow">Acessar App</a>
+                    <li class="nav-item"><a class="nav-link px-3" href="#features">Recursos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#deals">Ofertas</a></li>
+                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                        <a href="#" class="btn btn-primary btn-login" data-bs-toggle="modal" data-bs-target="#loginModal">Entrar</a>
                     </li>
                 </ul>
             </div>
@@ -60,26 +58,28 @@
 
     @RenderBody()
 
+    <partial name="_LoginModal" />
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="row gy-4">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 text-center text-md-start">
                     <a class="footer-brand text-white text-decoration-none" href="#">
                         <i class="fas fa-gamepad text-primary me-2"></i>Game<span class="text-primary">Price</span>
                     </a>
                     <p class="footer-text">
                         Sua plataforma definitiva para encontrar os melhores preços de jogos digitais. Economize em cada compra e jogue mais.
                     </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <div class="social-links justify-content-center justify-content-md-start">
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
 
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-2 col-md-6 text-center text-md-start">
                     <h5 class="footer-subtitle">Navegação</h5>
                     <ul class="footer-links">
                         <li><a href="#features">Recursos</a></li>
@@ -89,7 +89,7 @@
                     </ul>
                 </div>
 
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-2 col-md-6 text-center text-md-start">
                     <h5 class="footer-subtitle">Suporte</h5>
                     <ul class="footer-links">
                         <li><a href="#">Central de Ajuda</a></li>
@@ -99,18 +99,18 @@
                     </ul>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 text-center text-md-start">
                     <h5 class="footer-subtitle">Contato</h5>
                     <ul class="footer-contact">
-                        <li>
+                        <li class="justify-content-center justify-content-md-start">
                             <i class="fas fa-envelope"></i>
                             <span>Gabrieloliveira.prado@hotmail.com</span>
                         </li>
-                        <li>
+                        <li class="justify-content-center justify-content-md-start">
                             <i class="fas fa-phone"></i>
                             <span>+55 81 8510-2009</span>
                         </li>
-                        <li>
+                        <li class="justify-content-center justify-content-md-start">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>Recife, Brasil</span>
                         </li>
@@ -121,11 +121,8 @@
             <hr class="footer-divider">
 
             <div class="row align-items-center">
-                <div class="col-md-6 text-center text-md-start">
+                <div class="col-12 text-center">
                     <p class="footer-copyright mb-0">&copy; 2026 GamePrice. Todos os direitos reservados.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
-                    <p class="footer-copyright mb-0">Feito com <i class="fas fa-heart text-primary"></i> para gamers.</p>
                 </div>
             </div>
         </div>
@@ -136,7 +133,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Custom JS -->
     <script src="/js/site.js" asp-append-version="true"></script>
+    <script src="/js/navbar.js" asp-append-version="true"></script>
+    <script src="/js/auth-modal.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

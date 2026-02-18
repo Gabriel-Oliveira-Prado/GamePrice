@@ -7,21 +7,26 @@
         const query = $searchInput.val().trim();
         if (!query) return;
         const skeletonHtml = `
-            <div class="card border-0 mb-2 bg-dark text-white overflow-hidden" style="border-bottom: 1px solid rgba(255,255,255,0.1) !important;">
+            <div class="card border-0 mb-3 bg-dark text-white overflow-hidden search-item-card">
                 <div class="d-flex align-items-center p-3">
+
                     <div class="flex-shrink-0 me-3">
-                        <div class="skeleton rounded-circle" style="width: 60px; height: 60px;"></div>
+                        <div class="skeleton search-item-thumb"></div>
                     </div>
+
                     <div class="flex-grow-1">
-                        <div class="skeleton skeleton-text" style="width: 60%;"></div>
-                        <div class="skeleton skeleton-text" style="width: 30%;"></div>
+                        <div class="skeleton skeleton-text search-item-title"></div>
+                        <div class="skeleton skeleton-text search-item-price"></div>
                     </div>
+
                     <div class="ms-3">
-                         <div class="skeleton rounded-pill" style="width: 100px; height: 35px;"></div>
+                        <div class="skeleton search-item-button"></div>
                     </div>
+
                 </div>
             </div>
         `;
+
         $resultsContainer.html(skeletonHtml).show();
         $searchBtn.prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i>');
         $.ajax({
@@ -35,10 +40,10 @@
                     return;
                 }
                 const html = `
-                    <div class="card border-0 mb-2 bg-dark text-white overflow-hidden hover-bg-light" style="border-bottom: 1px solid rgba(255,255,255,0.1) !important; cursor: pointer;">
+                    <div class="card border-0 mb-2 bg-dark text-white overflow-hidden search-item-card" style="cursor: pointer;">
                         <div class="d-flex align-items-center p-3">
                             <div class="flex-shrink-0 me-3">
-                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle text-primary">
+                                <div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary search-item-thumb">
                                     <i class="fas fa-gamepad fa-2x"></i>
                                 </div>
                             </div>
@@ -47,8 +52,8 @@
                                 <div class="badge bg-success bg-opacity-75 fs-6 mt-1">R$ ${data.price}</div>
                             </div>
                             <div class="ms-3">
-                                <a href="${data.url}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3">
-                                    Ver Loja <i class="fas fa-external-link-alt ms-1"></i>
+                                <a href="${data.url}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3 search-item-button d-flex align-items-center justify-content-center">
+                                    Ver <i class="fas fa-external-link-alt ms-1"></i>
                                 </a>
                             </div>
                         </div>
