@@ -161,15 +161,15 @@
 
 /* Ajuste para o Swiper Coverflow não cortar bordas */
 .features-swiper {
-    padding: 2rem 1rem 5rem !important; /* Aumenta o espaço interno para o efeito 3D e paginação */
-    overflow: visible !important; /* Permite que os cards laterais apareçam sem cortes */
+    padding: 2rem 1rem 5rem !important;
+    overflow: visible !important;
 }
 
 #features {
-    overflow: hidden; /* Garante que o efeito não crie barra de rolagem horizontal na página */
+    overflow: hidden;
 }
 
-/* --- Skeleton Loading --- */
+/* Skeleton Loading */
 .skeleton, .skeleton-shimmer {
     background-color: rgba(255, 255, 255, 0.1);
     position: relative;
@@ -241,3 +241,24 @@
     height: 36px;
     border-radius: 8px;
 }
+
+/* Deal Card - Estilo com efeito igual aos botões de login */
+.deal-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    position: relative;
+    cursor: pointer;
+    z-index: 10;
+}
+
+    .deal-card:hover {
+        border-color: var(--primary) !important;
+        box-shadow: 0 5px 0 var(--primary) !important;
+        transform: translateY(-5px);
+    }
