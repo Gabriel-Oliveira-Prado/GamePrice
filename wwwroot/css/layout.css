@@ -3,6 +3,7 @@
     font-weight: 700;
     font-size: 1.3rem;
     letter-spacing: 1px;
+    margin-right: auto;
 }
 
 .nav-link {
@@ -11,12 +12,13 @@
     font-size: 1rem;
     transition: color 0.3s ease;
 }
+
     .nav-link:hover, .nav-link.active {
         color: var(--primary) !important;
     }
 
 .btn-login {
-    border-radius: 50px;
+    border-radius: 2;
     padding: 0.5rem 2rem;
     font-weight: 700;
     font-size: 1rem;
@@ -27,26 +29,24 @@
     .btn-login:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
+        border: 1px solid #ffffff !important;
     }
 
 /* Animação da Navbar */
 .floating-navbar {
     width: 100%;
     max-width: none;
-    background: rgba(15, 15, 20, 0.9);
+    background-color: rgba(7, 18, 42, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    
     /* Borda e Estilo */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid white;
     border-radius: 0;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    
     padding: 0.7rem 1rem;
     z-index: 1030;
-    
     /* Animação */
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Efeito suave */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
     transform: translateY(0);
     will-change: transform;
 }
@@ -54,6 +54,37 @@
     .floating-navbar.navbar-hidden {
         transform: translateY(-100%); /* Esconde movendo para cima */
     }
+
+    /* Estado Transparente (Hero Section) */
+    .floating-navbar.navbar-transparent {
+        background-color: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* Navbar Alignment: Logo Left, Links Right */
+    .floating-navbar .navbar-collapse {
+        justify-content: flex-end;
+    }
+
+    /* Forçar a navbar a ocupar a largura total da tela (Logo no canto esquerdo, Itens no direito) */
+    .floating-navbar .container {
+        max-width: 100%;
+        padding: 0 2rem;
+    }
+
+/* Navbar Search Styles */
+.navbar-search-container input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.navbar-search-container input:focus {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: none;
+    color: white;
+}
 
 /* Ajustes Mobile */
 @media (max-width: 991px) {
@@ -76,9 +107,9 @@
 }
 
 /* --- Deal Cards (Ofertas) --- */
-    .deal-card img {
-        transition: transform 0.5s ease;
-    }
+.deal-card img {
+    transition: transform 0.5s ease;
+}
 
 /* --- App Dashboard Styles --- */
 .app-layout {
@@ -130,7 +161,7 @@
     background: var(--bg-card);
     padding: 5rem 0 2rem;
     position: relative;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 2px solid rgba(255, 255, 255, 0.05);
     margin-top: auto;
 }
 
@@ -269,4 +300,16 @@
         margin-left: 0;
         margin-bottom: 80px;
     }
+}
+
+/* --- Login Modal --- */
+.login-modal-content {
+    background-color: var(--surface-dark);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.login-divider-text {
+    background-color: var(--surface-dark);
 }

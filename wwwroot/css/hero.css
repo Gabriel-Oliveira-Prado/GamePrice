@@ -7,18 +7,24 @@
     display: flex;
     align-items: center;
     overflow: hidden;
+    background-color: var(--bg-dark);
+    /* Gradiente mais forte para esconder imperfeições da IA e focar no texto */
+    background-image: radial-gradient(circle at center, rgba(7, 18, 42, 0.8) 0%, #07122a 100%), url('../img/hero-bg-controller.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 .hero-bg-glow {
     position: fixed;
-    width: 25vmax;
-    height: 25vmax;
-    background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+    width: 35vmax;
+    height: 35vmax;
+    background: radial-gradient(circle, rgba(13, 110, 253, 0.4) 0%, transparent 70%);
     top: 0;
     left: 0;
     transform: translate(-50%, -50%);
     z-index: 1;
     pointer-events: none;
+    mix-blend-mode: screen;
 }
 
 .hero-animation-container {
@@ -71,7 +77,7 @@
 
 .hero-section p.lead {
     color: #E2E8F0 !important;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Sombra mais suave e realista */
     font-weight: 500;
 }
 /* --- Stats Animados --- */

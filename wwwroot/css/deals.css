@@ -1,12 +1,14 @@
-﻿/* --- Deal Cards (Ofertas) --- */
-    .deal-card .card-img-top {
-        height: 240px;
-        object-fit: cover;
-    }
+﻿ /* --- Deal Cards (Ofertas) --- */
+.deal-card .card-img-top {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
 
 /* --- Game Card (Generic) --- */
 .game-card {
-    background: linear-gradient( 135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04) );
+    background: linear-gradient( 135deg, rgba(7, 18, 42, 0.9), rgba(7, 18, 42, 0.6));
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.35s ease;
@@ -33,7 +35,7 @@
     }
 
 .game-thumb {
-    height: 180px;
+    height: 220px;
     width: 100%;
     object-fit: cover;
     display: block;
@@ -78,7 +80,7 @@
     font-weight: 600;
 }
 
-/* --- Filters (Pills) --- */
+/*Filters (Pills)*/
 .filter-pill {
     cursor: pointer;
     transition: all 0.3s ease;
@@ -88,7 +90,7 @@
 
     .filter-pill:hover, .filter-pill.active {
         background: var(--bs-primary);
-        border-color: var(--bs-primary);
+        border-color: #ffffff;
         color: white !important;
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);

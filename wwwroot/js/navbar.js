@@ -26,6 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         scrollTimeout = setTimeout(() => {
             navbar.classList.remove('navbar-hidden');
-        }, 3500);
+        }, 1200);
     });
 });

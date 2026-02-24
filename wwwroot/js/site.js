@@ -193,10 +193,31 @@
     let ticking = false;
     const heroTitle = document.querySelector('.hero-title');
     const heroLead = document.querySelector('.hero-section p.lead');
+    const navbar = document.querySelector('.floating-navbar');
+
+    // Check inicial da navbar para aplicar transparência se carregar no topo
+    if (navbar) {
+        if (window.scrollY < 50) navbar.classList.add('navbar-transparent');
+        // Garante que a verificação ocorra também após o carregamento total da página
+        window.addEventListener('load', () => {
+            if (window.scrollY < 50) navbar.classList.add('navbar-transparent');
+        });
+    }
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrollY = window.scrollY;
+
+                // Lógica de Transparência da Navbar
+                if (navbar) {
+                    if (scrollY < 50) {
+                        navbar.classList.add('navbar-transparent');
+                    } else {
+                        navbar.classList.remove('navbar-transparent');
+                    }
+                }
+
                 if (heroTitle) {
                     heroTitle.style.transform = `translateY(${scrollY * 0.4}px)`;
                 }

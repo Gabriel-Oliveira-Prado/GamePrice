@@ -1,6 +1,6 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-white" style="background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
+        <div class="modal-content text-white login-modal-content">
             <div class="modal-header border-bottom-0 pt-4 px-4">
                 <h5 class="modal-title fw-bold d-flex align-items-center" id="loginModalLabel">
                     <i class="fas fa-user-circle text-primary me-2 fs-4"></i> <span id="authTitle">Login</span>
@@ -12,23 +12,23 @@
                 <div id="loginForm">
                     <form>
                         <div class="mb-3">
-                            <label for="emailInput" class="form-label text-white-50 small">Email:</label>
+                            <label for="emailInput" class="form-label text-white small">Email:</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control bg-dark border-secondary text-white shadow-none" id="emailInput" placeholder="seu@email.com">
+                                <span class="input-group-text bg-dark border-white text-white"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control bg-dark border-white text-white shadow-none" id="emailInput" placeholder="seu@email.com">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="passwordInput" class="form-label text-white-50 small">Senha:</label>
+                            <label for="passwordInput" class="form-label text-white small">Senha:</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control bg-dark border-secondary text-white shadow-none" id="passwordInput" placeholder="******">
+                                <span class="input-group-text bg-dark border-white text-white"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control bg-dark border-white text-white shadow-none" id="passwordInput" placeholder="******">
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="form-check">
-                                <input class="form-check-input bg-dark border-secondary shadow-none" type="checkbox" id="rememberCheck">
-                                <label class="form-check-label text-white-50 small" for="rememberCheck">
+                                <input class="form-check-input bg-dark border-white shadow-none" type="checkbox" id="rememberCheck">
+                                <label class="form-check-label text-white small" for="rememberCheck">
                                     Lembrar-me
                                 </label>
                             </div>
@@ -44,31 +44,31 @@
                 <div id="registerForm" class="d-none">
                     <form>
                         <div class="mb-3">
-                            <label for="regNameInput" class="form-label text-white-50 small">Nome:</label>
+                            <label for="regNameInput" class="form-label text-white small">Nome:</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control bg-dark border-secondary text-white shadow-none" id="regNameInput" placeholder="Seu Nome">
+                                <span class="input-group-text bg-dark border-white text-white"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control bg-dark border-white text-white shadow-none" id="regNameInput" placeholder="Seu Nome">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="regEmailInput" class="form-label text-white-50 small">Email:</label>
+                            <label for="regEmailInput" class="form-label text-white small">Email:</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control bg-dark border-secondary text-white shadow-none" id="regEmailInput" placeholder="seu@email.com">
+                                <span class="input-group-text bg-dark border-white text-white"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control bg-dark border-white text-white shadow-none" id="regEmailInput" placeholder="seu@email.com">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="regPasswordInput" class="form-label text-white-50 small">Senha:</label>
+                            <label for="regPasswordInput" class="form-label text-white small">Senha:</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control bg-dark border-secondary text-white shadow-none" id="regPasswordInput" placeholder="******">
+                                <span class="input-group-text bg-dark border-white text-white"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control bg-dark border-white text-white shadow-none" id="regPasswordInput" placeholder="******">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="regConfirmPasswordInput" class="form-label text-white-50 small">Confirmar Senha:</label>
+                            <label for="regConfirmPasswordInput" class="form-label text-white small">Confirmar Senha:</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control bg-dark border-secondary text-white shadow-none" id="regConfirmPasswordInput" placeholder="******">
+                                <span class="input-group-text bg-dark border-white text-white"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control bg-dark border-white text-white shadow-none" id="regConfirmPasswordInput" placeholder="******">
                             </div>
                         </div>
                         <div class="d-grid">
@@ -79,7 +79,7 @@
 
                 <div class="position-relative my-4">
                     <hr class="border-secondary opacity-25">
-                    <span class="position-absolute top-50 start-50 translate-middle px-2 text-white-50 small" style="background: rgba(20, 20, 20, 0.85);">ou</span>
+                    <span class="position-absolute top-50 start-50 translate-middle px-2 text-white small login-divider-text">ou</span>
                 </div>
 
                 <div class="d-flex gap-3">
@@ -102,10 +102,10 @@
             </div>
             <div class="modal-footer border-top-0 justify-content-center pb-4">
                 <div id="loginFooter">
-                    <p class="mb-0 text-white-50 small">Não tem uma conta? <a href="#" class="text-primary text-decoration-none fw-bold" onclick="toggleAuth(event, 'register')">Cadastre-se</a></p>
+                    <p class="mb-0 text-white small">Nao tem uma conta? <a href="#" class="text-primary text-decoration-none fw-bold" onclick="toggleAuth(event, 'register')">Cadastre-se</a></p>
                 </div>
                 <div id="registerFooter" class="d-none">
-                    <p class="mb-0 text-white-50 small">Já tem uma conta? <a href="#" class="text-primary text-decoration-none fw-bold" onclick="toggleAuth(event, 'login')">Entrar</a></p>
+                    <p class="mb-0 text-white small">Ja tem uma conta? <a href="#" class="text-primary text-decoration-none fw-bold" onclick="toggleAuth(event, 'login')">Entrar</a></p>
                 </div>
             </div>
         </div>

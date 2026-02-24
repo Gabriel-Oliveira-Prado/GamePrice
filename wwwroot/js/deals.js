@@ -80,8 +80,8 @@
                                     <small class="d-block text-success mb-0" style="font-size: 0.8rem;">Melhor Preço</small>
                                     <span class="h4 fw-bold text-white mb-0">R$ ${game.price}</span>
                                 </div>
-                                <button class="btn btn-sm btn-primary rounded-circle" style="width: 38px; height: 38px;">
-                                    <i class="fas fa-arrow-right"></i>
+                                <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold text-primary">
+                                    <i class="fas fa-shopping-bag me-1"></i> Ver Loja
                                 </button>
                             </div>
                         </div>
