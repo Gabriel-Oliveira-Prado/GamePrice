@@ -49,25 +49,48 @@
     loaderTimeline.add({
         targets: '.logo-path',
         strokeDashoffset: [anime.setDashoffset, 0],
-        duration: 1500,
+        duration: 1200,
         easing: 'easeInOutSine'
     })
+        .add({
+            targets: '.loader-text',
+            opacity: [0, 1],
+            translateY: [15, 0],
+            duration: 600,
+            easing: 'easeOutExpo'
+        }, '-=400')
         .add({
             targets: '.logo-path',
             fill: '#0d6efd',
             duration: 800,
             easing: 'easeOutExpo'
-        })
+        }, '-=400')
         .add({
             targets: ".loading-bar",
             width: "100%",
-            duration: 1500,
+            duration: 800,
             easing: 'easeInOutSine'
-        }, '-=1500')
+        }, '-=800')
+        .add({
+            targets: ".loader-content",
+            scale: 1.1,
+            opacity: 0,
+            duration: 500,
+            easing: 'easeInQuad',
+            delay: 200
+        })
         .add({
             targets: ".loader-container",
-            translateY: "-100%",
+            opacity: 0,
             duration: 500,
-            delay: 100
-        });
+            easing: 'linear',
+            complete: function () {
+                const container = document.querySelector('.loader-container');
+                if (container) {
+                    container.style.visibility = 'hidden';
+                    container.style.pointerEvents = 'none';
+                    container.style.display = 'none';
+                }
+            }
+        }, '-=300');
 });

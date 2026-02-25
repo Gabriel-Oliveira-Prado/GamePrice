@@ -1,0 +1,157 @@
+/* --- Footer Personalizado --- */
+.footer {
+    background: var(--bg-card);
+    padding: 5rem 0 2rem;
+    position: relative;
+    border-top: 2px solid rgba(255, 255, 255, 0.05);
+    margin-top: auto;
+
+    /* Styles merged from previous footer.css */
+    border-radius: 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand {
+    font-family: var(--font-primary);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.footer-brand i,
+.footer-brand span {
+    color: var(--primary);
+}
+
+.footer-text {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-link:hover {
+    background: var(--primary);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(var(--glow-cyan-rgb), 0.4);
+    transform: translateY(-3px);
+    border-color: var(--primary);
+}
+
+.footer-subtitle {
+    color: var(--text-main);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 1px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+    transform: translateX(5px);
+    text-shadow: 0 0 10px rgba(var(--glow-cyan-rgb), 0.3);
+}
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.footer-contact i {
+    color: var(--primary);
+    margin-top: 4px;
+}
+
+.footer-divider {
+    border-color: rgba(255, 255, 255, 0.05);
+    margin: 3rem 0 2rem;
+}
+
+.footer-copyright {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Responsividade do Footer em Telas Pequenas */
+@media (max-width: 768px) {
+    .footer {
+        padding: 4rem 1.5rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .footer-subtitle {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .social-links,
+    .footer-contact li {
+        justify-content: center !important;
+    }
+
+    .footer-text {
+        text-align: center;
+    }
+}

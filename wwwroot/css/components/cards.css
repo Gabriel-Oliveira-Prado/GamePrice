@@ -4,7 +4,7 @@
     padding: 2.5rem;
     border-radius: 20px;
     border: 1px solid #ffffff;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.15s ease;
@@ -20,9 +20,17 @@
 /* Make deal card body use the same dark surface as navbar/footer */
 .deal-card .card-body,
 .deal-card .p-4,
-.deal-card > .p-4 {
+.deal-card>.p-4 {
     background-color: transparent;
     color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Empurra o último container (com o preço e botão) para o fundo */
+.deal-card .p-4>div:last-child {
+    margin-top: auto;
 }
 
 .deal-card .card-title,
@@ -33,7 +41,7 @@
 }
 
 .deal-card .text-decoration-line-through {
-    color: rgba(255,255,255,0.45) !important;
+    color: rgba(255, 255, 255, 0.45) !important;
 }
 
 /* soft glass reflex */
@@ -41,7 +49,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(120deg, rgba(255,255,255,0.08), transparent 40%);
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 40%);
     opacity: 0.06;
     pointer-events: none;
 }
@@ -51,7 +59,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: rgba(13,110,253,0.08);
+    background-color: rgba(13, 110, 253, 0.08);
     pointer-events: none;
 }
 
@@ -60,7 +68,7 @@
 .feature-card:focus-within {
     transform: none;
     border-color: #ffffff;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.36);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.36);
     z-index: 2;
 }
 
@@ -83,7 +91,7 @@
     color: white;
     margin-bottom: 1rem;
     background-color: #0d6efd;
-    box-shadow: 0 6px 14px rgba(2,6,23,0.32), inset 0 2px 6px rgba(255,255,255,0.04);
+    box-shadow: 0 6px 14px rgba(2, 6, 23, 0.32), inset 0 2px 6px rgba(255, 255, 255, 0.04);
 }
 
 /* Ensure swiper slides and feature cards match heights */
@@ -92,10 +100,10 @@
     align-items: stretch;
 }
 
-    .features-swiper .swiper-slide .feature-card {
-        width: 100%;
-        height: 100%;
-    }
+.features-swiper .swiper-slide .feature-card {
+    width: 100%;
+    height: 100%;
+}
 
 
 .game-card {
@@ -105,30 +113,30 @@
     overflow: hidden;
     transition: all 0.35s ease;
     position: relative;
-    border: 1px solid rgba(255,255,255,0.04);
+    border: 1px solid rgba(255, 255, 255, 0.04);
     /* reduce glass blur on dark surface */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
-    /* Reflexo de luz */
-    .game-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient( 120deg, rgba(255, 255, 255, 0.35), transparent 40% );
-        opacity: 0.12;
-        pointer-events: none;
-    }
+/* Reflexo de luz */
+.game-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), transparent 40%);
+    opacity: 0.12;
+    pointer-events: none;
+}
 
-    /* Hover Game Card */
-    .game-card:hover {
-        /* keep hover subtle on dark surface: no lift, slight border accent */
-        transform: none;
-        border-color: rgba(255, 0, 85, 0.18);
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
-    }
+/* Hover Game Card */
+.game-card:hover {
+    /* keep hover subtle on dark surface: no lift, slight border accent */
+    transform: none;
+    border-color: rgba(255, 0, 85, 0.18);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+}
 
 /* Game Thumb */
 .game-thumb {
@@ -163,9 +171,9 @@
     font-size: 0.9rem;
 }
 
-    .store-price:last-child {
-        border-bottom: none;
-    }
+.store-price:last-child {
+    border-bottom: none;
+}
 
 /* Prices */
 .price-old {
@@ -200,12 +208,42 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Hack para evitar o fundo branco feio do Autofill do Google Chrome */
+.newsletter-input:-webkit-autofill,
+.newsletter-input:-webkit-autofill:hover,
+.newsletter-input:-webkit-autofill:focus,
+.newsletter-input:-webkit-autofill:active {
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: white;
+}
+
+/* Responsividade do Newsletter em Dispositivos Móveis */
+@media (max-width: 768px) {
+    .newsletter-card {
+        padding: 2rem 1rem !important;
+    }
+
+    .newsletter-card .d-flex.gap-2 {
+        flex-direction: column;
+    }
+
+    .newsletter-card .btn {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}
+
 /* Footer surface (use same darker surface as navbar) */
 .footer {
     background-color: var(--surface-dark);
     /* thin white border on top for separation */
     border-top: 1px solid var(--surface-border);
-    box-shadow: 0 -8px 30px rgba(2,6,23,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    box-shadow: 0 -8px 30px rgba(2, 6, 23, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
     color: var(--text-main);
 }
 
@@ -220,23 +258,25 @@
 }
 
 /* Skeleton Loading */
-.skeleton, .skeleton-shimmer {
+.skeleton,
+.skeleton-shimmer {
     background-color: rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
 }
 
-    .skeleton::after, .skeleton-shimmer::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        transform: translateX(-100%);
-        background-image: linear-gradient( 90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.1) 60%, rgba(255, 255, 255, 0) );
-        animation: shimmer 1.5s infinite;
-    }
+.skeleton::after,
+.skeleton-shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.1) 60%, rgba(255, 255, 255, 0));
+    animation: shimmer 1.5s infinite;
+}
 
 .skeleton-text {
     height: 0.8rem;
@@ -251,16 +291,21 @@
 
 /* --- Search Result Items --- */
 .search-item-card {
-    border-bottom: 1px solid rgba(0,255,255,0.15) !important;
-    background: linear-gradient(145deg, #111, #1a1a1a);
-    transition: 0.25s ease;
+    background: linear-gradient(135deg, rgba(var(--bg-dark-rgb), 0.95), rgba(var(--bg-dark-rgb), 0.75));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
 }
 
-    .search-item-card:hover {
-        background: linear-gradient(145deg, #161616, #222);
-        border-bottom: 1px solid rgba(0,255,255,0.4) !important;
-        transform: translateY(-2px);
-    }
+.search-item-card:hover {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+    border-color: rgba(255, 255, 255, 0.2);
+}
 
 .search-item-thumb {
     width: 120px;
@@ -292,6 +337,41 @@
     border-radius: 8px;
 }
 
+/* Responsividade do Search Dropdown (Mobile) */
+@media (max-width: 576px) {
+    .search-item-card .d-flex {
+        flex-direction: column;
+        align-items: center !important;
+        text-align: center;
+        gap: 0.8rem;
+    }
+
+    .search-item-card .flex-shrink-0 {
+        margin-right: 0 !important;
+    }
+
+    .search-item-card .ms-3 {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+
+    .search-item-card .search-item-button,
+    .search-item-card .btn {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .search-item-title {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .search-item-price {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 /* Deal Card - Estilo com efeito igual aos botões de login */
 .deal-card {
     background: linear-gradient(135deg, rgba(7, 18, 42, 0.9), rgba(7, 18, 42, 0.6));
@@ -310,8 +390,54 @@
     height: 100%;
 }
 
-    .deal-card:hover {
-        border-color: var(--primary) !important;
-        box-shadow: 0 5px 0 var(--primary) !important;
-        transform: translateY(-5px);
+.deal-card:hover {
+    border-color: var(--primary) !important;
+    box-shadow: 0 5px 0 var(--primary) !important;
+    transform: translateY(-5px);
+}
+
+/* --- Deal Cards Img --- */
+.deal-card .card-img-top {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
+
+.deal-card img {
+    transition: transform 0.5s ease;
+}
+
+/* Responsividade: Impede que o botão quebre em telas "Médias/Grandes" de 992px a 1400px
+   Garante que quando os elementos não couberem na mesma linha, eles quebrem (wrap) com elegância
+   e alinhamento uniforme. */
+@media (min-width: 992px) and (max-width: 1400px) {
+    .deal-card .p-4>div:last-child {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 0.8rem;
+        align-items: center !important;
     }
+
+    .deal-card .p-4>div:last-child>div {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/*Filters (Pills)*/
+.filter-pill {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+    background: var(--bs-primary);
+    border-color: #ffffff;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+}

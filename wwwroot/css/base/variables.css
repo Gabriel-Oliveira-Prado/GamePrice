@@ -1,0 +1,26 @@
+:root {
+    --bg-dark: #07122a;
+    --bg-dark-rgb: 7, 18, 42;
+    --bg-card: #151A23;
+    --bg-card-rgb: 21, 26, 35;
+    --primary: #0d6efd;
+    --primary-rgb: 13, 110, 253;
+    --secondary: #7000FF;
+    --secondary-rgb: 112, 0, 255;
+    --accent: #FF0055;
+    --accent-rgb: 255, 0, 85;
+    --glow-cyan-rgb: 0, 229, 255;
+    --text-main: #FFFFFF;
+    --text-muted: #CBD5E1;
+    --glass: rgba(var(--bg-card-rgb), 0.7);
+    --gradient-main: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+    --glow-color: rgba(var(--secondary-rgb), 0.15);
+    --surface-dark: var(--bg-dark);
+    --surface-border: #ffffff;
+
+    /* Typography */
+    --font-primary: 'Plus Jakarta Sans', sans-serif;
+    /* Headings */
+    --font-secondary: 'Inter', sans-serif;
+    /* Body Text */
+}

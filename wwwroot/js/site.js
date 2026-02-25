@@ -366,14 +366,14 @@ function initFeaturesSwiper() {
         autoHeight: true,
         slideToClickedSlide: true,
         speed: 800,
-        slidesPerView: 1,
+        slidesPerView: 1.15,
         keyboard: {
             enabled: true,
             onlyInViewport: true,
         },
         coverflowEffect: {
-            rotate: 35,
-            stretch: 0,
+            rotate: 0,
+            stretch: 10,
             depth: 100,
             modifier: 1,
             slideShadows: false,

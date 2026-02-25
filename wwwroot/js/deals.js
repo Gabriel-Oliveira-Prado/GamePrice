@@ -39,7 +39,7 @@
         { id: 4, title: "Hollow Knight", price: "14,99", oldPrice: "46,99", discount: "-68%", platform: "pc", store: "GOG", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg" },
         { id: 5, title: "Red Dead Redemption 2", price: "89,90", oldPrice: "299,90", discount: "-70%", platform: "pc", store: "Epic", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg" },
         { id: 6, title: "The Witcher 3", price: "19,99", oldPrice: "99,99", discount: "-80%", platform: "under20", store: "Steam", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg" },
-        { id: 7, title: "Zelda: Breath of the Wild", price: "199,00", oldPrice: "299,00", discount: "-33%", platform: "nintendo", store: "Nintendo", image: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/software/switch/70010000000025/7137262b5a64d921e193653f8aa0b722925abc5680380ca0e18a77cf438e3661" },
+        { id: 7, title: "Zelda: Breath of the Wild", price: "199,00", oldPrice: "299,00", discount: "-33%", platform: "nintendo", store: "Nintendo", image: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/en_US/games/switch/t/the-legend-of-zelda-breath-of-the-wild-switch/hero" },
         { id: 8, title: "Stardew Valley", price: "12,49", oldPrice: "24,99", discount: "-50%", platform: "under20", store: "Steam", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg" }
     ];
 
@@ -81,7 +81,7 @@
                                     <span class="h4 fw-bold text-white mb-0">R$ ${game.price}</span>
                                 </div>
                                 <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold text-primary">
-                                    <i class="fas fa-shopping-bag me-1"></i> Ver Loja
+                                    <i class="bi bi-bag-fill me-1"></i> Ver Loja
                                 </button>
                             </div>
                         </div>

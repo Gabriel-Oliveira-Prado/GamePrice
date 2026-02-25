@@ -28,4 +28,19 @@ document.addEventListener('DOMContentLoaded', function () {
             navbar.classList.remove('navbar-hidden');
         }, 1200);
     });
+
+    // Fix: Add background to navbar when mobile menu is opened at the top
+    const collapse = navbar.querySelector('.navbar-collapse');
+    if (collapse) {
+        collapse.addEventListener('show.bs.collapse', function () {
+            navbar.classList.add('mobile-menu-open');
+            navbar.classList.remove('navbar-transparent');
+        });
+        collapse.addEventListener('hidden.bs.collapse', function () {
+            navbar.classList.remove('mobile-menu-open');
+            if (window.scrollY < 50) {
+                navbar.classList.add('navbar-transparent');
+            }
+        });
+    }
 });

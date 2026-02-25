@@ -9,8 +9,12 @@
 
 .marquee-content {
     display: flex;
-    animation: scroll 40s linear infinite;
+    animation: scroll 35s linear infinite;
     width: max-content;
+}
+
+.brands-section:hover .marquee-content-hover {
+    animation-play-state: paused;
 }
 
 .brand-item {
@@ -25,12 +29,12 @@
     transition: all 0.3s ease;
 }
 
-    .brand-item:hover {
-        opacity: 1;
-        color: var(--text-main);
-        transform: scale(1.05);
-        text-shadow: 0 0 15px currentColor;
-    }
+.brand-item:hover {
+    opacity: 1;
+    color: var(--text-main);
+    transform: scale(1.05);
+    text-shadow: 0 0 15px currentColor;
+}
 
 /* Cores das Marcas para Legibilidade */
 .brand-steam {
@@ -54,7 +58,18 @@
 }
 
 .brand-gog {
-    color: #a855f7;
+    color: #df00f5;
+    /* Updated color for GOG logo */
+}
+
+.brand-nuuvem {
+    color: #12d2ff;
+    /* Added color for Nuuvem logo */
+}
+
+.brand-nintendo {
+    color: #e60012;
+    /* Added color for Nintendo logo */
 }
 
 @keyframes scroll {
@@ -63,7 +78,8 @@
     }
 
     100% {
-        transform: translateX(-50%);
+        transform: translateX(calc(-100% / 6));
+        /* Move exactly 1 set out of 6 */
     }
 }
 

@@ -1,15 +1,16 @@
-@import url('variables.css');
-@import url('global.css');
-@import url('buttons.css');
-@import url('loader.css');
-@import url('animations.css');
-@import url('brands.css');
-@import url('features.css');
-@import url('deals.css');
-@import url('footer.css');
-@import url('search.css');
-@import url('hero.css');
-@import url('newsletter.css');
-@import url('layout.css');
-@import url('cards.css');
-@import url('LoginModal.css');
+@import url('base/variables.css');
+@import url('base/global.css');
+@import url('base/animations.css');
+
+@import url('layout/navbar.css');
+@import url('layout/sidebar.css');
+@import url('layout/footer.css');
+
+@import url('components/buttons.css');
+@import url('components/cards.css');
+@import url('components/loader.css');
+@import url('components/search.css');
+@import url('components/LoginModal.css');
+
+@import url('sections/hero.css');
+@import url('sections/brands.css');
