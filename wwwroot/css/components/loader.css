@@ -1,11 +1,11 @@
-﻿/* --- Preloader Premium --- */
+﻿
 .loader-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Fundo em vidro fosco permitindo ver as partículas borradas atrás */
+
     background: rgba(var(--bg-dark-rgb), 0.75);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
@@ -26,10 +26,9 @@
 
 .loader-content.scale-out {
     transform: scale(1.1);
-    /* Efeito de zoom na saída */
+
 }
 
-/* Container da barra ultrafina premium */
 .loading-bar-container {
     width: 150px;
     height: 2px;
@@ -68,7 +67,6 @@
     letter-spacing: 1px;
 }
 
-/* --- Skeleton Loading --- */
 .skeleton {
     background: rgba(255, 255, 255, 0.1);
     background: linear-gradient(110deg, rgba(255, 255, 255, 0.05) 8%, rgba(255, 255, 255, 0.15) 18%, rgba(255, 255, 255, 0.05) 33%);

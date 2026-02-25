@@ -1,126 +1,83 @@
-﻿/* Feature Card - improved design but keeping original size */
-.feature-card {
-    background: var(--surface-dark);
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 1px solid #ffffff;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.15s ease;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+﻿
+.custom-accordion {
+    --bs-accordion-bg: transparent;
+    --bs-accordion-border-width: 0;
     gap: 1rem;
-    min-height: 220px;
-    z-index: 1;
-}
-
-/* Make deal card body use the same dark surface as navbar/footer */
-.deal-card .card-body,
-.deal-card .p-4,
-.deal-card>.p-4 {
-    background-color: transparent;
-    color: var(--text-main);
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
 }
 
-/* Empurra o último container (com o preço e botão) para o fundo */
-.deal-card .p-4>div:last-child {
-    margin-top: auto;
+.custom-accordion .accordion-item {
+    background: linear-gradient(135deg, rgba(var(--bg-dark-rgb), 0.95), rgba(var(--bg-dark-rgb), 0.5));
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px !important;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.deal-card .card-title,
-.deal-card small,
-.deal-card .text-white-50,
-.deal-card .text-primary {
-    color: inherit;
+.custom-accordion .accordion-item:hover {
+    border-color: rgba(13, 110, 253, 0.3);
+    transform: translateY(-2px);
 }
 
-.deal-card .text-decoration-line-through {
-    color: rgba(255, 255, 255, 0.45) !important;
+.custom-accordion .accordion-button {
+    background-color: transparent;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.05rem;
+    box-shadow: none !important;
+    padding: 1.25rem 1.5rem;
 }
 
-/* soft glass reflex */
-.feature-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 40%);
-    opacity: 0.06;
-    pointer-events: none;
+.custom-accordion .accordion-button:not(.collapsed) {
+    color: var(--primary);
+    background-color: rgba(13, 110, 253, 0.05);
 }
 
-.feature-card::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: rgba(13, 110, 253, 0.08);
-    pointer-events: none;
+.custom-accordion .accordion-button::after {
+    filter: invert(1) grayscale(100%) brightness(200%);
 }
 
-/* Feature card hover: remove lift and neon glow — keep only a subtle border accent */
-.feature-card:hover,
-.feature-card:focus-within {
-    transform: none;
-    border-color: #ffffff;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.36);
-    z-index: 2;
+.custom-accordion .accordion-button:not(.collapsed)::after {
+    filter: sepia(100%) hue-rotate(190deg) saturate(500%) brightness(1.1);
+
 }
 
-.feature-card p {
-    color: #E6EDF6;
-    line-height: 1.6;
-    margin: 0;
-    font-size: 1rem;
+.custom-accordion .accordion-body {
+    padding: 0 1.5rem 1.25rem 1.5rem;
+    line-height: 1.7;
 }
 
-/* Feature Icon */
-.feature-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: white;
-    margin-bottom: 1rem;
-    background-color: #0d6efd;
-    box-shadow: 0 6px 14px rgba(2, 6, 23, 0.32), inset 0 2px 6px rgba(255, 255, 255, 0.04);
+.custom-accordion .accordion-button:focus {
+    border-color: transparent;
+    box-shadow: none;
 }
 
-/* Ensure swiper slides and feature cards match heights */
-.features-swiper .swiper-slide {
-    display: flex;
-    align-items: stretch;
-}
-
-.features-swiper .swiper-slide .feature-card {
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(13, 110, 253, 0.4), transparent);
     width: 100%;
-    height: 100%;
+    margin: 4rem 0 1rem 0;
 }
-
 
 .game-card {
-    /* Use same dark surface as navbar/footer for consistency */
+
     background-color: var(--surface-dark);
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.35s ease;
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.04);
-    /* reduce glass blur on dark surface */
+
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* Reflexo de luz */
 .game-card::before {
     content: "";
     position: absolute;
@@ -130,15 +87,13 @@
     pointer-events: none;
 }
 
-/* Hover Game Card */
 .game-card:hover {
-    /* keep hover subtle on dark surface: no lift, slight border accent */
+
     transform: none;
     border-color: rgba(255, 0, 85, 0.18);
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
 }
 
-/* Game Thumb */
 .game-thumb {
     height: 220px;
     width: 100%;
@@ -146,7 +101,6 @@
     display: block;
 }
 
-/* Discount Badge */
 .discount-badge {
     position: absolute;
     top: 10px;
@@ -161,7 +115,6 @@
     backdrop-filter: blur(6px);
 }
 
-/* Store Prices */
 .store-price {
     display: flex;
     justify-content: space-between;
@@ -175,7 +128,6 @@
     border-bottom: none;
 }
 
-/* Prices */
 .price-old {
     text-decoration: line-through;
     color: var(--text-muted);
@@ -188,17 +140,8 @@
     font-weight: 600;
 }
 
-.swiper-pagination-bullet {
-    background: rgba(255, 255, 255, 0.5);
-}
-
-.swiper-pagination-bullet-active {
-    background: var(--primary);
-}
-
-/* Newsletter Card Glass Effect */
 .newsletter-card {
-    /* use same dark surface as navbar/footer for newsletter */
+
     background-color: var(--surface-dark);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -212,7 +155,6 @@
     color: rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Hack para evitar o fundo branco feio do Autofill do Google Chrome */
 .newsletter-input:-webkit-autofill,
 .newsletter-input:-webkit-autofill:hover,
 .newsletter-input:-webkit-autofill:focus,
@@ -222,7 +164,6 @@
     caret-color: white;
 }
 
-/* Responsividade do Newsletter em Dispositivos Móveis */
 @media (max-width: 768px) {
     .newsletter-card {
         padding: 2rem 1rem !important;
@@ -238,26 +179,14 @@
     }
 }
 
-/* Footer surface (use same darker surface as navbar) */
 .footer {
     background-color: var(--surface-dark);
-    /* thin white border on top for separation */
+
     border-top: 1px solid var(--surface-border);
     box-shadow: 0 -8px 30px rgba(2, 6, 23, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
     color: var(--text-main);
 }
 
-/* Ajuste para o Swiper Coverflow não cortar bordas */
-.features-swiper {
-    padding: 2rem 1rem 5rem !important;
-    overflow: visible !important;
-}
-
-#features {
-    overflow: hidden;
-}
-
-/* Skeleton Loading */
 .skeleton,
 .skeleton-shimmer {
     background-color: rgba(255, 255, 255, 0.1);
@@ -289,7 +218,10 @@
     }
 }
 
-/* --- Search Result Items --- */
+#search-results {
+    display: none;
+}
+
 .search-item-card {
     background: linear-gradient(135deg, rgba(var(--bg-dark-rgb), 0.95), rgba(var(--bg-dark-rgb), 0.75));
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -303,8 +235,8 @@
 }
 
 .search-item-card:hover {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
-    border-color: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(var(--bg-dark-rgb), 0.85), rgba(255, 255, 255, 0.05));
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .search-item-thumb {
@@ -337,7 +269,6 @@
     border-radius: 8px;
 }
 
-/* Responsividade do Search Dropdown (Mobile) */
 @media (max-width: 576px) {
     .search-item-card .d-flex {
         flex-direction: column;
@@ -372,7 +303,6 @@
     }
 }
 
-/* Deal Card - Estilo com efeito igual aos botões de login */
 .deal-card {
     background: linear-gradient(135deg, rgba(7, 18, 42, 0.9), rgba(7, 18, 42, 0.6));
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -396,7 +326,6 @@
     transform: translateY(-5px);
 }
 
-/* --- Deal Cards Img --- */
 .deal-card .card-img-top {
     height: 250px;
     width: 100%;
@@ -408,9 +337,6 @@
     transition: transform 0.5s ease;
 }
 
-/* Responsividade: Impede que o botão quebre em telas "Médias/Grandes" de 992px a 1400px
-   Garante que quando os elementos não couberem na mesma linha, eles quebrem (wrap) com elegância
-   e alinhamento uniforme. */
 @media (min-width: 992px) and (max-width: 1400px) {
     .deal-card .p-4>div:last-child {
         flex-wrap: wrap !important;
@@ -425,7 +351,6 @@
     }
 }
 
-/*Filters (Pills)*/
 .filter-pill {
     cursor: pointer;
     transition: all 0.3s ease;

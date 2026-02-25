@@ -30,3 +30,8 @@
     color: rgba(255, 255, 255, 0.55);
     opacity: 1;
 }
+
+.auth-submit-btn {
+    border-radius: 4px;
+    border: none;
+}

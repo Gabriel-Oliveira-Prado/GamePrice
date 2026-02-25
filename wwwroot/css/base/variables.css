@@ -18,9 +18,8 @@
     --surface-dark: var(--bg-dark);
     --surface-border: #ffffff;
 
-    /* Typography */
     --font-primary: 'Plus Jakarta Sans', sans-serif;
-    /* Headings */
+
     --font-secondary: 'Inter', sans-serif;
-    /* Body Text */
+
 }

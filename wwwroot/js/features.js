@@ -2,25 +2,17 @@
     const swiperContainer = document.querySelector('.features-swiper');
     if (!swiperContainer) return;
 
-    // Configuração oficial do Swiper para loop infinito em Coverflow
-    // Duplicar os slides originais via DOM para garantir que telas grandes rodem perfeitamente
-    const wrapper = swiperContainer.querySelector('.swiper-wrapper');
-    const originalSlides = wrapper.querySelectorAll('.swiper-slide');
-
-    // Adicionar 2 cópias de todos os slides (total de 9 slides se forem 3 originais)
-    // Isso garante conteúdo suficiente para swiper loop em telas ultrawide (slidesPerView: 3)
-    for (let i = 0; i < 2; i++) {
-        originalSlides.forEach(slide => {
-            wrapper.appendChild(slide.cloneNode(true));
-        });
-    }
-
     const swiper = new Swiper('.features-swiper', {
         effect: 'coverflow',
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: 1.15, /* Pedaço do próximo slide visível no Mobile */
-        loop: true,
+        centeredSlidesBounds: true, /* Previne comportamento estranho nas bordas com poucos slides */
+        slidesPerView: 1.15,
+        initialSlide: 1,
+        loop: false,
+        touchRatio: 1.5,
+        longSwipesRatio: 0.1,
+        threshold: 5, /* Requer pequeno arrasto (5px) para não acidentalmente passar o slide num click */
         coverflowEffect: {
             rotate: 0, /* Tira a rotação confusa no celular */
             stretch: 10,
@@ -28,18 +20,15 @@
             modifier: 1,
             slideShadows: false,
         },
-        autoplay: {
-            delay: 6500,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
-        },
-
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
             dynamicBullets: true,
         },
-        loopAdditionalSlides: 3, // Importante para evitar "pulos" quando o loop recomeça
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
         breakpoints: {
             768: {
                 slidesPerView: 2,
@@ -52,11 +41,11 @@
                 }
             },
             1200: {
-                slidesPerView: 3,
+                slidesPerView: 2,
                 coverflowEffect: {
-                    rotate: 30,
+                    rotate: 20, /* Suavizando a rotação no desktop */
                     stretch: 0,
-                    depth: 150,
+                    depth: 100,
                     modifier: 1,
                     slideShadows: false,
                 }

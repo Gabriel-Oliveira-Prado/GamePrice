@@ -1,8 +1,6 @@
 ﻿function initDeals() {
     const $grid = $("#deals-grid");
     const $filters = $(".filter-pill");
-
-    // 1. Render Skeleton Loading
     const renderSkeleton = () => {
         let html = '';
         for (let i = 0; i < 8; i++) {
@@ -30,8 +28,6 @@
         }
         $grid.html(html);
     };
-
-    // 2. Mock Data (Simulando API)
     const dealsData = [
         { id: 1, title: "Elden Ring", price: "149,90", oldPrice: "229,90", discount: "-35%", platform: "pc", store: "Steam", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg" },
         { id: 2, title: "God of War Ragnarök", price: "199,50", oldPrice: "349,90", discount: "-43%", platform: "playstation", store: "PS Store", image: "https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png" },
@@ -42,8 +38,6 @@
         { id: 7, title: "Zelda: Breath of the Wild", price: "199,00", oldPrice: "299,00", discount: "-33%", platform: "nintendo", store: "Nintendo", image: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/en_US/games/switch/t/the-legend-of-zelda-breath-of-the-wild-switch/hero" },
         { id: 8, title: "Stardew Valley", price: "12,49", oldPrice: "24,99", discount: "-50%", platform: "under20", store: "Steam", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg" }
     ];
-
-    // 3. Render Cards
     const renderCards = (filter = "all") => {
         const filteredData = filter === "all"
             ? dealsData
@@ -53,7 +47,6 @@
             $grid.html('<div class="col-12 text-center py-5 text-muted">Nenhuma oferta encontrada para este filtro.</div>');
             return;
         }
-
         let html = '';
         filteredData.forEach(game => {
             let platformIcon = 'fa-gamepad';
@@ -61,7 +54,6 @@
             if (game.platform === 'playstation') platformIcon = 'fa-playstation';
             if (game.platform === 'xbox') platformIcon = 'fa-xbox';
             if (game.platform === 'nintendo') platformIcon = 'fa-gamepad';
-
             html += `
                 <div class="col-lg-3 col-md-6 fade-in-up">
                     <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect">
@@ -72,7 +64,7 @@
                         <div class="card-body p-4 d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <small class="text-white-50"><i class="fab ${platformIcon} me-1"></i> ${game.store}</small>
-                                <small class="text-decoration-line-through text-muted">R$ ${game.oldPrice}</small>
+                                <small class="text-decoration-line-through text-secondary">R$ ${game.oldPrice}</small>
                             </div>
                             <h5 class="card-title fw-bold mb-auto text-white">${game.title}</h5>
                             <div class="d-flex justify-content-between align-items-end mt-3 border-top border-secondary border-opacity-25 pt-3">
@@ -89,29 +81,18 @@
                 </div>
             `;
         });
-
         $grid.hide().html(html).fadeIn(400);
     };
-
-    // Inicialização
     renderSkeleton();
-
-    // Simula delay de rede (2 segundos)
     setTimeout(() => {
         renderCards();
     }, 2000);
-
-    // 4. Filter Logic
     $filters.on('click', function () {
         const $this = $(this);
         if ($this.hasClass('active')) return;
-
         $filters.removeClass('active');
         $this.addClass('active');
-
         const filter = $this.data('filter');
-
-        // Efeito visual simples de "recarregamento"
         $grid.animate({ opacity: 0 }, 200, function () {
             renderCards(filter);
             $(this).animate({ opacity: 1 }, 200);

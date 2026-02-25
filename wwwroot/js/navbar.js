@@ -5,10 +5,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!navbar) return;
 
+    if (window.scrollY < 50) {
+        navbar.classList.add('navbar-transparent');
+    }
+
     window.addEventListener('scroll', function () {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
         clearTimeout(scrollTimeout);
+
+        if (scrollTop < 50) {
+            navbar.classList.add('navbar-transparent');
+        } else {
+            navbar.classList.remove('navbar-transparent');
+        }
 
         // Verifica se o menu mobile está aberto para não esconder a navbar
         const collapse = navbar.querySelector('.navbar-collapse');
@@ -29,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 1200);
     });
 
-    // Fix: Add background to navbar when mobile menu is opened at the top
     const collapse = navbar.querySelector('.navbar-collapse');
     if (collapse) {
         collapse.addEventListener('show.bs.collapse', function () {

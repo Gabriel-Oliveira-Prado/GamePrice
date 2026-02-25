@@ -5,25 +5,22 @@
 <section class="hero-section text-center position-relative">
     <div id="particles-js" class="particles-container"></div>
     <div class="hero-animation-container" id="hero-animation"></div>
-    <div class="container position-relative" style="z-index: 2;">
+    <div class="container position-relative hero-content-wrapper">
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="badge glass-effect text-primary px-3 py-2 rounded-pill mb-4 fade-in-up">
                     <span class="pulse-dot"></span> Monitoramento em Tempo Real
                 </div>
-                <h1 class="hero-title text-white mb-4 fade-in-up">
-                    Não pague mais caro.<br>Encontre o <span class="text-highlight" id="typewriter-text" style="display: inline-block; min-width: 10px; color: #0d6efd !important;"></span><span class="typewriter-cursor" style="color: #0d6efd !important;">|</span>
-                </h1>
-                <p class="lead text-muted mb-5 fade-in-up" style="max-width: 700px; margin: 0 auto;">Comparamos preços da Steam, Epic Games, PS Store, Xbox e Nintendo Eshop em segundos. Receba alertas de promoções imperdíveis.</p>
-                <div class="search-container fade-in-up">
+                <h1 class="hero-title text-white mb-4 fade-in-up">Não pague mais caro.<br>Encontre o <span class="text-highlight" style="color: var(--primary);">menor preço.</span></h1>  
+                <div class="search-container fade-in-up mb-4">
                     <div class="position-relative">
                         <input type="text" class="search-input" placeholder="Qual jogo você está procurando?">
                         <button class="search-btn" type="button"><i class="bi bi-search"></i></button>
                     </div>
-
-                    @* Search Results Container (Dropdown Flutuante) *@
-                    <div id="search-results" class="search-dropdown mt-2 text-start rounded-3 shadow-lg" style="display: none;"></div>
+                    @* Search Results*@
+                    <div id="search-results" class="search-dropdown mt-2 text-start rounded-3 shadow-lg"></div>
                 </div>
+                <p class="lead text-muted fade-in-up hero-lead-text">Comparamos preços da Steam, Epic Games, PS Store, Xbox e Nintendo Eshop em segundos. Receba alertas de promoções imperdíveis.</p>
                 <div class="mt-5 d-flex flex-wrap justify-content-center gap-3 gap-md-4 small fade-in-up">
                     <span class="stat-item gs-reveal"><i class="fas fa-store text-primary me-1 fs-5"></i> <strong><span class="counter" data-target="8">0</span></strong> Lojas</span>
                     <span class="stat-item gs-reveal"><i class="fas fa-gamepad text-primary me-1 fs-5"></i> <strong>+<span class="counter" data-target="15000">0</span></strong> Jogos</span>
@@ -31,7 +28,16 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+    @* Scroll Down Indicator *@
+    <a href="#deals" class="scroll-indicator d-flex text-decoration-none">
+        <span class="scroll-text">Descobrir</span>
+        <div class="scroll-arrows">
+            <i class="bi bi-chevron-down arrow-1"></i>
+            <i class="bi bi-chevron-down arrow-2"></i>
+            <i class="bi bi-chevron-down arrow-3"></i>
+        </div>
+    </a>
 </section>
 @* Brands Marquee *@
 <section class="brands-section">
@@ -46,7 +52,6 @@
         <a href="https://www.nintendo.com" target="_blank" class="brand-item brand-nintendo text-decoration-none">NINTENDO</a>
     </div>
 </section>
-
 @* Deals Section (Grid de Ofertas) *@
 <section id="deals" class="py-5 position-relative">
     <div class="container py-4">
@@ -54,8 +59,7 @@
             <h2 class="fw-bold text-white mb-2">Ofertas em <span class="text-primary">Destaques</span></h2>
             <p class="text-white">Os maiores descontos encontrados pelos nossos bots hoje.</p>
         </div>
-
-        @* Filtros Rápidos (Pills) *@
+        @* Filtros Rapidos *@
         <div class="d-flex justify-content-center flex-wrap gap-2 mb-5 gs-reveal">
             <span class="badge rounded-pill px-4 py-2 filter-pill active" data-filter="all">Todos</span>
             <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="pc"><i class="fas fa-desktop me-1"></i> PC</span>
@@ -64,10 +68,9 @@
             <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="nintendo"><i class="bi bi-nintendo-switch me-1"></i> Nintendo</span>
             <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="under20">Abaixo de R$ 20</span>
         </div>
-
         @* Grid de Cards *@
         <div class="row g-4" id="deals-grid">
-            @* Exemplo de Card Estático para Visualização (Substitua pelo JS depois se necessário) *@
+            @* Exemplo de Card Estático para Visualização (Substituir pela Api depois) *@
             <div class="col-md-4 col-lg-3">
                 <div class="deal-card h-100">
                     <div class="position-relative">
@@ -84,16 +87,14 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
                             <div>
-                                <small class="text-decoration-line-through text-white-50 d-block">R$ 199,90</small>
+                                <small class="text-decoration-line-through text-secondary d-block">R$ 199,90</small>
                                 <span class="text-primary fw-bold fs-4">R$ 99,95</span>
                             </div>
-                            @* stretched-link torna o card todo clicável *@
                             <a href="#" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold stretched-link">Ver Oferta <i class="fas fa-external-link-alt ms-1"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4 col-lg-3">
                 <div class="deal-card h-100">
                     <div class="position-relative">
@@ -104,54 +105,83 @@
                         <h5 class="text-white fw-bold mb-2">Grand Theft Auto V</h5>
                         <div class="d-flex align-items-center mb-3"><i class="fab fa-epic-games text-white-50 me-2"></i> <small class="text-white-50">Epic Games</small></div>
                         <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
-                            <div><small class="text-decoration-line-through text-white-50 d-block">R$ 89,90</small><span class="text-primary fw-bold fs-4">R$ 22,47</span></div>
+                            <div><small class="text-decoration-line-through text-secondary d-block">R$ 89,90</small><span class="text-primary fw-bold fs-4">R$ 22,47</span></div>
                             <a href="#" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold stretched-link">Ver Oferta <i class="fas fa-external-link-alt ms-1"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="text-center mt-5">
             <a href="#" class="btn btn-outline-primary rounded-pill px-5 py-2 btn-glow">Ver Mais Ofertas</a>
         </div>
     </div>
 </section>
-
-@* Features Grid *@
-<section id="features" class="py-4">
+@* Premium Glowing Divider *@
+<div class="container gs-reveal"><div class="section-divider"></div></div>
+<section id="features" class="py-5 mb-4 position-relative">
     <div class="container gs-reveal">
-        <div class="swiper features-swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide h-auto">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-lightning-charge"></i>
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5 text-center text-lg-start">
+                <h2 class="fw-bold text-white mb-4">Por que usar o <span class="text-primary">GamePrice</span>?</h2>
+                <p class="text-white-50 mb-4">Nossa plataforma foi construída para garantir que você tenha as melhores ferramentas de economia no mundo dos games, sem complicação e em tempo real.</p>
+                
+                <ul class="list-unstyled mb-0 feature-check-list text-start d-inline-block d-lg-block">
+                    <li class="mb-3 d-flex align-items-center text-white"><i class="bi bi-check-circle-fill text-primary fs-5 me-3"></i> Comparação em 8 lojas digitais</li>
+                    <li class="mb-3 d-flex align-items-center text-white"><i class="bi bi-check-circle-fill text-primary fs-5 me-3"></i> Curadoria de descontos reais</li>
+                    <li class="mb-3 d-flex align-items-center text-white"><i class="bi bi-check-circle-fill text-primary fs-5 me-3"></i> Alertas de preço personalizados</li>
+                    <li class="d-flex align-items-center text-white"><i class="bi bi-check-circle-fill text-primary fs-5 me-3"></i> API Pública e Gratuita</li>
+                </ul>
+            </div>           
+            <div class="col-lg-7">
+                <div class="accordion custom-accordion" id="featuresAccordion">                
+                    @* Item 1 *@
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="bi bi-lightning-charge me-2 text-primary fs-5"></i> Comparação Instantânea
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#featuresAccordion">
+                            <div class="accordion-body text-white-50">Nossos bots monitoram múltiplas lojas digitais simultaneamente para garantir que você encontre sempre a melhor cotação em tempo real.</div>
                         </div>
-                        <h3 class="h4 text-white mb-3">Comparação Instantânea</h3>
-                        <p>Nossos bots varrem todas as lojas digitais em tempo real para garantir que você veja o preço atualizado.</p>
+                    </div>                 
+                    @* Item 2 *@
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="bi bi-tags me-2 text-primary fs-5"></i> Economia Real
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#featuresAccordion">
+                            <div class="accordion-body text-white-50">Aproveite descontos imperdíveis através da nossa curadoria automática, agrupando a melhor disponibilidade com o menor custo no mercado.</div>
+                        </div>
+                    </div>                   
+                    @* Item 3 *@
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="bi bi-bell me-2 text-primary fs-5"></i> Alertas Inteligentes
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#featuresAccordion">
+                            <div class="accordion-body text-white-50">Defina o seu preço ideal, ative o sino de notificação e seja o primeiro a saber (via E-mail ou WhatsApp) quando o jogo da sua wishlist atingir esse exato valor.</div>
+                        </div>
                     </div>
-                </div>
-                <div class="swiper-slide h-auto">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-tags"></i>
+                    @* Item 4 *@
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                <i class="bi bi-code-slash me-2 text-primary fs-5"></i> API Pública para Desenvolvedores
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#featuresAccordion">
+                            <div class="accordion-body text-white-50">Desenvolvedor? Nós disponibilizamos nossa própria API RESTful de forma gratuita e pública. Integre nossos dados de preços de jogos em tempo real diretamente em seus aplicativos, bots de Discord ou projetos pessoais.</div>
                         </div>
-                        <h3 class="h4 text-white mb-3">Economia Real</h3>
-                        <p>Aproveite descontos exclusivos e ofertas imperdíveis. Garantimos que você encontre o menor preço disponível no mercado.</p>
-                    </div>
-                </div>
-                <div class="swiper-slide h-auto">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-bell"></i>
-                        </div>
-                        <h3 class="h4 text-white mb-3">Alertas Inteligentes</h3>
-                        <p>Defina o preço que quer pagar e receba avisos de promoções. Nós te avisamos instantaneamente quando o jogo entrar em oferta.</p>
                     </div>
                 </div>
             </div>
-            <div class="swiper-pagination"></div>
+
         </div>
     </div>
 </section>
@@ -170,13 +200,10 @@
                         <div class="col-md-8">
                             <form action="#" method="POST" class="d-grid w-100">
                                 <div class="input-group mb-3 bg-white bg-opacity-10 rounded-pill p-1">
-                                    <span class="input-group-text bg-transparent border-0 text-primary ps-3"><i class="fas fa-envelope"></i></span>
-                                    <input type="email" class="form-control bg-transparent border-0 text-white py-2 shadow-none newsletter-input" placeholder="Digite seu melhor email..." style="box-shadow: none;">
+                                    <span class="input-group-text bg-transparent border-0 text-primary ps-3"><i class="fas fa-envelope"></i></span><input type="email" class="form-control bg-transparent border-0 text-white py-2 shadow-none newsletter-input" placeholder="Digite seu melhor email...">
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary btn-glow rounded-pill py-2 fw-bold">
-                                        Inscrever-se
-                                    </button>
+                                    <button type="submit" class="btn btn-primary btn-glow rounded-pill py-2 fw-bold">Inscrever-se</button>
                                 </div>
                             </form>
                         </div>
