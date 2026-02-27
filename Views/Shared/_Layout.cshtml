@@ -26,13 +26,18 @@
 <body class="d-flex flex-column min-vh-100">
 
     @* Preloader *@
-    <div class="loader-container">
-        <div class="loader-content text-center">
-            <svg class="logo-svg mb-3 text-primary me-2" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
-                <path class="logo-path" d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 168c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zm-32 128c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zM192 160v48h48c13.3 0 24 10.7 24 24s-10.7 24-24 24H192v48c0 13.3-10.7 24-24 24s-24-10.7-24-24V256H96c-13.3 0-24-10.7-24-24s10.7-24 24-24h48V160c0-13.3 10.7-24 24-24s24 10.7 24 24z" />
-            </svg>
-            <h2 class="text-white fw-bold mb-3 mt-2 loader-text">Game<span class="text-primary">Price</span></h2>
-            <div class="loading-bar-container"><div class="loading-bar"></div></div>
+    <div class="loader-container" aria-hidden="false">
+        <div class="loader-overlay"></div>
+        <div class="loader-content text-center" role="status" aria-live="polite">
+            <div class="loader-brand">
+                <svg class="logo-svg mb-2 text-primary" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path class="logo-path" d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 168c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zm-32 128c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zM192 160v48h48c13.3 0 24 10.7 24 24s-10.7 24-24 24H192v48c0 13.3-10.7 24-24 24s-24-10.7-24-24V256H96c-13.3 0-24-10.7-24-24s10.7-24 24-24h48V160c0-13.3 10.7-24 24-24s24 10.7 24 24z" />
+                </svg>
+            </div>
+            <h2 class="text-white fw-bold mb-2 mt-1 loader-text">Game<span class="text-primary">Price</span></h2>
+            <p class="loader-subtext text-white-50 mb-3">Carregando recursos, quase lá...</p>
+            <div class="loading-bar-container" aria-hidden="true"><div class="loading-bar"></div></div>
+                <button type="button" class="btn btn-sm btn-light mt-3 loader-skip-btn" style="display:none;">Continuar</button>
         </div>
     </div>
 

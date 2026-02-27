@@ -1,4 +1,3 @@
-// brands.js
 document.addEventListener("DOMContentLoaded", function () {
     const marqueeContent = document.querySelector(".marquee-content");
     if (marqueeContent) {

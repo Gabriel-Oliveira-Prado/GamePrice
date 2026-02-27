@@ -1,96 +1,171 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = 'hidden';
 
-    // --- SEGURANÇA ---
-    setTimeout(() => {
-        const loader = document.querySelector('.loader-container');
-        if (loader && getComputedStyle(loader).display !== 'none') {
-            console.warn("Loader demorou muito. Forçando exibição.");
-            loader.style.display = 'none';
-            document.body.style.overflow = '';
-            document.querySelectorAll('.gs-reveal').forEach(el => {
-                el.style.opacity = '1';
-                el.style.transform = 'none';
-            });
-            // Tenta iniciar animações mesmo se o loader falhar
-            if (typeof initHeroAnimations === 'function') {
-                const tl = initHeroAnimations();
-                if (tl) tl.play();
+    // If multiple loader containers exist (duplicated markup), keep only the first
+    try {
+        const loaders = document.querySelectorAll('.loader-container');
+        if (loaders && loaders.length > 1) {
+            for (let i = 1; i < loaders.length; i++) {
+                loaders[i].parentNode && loaders[i].parentNode.removeChild(loaders[i]);
             }
+            console.warn('Multiple loader containers detected. Extra instances removed.');
         }
-    }, 3000);
+    } catch (e) {
+        // ignore
+    }
+    // Removed forced hide fallback so preloader truly waits for page load.
+    // Provide a manual "Continuar" button if resources hang (user can dismiss).
 
     // --- Preloader ---
     // Inicializa a timeline do Hero (mas pausada)
     const heroTimeline = typeof initHeroAnimations === 'function' ? initHeroAnimations() : null;
 
-    const loaderTimeline = anime.timeline({
-        easing: 'easeInOutQuad',
-        complete: () => {
-            document.body.style.overflow = '';
+    // No circular loader: removed ring animation to keep single loading indicator
 
-            // Inicia animações da Home
-            if (heroTimeline) heroTimeline.play();
-
-            // Inicializa componentes
-            if (typeof initScrollReveal === 'function') initScrollReveal();
-            if (typeof initSearch === 'function') initSearch();
-            if (typeof initFeaturesSwiper === 'function') initFeaturesSwiper();
-            if (typeof initTypewriter === 'function') initTypewriter();
-            if (typeof initDeals === 'function') initDeals();
-
-            // Efeitos visuais
-            if (typeof initBadgeInteractivity === 'function') initBadgeInteractivity();
-            if (typeof initScrollEffects === 'function') initScrollEffects();
-            if (typeof initBackgroundGlow === 'function') initBackgroundGlow();
-        }
-    });
-
-    loaderTimeline.add({
-        targets: '.logo-path',
-        strokeDashoffset: [anime.setDashoffset, 0],
-        duration: 1200,
-        easing: 'easeInOutSine'
-    })
-        .add({
-            targets: '.loader-text',
-            opacity: [0, 1],
-            translateY: [15, 0],
-            duration: 600,
-            easing: 'easeOutExpo'
-        }, '-=400')
-        .add({
-            targets: '.logo-path',
-            fill: '#0d6efd',
-            duration: 800,
-            easing: 'easeOutExpo'
-        }, '-=400')
-        .add({
-            targets: ".loading-bar",
-            width: "100%",
-            duration: 800,
-            easing: 'easeInOutSine'
-        }, '-=800')
-        .add({
-            targets: ".loader-content",
-            scale: 1.1,
-            opacity: 0,
-            duration: 500,
-            easing: 'easeInQuad',
-            delay: 200
-        })
-        .add({
-            targets: ".loader-container",
-            opacity: 0,
-            duration: 500,
+    // Indeterminate loading bar animation while waiting for full load
+    let waitingAnim = null;
+    try {
+        waitingAnim = anime({
+            targets: '.loading-bar',
+            width: ['0%', '80%'],
+            duration: 2000,
             easing: 'linear',
-            complete: function () {
-                const container = document.querySelector('.loader-container');
-                if (container) {
-                    container.style.visibility = 'hidden';
-                    container.style.pointerEvents = 'none';
-                    container.style.display = 'none';
+            loop: true,
+            direction: 'alternate'
+        });
+    } catch (e) { }
+
+    function finalizeLoader() {
+        try {
+            // stop waiting animations
+            if (waitingAnim && waitingAnim.pause) waitingAnim.pause();
+
+            const loadingBar = document.querySelector('.loading-bar');
+            const loaderContent = document.querySelector('.loader-content');
+            const loader = document.querySelector('.loader-container');
+
+            // Prefer anime.js animation if available, otherwise fall back to CSS changes
+            if (typeof anime === 'function') {
+                anime({
+                    targets: '.loading-bar',
+                    width: '100%',
+                    duration: 600,
+                    easing: 'easeInOutSine'
+                });
+
+                anime({
+                    targets: '.loader-content',
+                    opacity: [1, 0],
+                    translateY: [0, -10],
+                    duration: 500,
+                    delay: 420,
+                    easing: 'easeInQuad',
+                    complete: () => {
+                        if (loader) {
+                            loader.classList.add('hidden');
+                            setTimeout(() => {
+                                loader.style.display = 'none';
+                                loader.setAttribute('aria-hidden', 'true');
+                            }, 560);
+                        }
+                    }
+                });
+            } else {
+                // fallback: immediate style updates
+                if (loadingBar) loadingBar.style.width = '100%';
+                if (loaderContent) loaderContent.style.opacity = '0';
+                if (loader) {
+                    loader.classList.add('hidden');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        loader.setAttribute('aria-hidden', 'true');
+                    }, 600);
                 }
             }
-        }, '-=300');
+
+            // Ensure scrolling is re-enabled
+            document.body.style.overflow = '';
+
+            // Start rest of page scripts/animations even if anime is missing
+            try { if (heroTimeline) heroTimeline.play(); } catch (e) { }
+            try { if (typeof initScrollReveal === 'function') initScrollReveal(); } catch (e) { }
+            try { if (typeof initSearch === 'function') initSearch(); } catch (e) { }
+            try { if (typeof initFeaturesSwiper === 'function') initFeaturesSwiper(); } catch (e) { }
+            try { if (typeof initTypewriter === 'function') initTypewriter(); } catch (e) { }
+            try { if (typeof initDeals === 'function') initDeals(); } catch (e) { }
+            try { if (typeof initBadgeInteractivity === 'function') initBadgeInteractivity(); } catch (e) { }
+            try { if (typeof initScrollEffects === 'function') initScrollEffects(); } catch (e) { }
+            try { if (typeof initBackgroundGlow === 'function') initBackgroundGlow(); } catch (e) { }
+        } catch (err) {
+            // final safety fallback: hide loader and allow interaction
+            console.error('finalizeLoader error', err);
+            const loader = document.querySelector('.loader-container');
+            if (loader) {
+                loader.style.display = 'none';
+                loader.setAttribute('aria-hidden', 'true');
+            }
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Non-blocking visual touches while waiting for full load
+    try {
+        if (typeof anime === 'function') {
+            anime({
+                targets: '.logo-path',
+                strokeDashoffset: [anime.setDashoffset, 0],
+                duration: 1200,
+                easing: 'easeInOutSine'
+            });
+
+            anime({
+                targets: '.loader-text',
+                opacity: [0, 1],
+                translateY: [15, 0],
+                duration: 600,
+                easing: 'easeOutExpo',
+                delay: 300
+            });
+        }
+    } catch (e) { }
+
+    // Finalize when the full window load event fires
+    window.addEventListener('load', function () {
+        finalizeLoader();
+    });
+
+    // Provide a manual skip after some time if user wants to continue (no forced hide)
+    const skipBtn = document.querySelector('.loader-skip-btn');
+    let skipShown = false;
+    setTimeout(() => {
+        if (skipBtn) {
+            skipBtn.style.display = 'inline-block';
+            skipShown = true;
+            const sub = document.querySelector('.loader-subtext');
+            if (sub) sub.textContent = 'Carregamento lento — você pode continuar manualmente.';
+        }
+    }, 8000);
+    if (skipBtn) skipBtn.addEventListener('click', () => finalizeLoader());
+
+    // If multiple resource errors occur (blocked CDNs etc.), show skip earlier
+    let resourceErrorCount = 0;
+    function revealSkipEarly() {
+        const skip = document.querySelector('.loader-skip-btn');
+        if (skip && !skipShown) {
+            skip.style.display = 'inline-block';
+            skipShown = true;
+            const sub = document.querySelector('.loader-subtext');
+            if (sub) sub.textContent = 'Alguns recursos falharam ao carregar — você pode continuar.';
+        }
+    }
+
+    window.addEventListener('error', (e) => {
+        try {
+            const target = e && e.target;
+            if (target && (target.src || target.href)) {
+                resourceErrorCount++;
+                if (resourceErrorCount >= 3) revealSkipEarly();
+            }
+        } catch (ex) { }
+    }, true);
 });
