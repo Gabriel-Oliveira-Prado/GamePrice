@@ -19,6 +19,45 @@
 .nav-link.active {
     color: var(--primary) !important;
 }
+.nav-icon-globe {
+    font-size: 1.2rem;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
+}
+.navbar .dropdown-menu {
+    background-color: rgba(var(--bg-dark-rgb), 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    padding: 0.4rem;
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    min-width: 13rem;
+    margin-top: 0.6rem;
+}
+.navbar .dropdown-item {
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 8px;
+    padding: 0.5rem 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+}
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+    color: #fff;
+    background-color: rgba(var(--primary-rgb), 0.2);
+}
+.navbar .dropdown-toggle::after {
+    margin-left: 0.35rem;
+    vertical-align: middle;
+}
+.navbar .dropdown-toggle:focus {
+    box-shadow: none;
+}
 .btn-login {
     border-radius: 4px;
     padding: 0.5rem 2rem;

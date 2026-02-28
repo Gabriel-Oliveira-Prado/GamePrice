@@ -1,5 +1,4 @@
-﻿
-.custom-accordion {
+﻿.custom-accordion {
     --bs-accordion-bg: transparent;
     --bs-accordion-border-width: 0;
     gap: 1rem;
@@ -20,7 +19,7 @@
 }
 
 .custom-accordion .accordion-item:hover {
-    border-color: rgba(13, 110, 253, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
     transform: translateY(-2px);
 }
 
@@ -176,6 +175,10 @@
     .newsletter-card .btn {
         width: 100%;
         margin-top: 0.5rem;
+    }
+
+    #free-games .free-games-cta {
+        align-self: center;
     }
 }
 
@@ -335,6 +338,66 @@
 
 .deal-card img {
     transition: transform 0.5s ease;
+}
+
+.deal-card .p-4 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.deal-card .p-4>div:nth-child(2) {
+    margin-bottom: auto !important;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contributor-card {
+    background: rgba(18, 24, 38, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.contributor-card:hover {
+    background: rgba(25, 32, 48, 0.6);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+}
+
+.contributor-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+    padding: 3px;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: block;
+}
+
+.contributor-card:hover .contributor-avatar {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-link-hover {
+    transition: opacity 0.2s ease, text-decoration 0.2s ease;
+    opacity: 0.8;
+}
+
+.contributor-card:hover .btn-link-hover {
+    opacity: 1;
+}
+
+.btn-link-hover:hover {
+    text-decoration: underline !important;
 }
 
 @media (min-width: 992px) and (max-width: 1400px) {
