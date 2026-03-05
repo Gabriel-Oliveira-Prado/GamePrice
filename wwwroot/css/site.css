@@ -5,6 +5,7 @@
 @import url('base/global.css');
 @import url('base/animations.css');
 @import url('base/utilities.css');
+@import url('base/inline-replacements.css');
 
 /* Utils */
 @import url('utils/responsive.css');

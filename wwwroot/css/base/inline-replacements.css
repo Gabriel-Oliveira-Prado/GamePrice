@@ -1,0 +1,205 @@
+/* ========================================
+   Substituições de Estilos Inline
+   ======================================== */
+
+/* Skeleton Loading */
+.skeleton-border {
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.skeleton-discount-badge {
+    width: 50px;
+    height: 24px;
+    border-radius: 0.375rem;
+}
+
+.skeleton-image {
+    height: 180px;
+    width: 100%;
+}
+
+.skeleton-store-badge {
+    width: 80px;
+    height: 16px;
+}
+
+.skeleton-title-text {
+    width: 90%;
+    height: 24px;
+}
+
+.skeleton-label-small {
+    width: 60px;
+    height: 12px;
+}
+
+.skeleton-price-text {
+    width: 50px;
+    height: 24px;
+}
+
+.skeleton-button {
+    width: 90px;
+    height: 32px;
+}
+
+/* Contributors */
+.skeleton-contributor-header {
+    height: 60px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.skeleton-avatar {
+    width: 96px;
+    height: 96px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.skeleton-contributor-name {
+    width: 140px;
+    height: 24px;
+}
+
+.skeleton-contributor-role {
+    width: 110px;
+    height: 16px;
+}
+
+.skeleton-contributor-button {
+    width: 130px;
+    height: 38px;
+}
+
+.contributor-badge-size {
+    width: 26px;
+    height: 26px;
+    transform: translate(10%, 10%);
+}
+
+.contributor-badge-icon {
+    font-size: 0.65rem;
+}
+
+.contributor-name-spacing {
+    letter-spacing: -0.3px;
+}
+
+.contributor-badge-text {
+    font-size: 0.65rem;
+}
+
+.contributor-description {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    max-width: 95%;
+}
+
+.contributor-link-icon {
+    font-size: 0.75rem;
+}
+
+/* Loader */
+.loader-skip-btn-hidden {
+    display: none;
+}
+
+/* Animações */
+.animation-delay-100 {
+    animation-delay: 0.1s;
+}
+
+.animation-delay-150 {
+    animation-delay: 0.15s;
+}
+
+.animation-delay-200 {
+    animation-delay: 0.2s;
+}
+
+.animation-delay-250 {
+    animation-delay: 0.25s;
+}
+
+.animation-delay-300 {
+    animation-delay: 0.3s;
+}
+
+.initial-opacity-0 {
+    opacity: 0;
+}
+
+.shadow-glow-initial {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 0 0px rgba(13, 110, 253, 0);
+}
+
+.shadow-glow-mid {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(13, 110, 253, 0.3);
+}
+
+.shadow-glow-end {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 0 0px rgba(13, 110, 253, 0);
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.slide-in-up {
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Interatividade */
+.badge-interactive {
+    cursor: grab;
+    user-select: none;
+}
+
+.badge-dragging {
+    cursor: grabbing;
+}
+
+.bg-glow-optimized {
+    will-change: transform;
+    top: 0;
+}
+
+.gs-reveal-initial {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+}
+
+.gs-reveal-visible {
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+/* Performance */
+.will-change-transform {
+    will-change: transform;
+}
+
+.will-change-opacity {
+    will-change: opacity;
+}
+

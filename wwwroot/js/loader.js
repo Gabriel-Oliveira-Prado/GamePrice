@@ -62,7 +62,6 @@
             { fn: state.heroTimeline?.play, name: 'heroTimeline.play' },
             { fn: window.initScrollReveal, name: 'initScrollReveal' },
             { fn: window.initSearch, name: 'initSearch' },
-            { fn: window.initFeaturesSwiper, name: 'initFeaturesSwiper' },
             { fn: window.initDeals, name: 'initDeals' },
             { fn: window.initBadgeInteractivity, name: 'initBadgeInteractivity' },
             { fn: window.initScrollEffects, name: 'initScrollEffects' },

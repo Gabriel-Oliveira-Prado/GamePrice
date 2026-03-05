@@ -1,30 +1,13 @@
 ﻿function initDeals() {
     const $grid = $("#deals-grid");
     const $filters = $(".filter-pill");
+
     const renderSkeleton = () => {
-        let html = '';
-        for (let i = 0; i < 8; i++) {
-            html += `
-                <div class="col-lg-3 col-md-6">
-                    <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect" style="border: 1px solid rgba(255,255,255,0.05) !important;">
-                        <div class="skeleton-shimmer card-img-top"></div>
-                        <div class="card-body p-4 d-flex flex-column">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="skeleton-shimmer rounded-pill skeleton-store"></div>
-                                <div class="skeleton-shimmer rounded skeleton-old-price"></div>
-                            </div>
-                            <div class="skeleton-shimmer mb-3 rounded skeleton-title"></div>
-                            <div class="mt-auto pt-3 border-top border-secondary">
-                                <div class="text-center">
-                                    <div class="skeleton-shimmer mb-2 rounded mx-auto skeleton-label"></div>
-                                    <div class="skeleton-shimmer rounded mx-auto skeleton-price"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
+        if (typeof renderGameCardsSkeletonGrid === 'function') {
+            $grid.html(renderGameCardsSkeletonGrid(8, "col-lg-3 col-md-6", { showDiscount: true, showOldPrice: true }));
+        } else {
+            console.warn('Skeleton component not loaded');
         }
-        $grid.html(html);
     };
     const dealsData = [
         { id: 1, title: "Elden Ring", price: "149,90", oldPrice: "229,90", discount: "-35%", platform: "pc", store: "Steam", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg" },

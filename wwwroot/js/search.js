@@ -12,16 +12,16 @@
     const renderSkeleton = () => {
         return `
             <div class="search-item-card text-white overflow-hidden">
-                <div class="d-flex align-items-center p-2">
-                    <div class="flex-shrink-0 me-2">
-                        <div class="skeleton search-item-thumb-small"></div>
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="skeleton skeleton-shimmer search-item-thumb-small"></div>
                     </div>
                     <div class="flex-grow-1">
-                        <div class="skeleton skeleton-text search-item-title-small"></div>
-                        <div class="skeleton skeleton-text search-item-price-small"></div>
+                        <div class="skeleton skeleton-shimmer skeleton-text search-item-title-small mb-2"></div>
+                        <div class="skeleton skeleton-shimmer search-item-price-small"></div>
                     </div>
-                    <div class="ms-2">
-                        <div class="skeleton search-item-button-small"></div>
+                    <div class="flex-shrink-0">
+                        <div class="skeleton skeleton-shimmer search-item-button-small"></div>
                     </div>
                 </div>
             </div>
@@ -39,19 +39,19 @@
 
         return `
             <div class="search-item-card text-white overflow-hidden">
-                <div class="d-flex align-items-center p-2">
-                    <div class="flex-shrink-0 me-2">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
                         <div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary search-item-thumb-small">
                             <i class="fas fa-gamepad fa-lg"></i>
                         </div>
                     </div>
                     <div class="flex-grow-1">
-                        <h6 class="mb-1 fw-bold small">${safeTitle}</h6>
+                        <h6 class="mb-1 fw-bold">${safeTitle}</h6>
                         <div class="badge bg-success bg-opacity-75 small">R$ ${safePrice}</div>
                     </div>
-                    <div class="ms-2">
+                    <div class="flex-shrink-0">
                         <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" 
-                           class="btn btn-sm btn-outline-light rounded-pill px-2 py-1 search-item-button-small d-flex align-items-center justify-content-center small">
+                           class="btn btn-sm btn-outline-light rounded-pill search-item-button-small">
                             Ver <i class="bi bi-box-arrow-up-right ms-1 search-result-icon"></i>
                         </a>
                     </div>

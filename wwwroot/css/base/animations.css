@@ -1,6 +1,7 @@
-/* Animações Globais */
+/* ========================================
+   Animações Globais
+   ======================================== */
 
-/* Fade In Up */
 .fade-in-up {
     opacity: 0;
     transform: translateY(20px);
@@ -14,7 +15,6 @@
     }
 }
 
-/* Pulse Dot */
 .pulse-dot {
     width: 8px;
     height: 8px;
@@ -36,7 +36,6 @@
     }
 }
 
-/* Reveal (ScrollReveal) */
 .gs-reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -48,7 +47,6 @@
     transform: translateY(0);
 }
 
-/* Shimmer Effect */
 @keyframes shimmer {
     from {
         transform: translateX(-100%);
@@ -58,7 +56,6 @@
     }
 }
 
-/* Spin */
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -68,7 +65,6 @@
     }
 }
 
-/* Scale In */
 .scale-in {
     animation: scaleIn 0.3s ease;
 }

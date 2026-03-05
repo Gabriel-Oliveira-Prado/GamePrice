@@ -5,16 +5,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-4xl) 0 var(--spacing-3xl);
+    padding: var(--spacing-2xl) 0;
     overflow: visible;
     background: var(--bg-dark);
 }
 
-/* Desktop: mover um pouco para baixo */
+/* Centralização perfeita independente do zoom */
 @media (min-width: 768px) {
     .hero-section {
-        align-items: flex-start;
-        padding-top: calc(var(--spacing-4xl) + 2rem);
+        padding: var(--spacing-3xl) 0;
     }
 }
 
@@ -29,6 +28,8 @@
 
 .hero-bg-glow {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 40vmax;
     height: 40vmax;
     background: radial-gradient(circle, rgba(var(--primary-rgb), 0.3) 0%, transparent 70%);

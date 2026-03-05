@@ -1,4 +1,7 @@
-﻿/* Botões Base */
+﻿/* ========================================
+   Botões
+   ======================================== */
+
 .btn {
     font-family: var(--font-body);
     font-weight: var(--font-weight-semibold);
@@ -14,7 +17,6 @@
     gap: var(--spacing-sm);
 }
 
-/* Botão Primary */
 .btn-primary,
 .btn-glow {
     background: var(--primary);
@@ -30,7 +32,6 @@
     color: white;
 }
 
-/* Botão Outline */
 .btn-outline-primary {
     background: transparent;
     color: var(--primary);
@@ -43,7 +44,6 @@
     filter: brightness(0.9);
 }
 
-/* Botão Light */
 .btn-light {
     background: #ffffff;
     color: var(--bg-dark);
@@ -66,7 +66,6 @@
     font-size: 1.0625rem;
 }
 
-/* Formas */
 .rounded-pill {
     border-radius: var(--radius-full);
 }

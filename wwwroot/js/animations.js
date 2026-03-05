@@ -36,8 +36,7 @@ function initScrollReveal() {
 
     requestAnimationFrame(() => {
         revealElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(50px) scale(0.9)';
+            el.classList.add('gs-reveal-initial');
         });
     });
 
@@ -45,9 +44,8 @@ function initScrollReveal() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 requestAnimationFrame(() => {
-                    entry.target.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out';
-                    entry.target.style.transform = 'translateY(0) scale(1)';
-                    entry.target.style.opacity = '1';
+                    entry.target.classList.remove('gs-reveal-initial');
+                    entry.target.classList.add('gs-reveal-visible');
                 });
 
                 const counters = entry.target.querySelectorAll('.counter');
@@ -82,8 +80,7 @@ function initBadgeInteractivity() {
     const badge = document.querySelector('.hero-section .badge');
     if (!badge || typeof anime !== 'function') return;
 
-    badge.style.cursor = 'grab';
-    badge.style.userSelect = 'none';
+    badge.classList.add('badge-interactive');
 
     let isDragging = false;
     let startX, startY;
@@ -105,7 +102,8 @@ function initBadgeInteractivity() {
         const matrix = new DOMMatrix(style.transform);
         initialTranslateX = matrix.m41;
         initialTranslateY = matrix.m42;
-        badge.style.cursor = 'grabbing';
+        badge.classList.add('badge-dragging');
+        badge.classList.remove('badge-interactive');
         anime.remove(badge);
     };
 
@@ -136,7 +134,8 @@ function initBadgeInteractivity() {
     const endDrag = () => {
         if (!isDragging) return;
         isDragging = false;
-        badge.style.cursor = 'grab';
+        badge.classList.remove('badge-dragging');
+        badge.classList.add('badge-interactive');
 
         const inertiaFactor = 30;
         const targetX = currentTranslateX + (vx * inertiaFactor);
@@ -196,9 +195,7 @@ function initBackgroundGlow() {
     const bgGlow = document.querySelector('.hero-bg-glow');
     if (!bgGlow || typeof anime !== 'function') return;
 
-    bgGlow.style.willChange = 'transform';
-    bgGlow.style.top = '0';
-    bgGlow.style.left = '0';
+    bgGlow.classList.add('bg-glow-optimized');
 
     let targetX = window.innerWidth / 2;
     let targetY = window.innerHeight / 2;
