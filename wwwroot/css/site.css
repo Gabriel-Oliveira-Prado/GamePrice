@@ -6,6 +6,9 @@
 @import url('base/animations.css');
 @import url('base/utilities.css');
 
+/* Utils */
+@import url('utils/responsive.css');
+
 /* Layout */
 @import url('layout/navbar.css');
 @import url('layout/sidebar.css');

@@ -6,21 +6,19 @@
         for (let i = 0; i < 8; i++) {
             html += `
                 <div class="col-lg-3 col-md-6">
-                    <div class="card h-100 border-0 bg-dark rounded-4 overflow-hidden shadow-sm" style="border: 1px solid rgba(255,255,255,0.05) !important;">
-                        <div class="skeleton-shimmer" style="height: 180px; width: 100%;"></div>
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="skeleton-shimmer rounded-pill" style="width: 60px; height: 20px;"></div>
-                                <div class="skeleton-shimmer rounded-pill" style="width: 40px; height: 20px;"></div>
+                    <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect" style="border: 1px solid rgba(255,255,255,0.05) !important;">
+                        <div class="skeleton-shimmer card-img-top"></div>
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="skeleton-shimmer rounded-pill skeleton-store"></div>
+                                <div class="skeleton-shimmer rounded skeleton-old-price"></div>
                             </div>
-                            <div class="skeleton-shimmer mb-2 rounded" style="width: 80%; height: 24px;"></div>
-                            <div class="skeleton-shimmer mb-3 rounded" style="width: 40%; height: 16px;"></div>
-                            <div class="d-flex justify-content-between align-items-end mt-3">
-                                <div>
-                                    <div class="skeleton-shimmer mb-1 rounded" style="width: 50px; height: 14px;"></div>
-                                    <div class="skeleton-shimmer rounded" style="width: 80px; height: 28px;"></div>
+                            <div class="skeleton-shimmer mb-3 rounded skeleton-title"></div>
+                            <div class="mt-auto pt-3 border-top border-secondary">
+                                <div class="text-center">
+                                    <div class="skeleton-shimmer mb-2 rounded mx-auto skeleton-label"></div>
+                                    <div class="skeleton-shimmer rounded mx-auto skeleton-price"></div>
                                 </div>
-                                <div class="skeleton-shimmer rounded-circle" style="width: 32px; height: 32px;"></div>
                             </div>
                         </div>
                     </div>
@@ -101,15 +99,15 @@
                                 <small class="text-decoration-line-through text-secondary">R$ ${safeOldPrice}</small>
                             </div>
                             <h5 class="card-title fw-bold mb-auto text-white">${safeTitle}</h5>
-                            <div class="d-flex justify-content-between align-items-end mt-3 border-top border-secondary border-opacity-25 pt-3">
-                                <div>
-                                    <small class="d-block text-success mb-0" style="font-size: 0.8rem;">Melhor Preço</small>
-                                    <span class="h4 fw-bold text-white mb-0">R$ ${safePrice}</span>
+                            <a href="#" class="card-price-link text-decoration-none">
+                                <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
+                                    <small class="text-success mb-1 price-old-text price-label">Melhor Preço</small>
+                                    <div class="price-display">
+                                        <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
+                                        <span class="h4 fw-bold text-white mb-0 price-value">R$ ${safePrice}</span>
+                                    </div>
                                 </div>
-                                <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold text-primary">
-                                    <i class="bi bi-bag-fill me-1"></i> Ver Loja
-                                </button>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

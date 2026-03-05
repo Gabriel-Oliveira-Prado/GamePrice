@@ -35,8 +35,8 @@
     --gradient-radial: radial-gradient(circle at 50% 0%, rgba(var(--primary-rgb), 0.15) 0%, transparent 50%);
 
     /* Tipografia - Fontes Modernas */
-    --font-display: 'Inter Tight', 'Inter', system-ui, -apple-system, sans-serif;
-    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    --font-body: 'Space Grotesk', system-ui, -apple-system, sans-serif;
 
     /* Pesos de Fonte */
     --font-weight-normal: 400;

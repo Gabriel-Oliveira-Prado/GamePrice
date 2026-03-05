@@ -3,7 +3,7 @@
     position: relative;
     max-width: 40rem;
     margin: var(--spacing-xl) auto;
-    z-index: 10;
+    z-index: 3;
 }
 
 /* Search Input */
@@ -54,7 +54,7 @@
 
 .search-btn:hover {
     background: var(--primary-hover);
-    box-shadow: var(--shadow-glow);
+    filter: brightness(0.85);
 }
 
 .search-btn i {
@@ -65,17 +65,81 @@
 .search-dropdown {
     position: relative;
     width: 100%;
-    max-height: 400px;
+    max-height: 280px;
     overflow-y: auto;
     margin-top: var(--spacing-sm);
     border-radius: var(--radius-lg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: var(--shadow-xl);
+    z-index: 5;
 }
 
 #search-results {
     display: none;
+}
+
+.search-result-icon {
+    font-size: 0.75rem;
+}
+
+/* Responsivo para busca */
+@media (max-width: 768px) {
+    .search-input {
+        font-size: 0.9375rem;
+        padding: var(--spacing-md) var(--spacing-3xl) var(--spacing-md) var(--spacing-lg);
+    }
+
+    .search-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .search-btn i {
+        font-size: 1rem;
+    }
+
+    .search-dropdown {
+        max-height: 200px;
+        margin-top: var(--spacing-xs);
+    }
+
+    .search-item-card {
+        padding: var(--spacing-xs);
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .search-item-thumb-small {
+        width: 60px;
+        height: 40px;
+    }
+
+    .search-item-title-small {
+        font-size: 0.8125rem;
+        width: 100%;
+    }
+
+    .search-item-price-small {
+        font-size: 0.75rem;
+    }
+
+    .search-item-button-small {
+        width: 55px;
+        height: 28px;
+        font-size: 0.75rem;
+        padding: var(--spacing-xs);
+    }
+}
+
+@media (max-width: 480px) {
+    .search-input {
+        font-size: 0.875rem;
+        padding: var(--spacing-sm) var(--spacing-2xl) var(--spacing-sm) var(--spacing-md);
+    }
+
+    .search-dropdown {
+        max-height: 150px;
+    }
 }
 
 /* Scrollbar personalizada para dropdown */

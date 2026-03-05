@@ -178,4 +178,9 @@
     .footer-subtitle {
         margin-top: var(--spacing-xl);
     }
+
+    .footer-subtitle::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
