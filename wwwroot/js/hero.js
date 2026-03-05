@@ -1,9 +1,25 @@
-﻿//Particles Initialization
-function initParticles() {
-    if (document.getElementById('particles-js')) {
+﻿function initParticles() {
+    const particlesContainer = document.getElementById('particles-js');
+    if (!particlesContainer) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                observer.disconnect();
+                loadParticles();
+            }
+        });
+    }, { rootMargin: '50px' });
+
+    const targetElement = particlesContainer.closest('.hero-section') || particlesContainer;
+    observer.observe(targetElement);
+}
+
+function loadParticles() {
+    if (typeof particlesJS !== 'undefined') {
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 75, "density": { "enable": false } },
+                "number": { "value": 30, "density": { "enable": false } },
                 "color": { "value": ["#0d6efd", "#00e5ff", "#10b981"] },
                 "shape": {
                     "type": ["circle", "char"],
@@ -34,31 +50,24 @@ function initParticles() {
                 },
                 "move": {
                     "enable": true,
-                    "speed": 1.2,
+                    "speed": 1.0,
                     "direction": "none",
                     "random": true,
                     "straight": false,
                     "out_mode": "out",
                     "bounce": false,
-                    "attract": { "enable": true, "rotateX": 600, "rotateY": 1200 }
+                    "attract": { "enable": false }
                 }
             },
             "interactivity": {
                 "detect_on": "canvas",
                 "events": {
-                    "onhover": { "enable": true, "mode": "grab" },
-                    "onclick": { "enable": true, "mode": "push" },
+                    "onhover": { "enable": false },
+                    "onclick": { "enable": false },
                     "resize": true
-                },
-                "modes": {
-                    "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } },
-                    "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
-                    "repulse": { "distance": 200, "duration": 0.4 },
-                    "push": { "particles_nb": 4 },
-                    "remove": { "particles_nb": 2 }
                 }
             },
-            "retina_detect": true
+            "retina_detect": false
         });
     }
 }
@@ -131,6 +140,8 @@ function initGravityBadge() {
     }
 
     function endDrag() {
+        if (!isDragging) return;
+
         isDragging = false;
         badge.style.cursor = 'grab';
 
@@ -140,7 +151,6 @@ function initGravityBadge() {
         document.removeEventListener('touchend', endDrag);
 
         animationFrame = requestAnimationFrame(physicsLoop);
-
         snapBackTimer = setTimeout(snapBack, 5000);
     }
 
@@ -151,23 +161,19 @@ function initGravityBadge() {
     function physicsLoop() {
         if (isDragging) return;
 
-        velocityY += gravity; // Aplica gravidade
-
+        velocityY += gravity;
         velocityX *= friction;
         velocityY *= friction;
 
-        // Calcula limites ANTES de somar a nova velocidade, pois o getBoundingClientRect reflete o frame atual (currentX antigo)
         const rect = badge.getBoundingClientRect();
         const minX = currentX - rect.left;
         const maxX = currentX + (window.innerWidth - rect.right);
         const minY = currentY - rect.top;
         const maxY = currentY + (window.innerHeight - rect.bottom);
 
-        // Nova Posição
         currentX += velocityX;
         currentY += velocityY;
 
-        // Colisões com as bordas da tela (Viewport)
         if (currentX < minX) {
             currentX = minX;
             velocityX = Math.abs(velocityX) * bounceFactor;
@@ -183,7 +189,6 @@ function initGravityBadge() {
             currentY = maxY;
             velocityY = -Math.abs(velocityY) * bounceFactor;
 
-            // Corrige tremor eterno no chão cortando pequenos pulos
             if (Math.abs(velocityY) < gravity * 2.5) {
                 velocityY = 0;
             }
@@ -216,19 +221,31 @@ function initGravityBadge() {
     badge.addEventListener('touchstart', startDrag, { passive: false });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    initParticles();
-    initGravityBadge();
+(function() {
+    'use strict';
 
     let resizeTimer;
-    window.addEventListener('resize', function () {
+
+    function handleResize() {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
+        resizeTimer = setTimeout(() => {
             if (window.pJSDom && window.pJSDom.length > 0) {
                 window.pJSDom[0].pJS.fn.vendors.destroypJS();
                 window.pJSDom = [];
             }
             initParticles();
         }, 250);
-    });
-});
+    }
+
+    function init() {
+        initParticles();
+        initGravityBadge();
+        window.addEventListener('resize', handleResize);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();

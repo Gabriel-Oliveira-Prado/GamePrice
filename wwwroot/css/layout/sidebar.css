@@ -1,48 +1,52 @@
+/* Sidebar Layout (se utilizado) */
 .app-layout {
     display: flex;
     min-height: 100vh;
 }
 
 .sidebar {
-    width: 80px;
+    width: 5rem;
     background: var(--bg-card);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid var(--surface-border);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem 0;
+    padding: var(--spacing-xl) 0;
     position: fixed;
     height: 100vh;
-    z-index: 100;
+    z-index: var(--z-sticky);
+    box-shadow: var(--shadow-md);
 }
 
 .sidebar-link {
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-muted);
-    margin-bottom: 1.5rem;
-    transition: all 0.3s ease;
+    margin-bottom: var(--spacing-lg);
+    transition: all var(--transition-fast);
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.125rem;
 }
 
 .sidebar-link:hover,
 .sidebar-link.active {
     background: var(--primary);
-    color: var(--bg-dark);
-    box-shadow: 0 0 15px rgba(var(--glow-cyan-rgb), 0.4);
+    color: white;
+    box-shadow: var(--shadow-glow);
+    transform: translateX(2px);
 }
 
 .main-content {
     flex: 1;
-    margin-left: 80px;
-    padding: 2rem;
+    margin-left: 5rem;
+    padding: var(--spacing-xl);
 }
 
+/* Responsivo */
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
@@ -51,8 +55,8 @@
         top: auto;
         flex-direction: row;
         justify-content: space-around;
-        padding: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: var(--spacing-md);
+        border-top: 1px solid var(--surface-border);
         border-right: none;
     }
 
@@ -62,6 +66,7 @@
 
     .main-content {
         margin-left: 0;
-        margin-bottom: 80px;
+        margin-bottom: 5rem;
+        padding: var(--spacing-md);
     }
 }

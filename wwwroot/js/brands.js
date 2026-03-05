@@ -1,13 +1,25 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const marqueeContent = document.querySelector(".marquee-content");
-    if (marqueeContent) {
-        // Obter os itens originais
-        const originalItems = marqueeContent.innerHTML;
+(function() {
+    'use strict';
 
-        // Adicionar exatamente mais 5 repetições, totalizando 6 blocos idênticos.
-        // O CSS foi ajustado para trasladar calc(-100% / 6) para um loop 100% perfeito
-        for (let i = 0; i < 5; i++) {
-            marqueeContent.innerHTML += originalItems;
+    function initMarquee() {
+        const marqueeContent = document.querySelector(".marquee-content");
+        if (!marqueeContent || !marqueeContent.children.length) return;
+
+        const fragment = document.createDocumentFragment();
+        const originalItems = Array.from(marqueeContent.children);
+
+        for (let i = 0; i < 2; i++) {
+            originalItems.forEach(item => {
+                fragment.appendChild(item.cloneNode(true));
+            });
         }
+
+        marqueeContent.appendChild(fragment);
     }
-});
+
+    if (document.readyState === 'loading') {
+        document.addEventListener("DOMContentLoaded", initMarquee);
+    } else {
+        initMarquee();
+    }
+})();

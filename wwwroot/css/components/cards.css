@@ -1,40 +1,137 @@
-﻿.custom-accordion {
+﻿/* Game Cards */
+.game-card,
+.deal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-lg);
+    height: 100%;
+}
+
+.game-card:hover,
+.deal-card:hover {
+    border-color: rgba(var(--primary-rgb), 0.4);
+    box-shadow: var(--shadow-xl);
+}
+
+.game-thumb,
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Card Body */
+.card-body {
+    padding: var(--spacing-lg);
+}
+
+.card-title {
+    margin-bottom: var(--spacing-md);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-md);
+    line-height: 1;
+}
+
+.bg-danger {
+    background: var(--accent);
+    color: white;
+}
+
+.bg-success {
+    background: #10b981;
+    color: white;
+}
+
+.bg-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.bg-secondary {
+    background: var(--secondary);
+    color: white;
+}
+
+.badge.rounded-pill {
+    border-radius: var(--radius-full);
+}
+
+.discount-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--accent);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    font-size: 0.875rem;
+    box-shadow: var(--shadow-md);
+}
+
+/* Preços */
+.price-old,
+.text-decoration-line-through {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.price-new {
+    color: var(--primary);
+    font-weight: var(--font-weight-bold);
+    font-size: 1.5rem;
+}
+
+/* Accordion Customizado */
+.custom-accordion {
     --bs-accordion-bg: transparent;
     --bs-accordion-border-width: 0;
-    gap: 1rem;
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-md);
 }
 
 .custom-accordion .accordion-item {
-    background: linear-gradient(135deg, rgba(var(--bg-dark-rgb), 0.95), rgba(var(--bg-dark-rgb), 0.5));
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px !important;
+    background: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-xl);
     overflow: hidden;
-    margin-bottom: 0.8rem;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
 }
 
 .custom-accordion .accordion-item:hover {
-    border-color: rgba(255, 255, 255, 0.8);
-    transform: translateY(-2px);
+    border-color: rgba(var(--primary-rgb), 0.3);
 }
 
 .custom-accordion .accordion-button {
-    background-color: transparent;
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.05rem;
+    background: transparent;
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: 1rem;
+    padding: var(--spacing-lg) var(--spacing-xl);
     box-shadow: none !important;
-    padding: 1.25rem 1.5rem;
+    border: none;
 }
 
 .custom-accordion .accordion-button:not(.collapsed) {
     color: var(--primary);
-    background-color: rgba(13, 110, 253, 0.05);
+    background: rgba(var(--primary-rgb), 0.05);
 }
 
 .custom-accordion .accordion-button::after {
@@ -43,156 +140,97 @@
 
 .custom-accordion .accordion-button:not(.collapsed)::after {
     filter: sepia(100%) hue-rotate(190deg) saturate(500%) brightness(1.1);
-
 }
 
 .custom-accordion .accordion-body {
-    padding: 0 1.5rem 1.25rem 1.5rem;
+    padding: 0 var(--spacing-xl) var(--spacing-lg);
     line-height: 1.7;
+    color: var(--text-secondary);
 }
 
-.custom-accordion .accordion-button:focus {
-    border-color: transparent;
-    box-shadow: none;
-}
-
-.section-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(13, 110, 253, 0.4), transparent);
-    width: 100%;
-    margin: 4rem 0 1rem 0;
-}
-
-.game-card {
-
-    background-color: var(--surface-dark);
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.35s ease;
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-}
-
-.game-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), transparent 40%);
-    opacity: 0.12;
-    pointer-events: none;
-}
-
-.game-card:hover {
-
-    transform: none;
-    border-color: rgba(255, 0, 85, 0.18);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
-}
-
-.game-thumb {
-    height: 220px;
-    width: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.discount-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: var(--accent);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 0.8rem;
-    box-shadow: 0 2px 10px rgba(255, 0, 85, 0.4);
-    backdrop-filter: blur(6px);
-}
-
-.store-price {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.9rem;
-}
-
-.store-price:last-child {
-    border-bottom: none;
-}
-
-.price-old {
-    text-decoration: line-through;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    margin-right: 5px;
-}
-
-.price-new {
-    color: var(--primary);
-    font-weight: 600;
-}
-
+/* Newsletter Card */
 .newsletter-card {
-
-    background-color: var(--surface-dark);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    background: var(--bg-card);
     border: 1px solid var(--surface-border);
-    border-radius: 20px;
-    padding: 3rem 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.newsletter-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--surface-border);
+    color: var(--text-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
 }
 
 .newsletter-input::placeholder {
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: var(--text-muted);
 }
 
-.newsletter-input:-webkit-autofill,
-.newsletter-input:-webkit-autofill:hover,
-.newsletter-input:-webkit-autofill:focus,
-.newsletter-input:-webkit-autofill:active {
-    -webkit-text-fill-color: white !important;
-    transition: background-color 5000s ease-in-out 0s;
-    caret-color: white;
+.newsletter-input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
 }
 
-@media (max-width: 768px) {
-    .newsletter-card {
-        padding: 2rem 1rem !important;
-    }
-
-    .newsletter-card .d-flex.gap-2 {
-        flex-direction: column;
-    }
-
-    .newsletter-card .btn {
-        width: 100%;
-        margin-top: 0.5rem;
-    }
-
-    #free-games .free-games-cta {
-        align-self: center;
-    }
+/* Input Group */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
 }
 
-.footer {
-    background-color: var(--surface-dark);
-
-    border-top: 1px solid var(--surface-border);
-    box-shadow: 0 -8px 30px rgba(2, 6, 23, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-    color: var(--text-main);
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 1rem;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+    color: var(--text-secondary);
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid var(--surface-border);
 }
 
+.input-group .form-control {
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+/* Search Item Cards */
+.search-item-card {
+    background: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.search-item-card:hover {
+    background: rgba(var(--bg-card-rgb), 0.8);
+    border-color: rgba(var(--primary-rgb), 0.4);
+}
+
+.search-item-thumb-img {
+    width: 120px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+}
+
+/* Skeleton Loader */
 .skeleton,
 .skeleton-shimmer {
-    background-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
     position: relative;
     overflow: hidden;
 }
@@ -201,103 +239,174 @@
 .skeleton-shimmer::after {
     content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     transform: translateX(-100%);
-    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.1) 60%, rgba(255, 255, 255, 0));
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%
+    );
     animation: shimmer 1.5s infinite;
 }
 
-.skeleton-text {
-    height: 0.8rem;
-    border-radius: 4px;
-}
-
-@keyframes shimmer {
-    100% {
-        transform: translateX(100%);
-    }
-}
-
-#search-results {
-    display: none;
-}
-
-.search-item-card {
-    background: linear-gradient(135deg, rgba(var(--bg-dark-rgb), 0.95), rgba(var(--bg-dark-rgb), 0.75));
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    transition: all 0.25s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-}
-
-.search-item-card:hover {
-    background: linear-gradient(135deg, rgba(var(--bg-dark-rgb), 0.85), rgba(255, 255, 255, 0.05));
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
+/* Skeleton para cards de busca */
 .search-item-thumb {
     width: 120px;
     height: 70px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
 }
 
-.search-item-thumb-img {
-    width: 120px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 8px;
+.skeleton-text {
+    height: 1rem;
+    margin-bottom: var(--spacing-sm);
 }
 
 .search-item-title {
     width: 70%;
     height: 18px;
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-sm);
 }
 
 .search-item-price {
-    width: 30%;
-    height: 16px;
+    width: 40%;
+    height: 14px;
 }
 
 .search-item-button {
     width: 90px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
 }
 
-@media (max-width: 576px) {
+/* Skeleton para card de jogo completo */
+.game-card-skeleton {
+    background: var(--bg-card);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.game-card-skeleton .skeleton-thumb {
+    width: 100%;
+    height: 200px;
+    border-radius: 0;
+}
+
+.game-card-skeleton .skeleton-content {
+    padding: var(--spacing-lg);
+}
+
+.game-card-skeleton .skeleton-title {
+    width: 80%;
+    height: 20px;
+    margin-bottom: var(--spacing-md);
+}
+
+.game-card-skeleton .skeleton-store {
+    width: 40%;
+    height: 14px;
+    margin-bottom: var(--spacing-md);
+}
+
+.game-card-skeleton .skeleton-price-old {
+    width: 30%;
+    height: 12px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.game-card-skeleton .skeleton-price-new {
+    width: 50%;
+    height: 24px;
+}
+
+@keyframes shimmer {
+    to {
+        transform: translateX(100%);
+    }
+}
+
+/* Section Divider */
+.section-divider {
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(var(--primary-rgb), 0.4),
+        transparent
+    );
+    width: 100%;
+    margin: var(--spacing-3xl) 0;
+}
+
+/* Filter Pills */
+.filter-pill {
+    background: var(--surface-glass);
+    border: 1px solid var(--surface-border);
+    color: var(--text-secondary);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+/* Border utilities */
+.border-top {
+    border-top: 1px solid var(--surface-border);
+}
+
+.border-secondary {
+    border-color: var(--surface-border) !important;
+}
+
+.border-opacity-25 {
+    opacity: 0.25;
+}
+
+/* Stretched link */
+.stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    content: "";
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .newsletter-card {
+        padding: var(--spacing-2xl) var(--spacing-lg);
+    }
+
+    .game-thumb,
+    .card-img-top {
+        height: 180px;
+    }
+
     .search-item-card .d-flex {
         flex-direction: column;
-        align-items: center !important;
+        align-items: center;
         text-align: center;
-        gap: 0.8rem;
+        gap: var(--spacing-md);
     }
 
-    .search-item-card .flex-shrink-0 {
-        margin-right: 0 !important;
-    }
-
-    .search-item-card .ms-3 {
-        margin-left: 0 !important;
+    .search-item-thumb-img {
         width: 100%;
+        height: auto;
     }
-
-    .search-item-card .search-item-button,
-    .search-item-card .btn {
-        width: 100%;
-        margin-top: 0.5rem;
-    }
-
-    .search-item-title {
-        margin-left: auto;
-        margin-right: auto;
+}
     }
 
     .search-item-price {

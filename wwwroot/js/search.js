@@ -2,79 +2,113 @@
     const $searchInput = $(".search-input");
     const $searchBtn = $(".search-btn");
     const $resultsContainer = $("#search-results");
-    if (!$searchInput.length || !$searchBtn.length) return;
-    const performSearch = () => {
-        const query = $searchInput.val().trim();
-        if (!query) return;
-        const skeletonHtml = `
+
+    if (!$searchInput.length || !$searchBtn.length || !$resultsContainer.length) return;
+
+    const escapeHTML = (str) => {
+        return $('<div>').text(str || '').html();
+    };
+
+    const renderSkeleton = () => {
+        return `
             <div class="search-item-card text-white overflow-hidden">
                 <div class="d-flex align-items-center p-3">
-
                     <div class="flex-shrink-0 me-3">
                         <div class="skeleton search-item-thumb"></div>
                     </div>
-
                     <div class="flex-grow-1">
                         <div class="skeleton skeleton-text search-item-title"></div>
                         <div class="skeleton skeleton-text search-item-price"></div>
                     </div>
-
                     <div class="ms-3">
                         <div class="skeleton search-item-button"></div>
                     </div>
-
                 </div>
             </div>
         `;
+    };
 
-        $resultsContainer.html(skeletonHtml).show();
+    const renderResult = (data) => {
+        if (!data) {
+            return '<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>';
+        }
+
+        const safeTitle = escapeHTML(data.title);
+        const safePrice = escapeHTML(String(data.price));
+        const safeUrl = escapeHTML(data.url);
+
+        return `
+            <div class="search-item-card text-white overflow-hidden">
+                <div class="d-flex align-items-center p-3">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary search-item-thumb">
+                            <i class="fas fa-gamepad fa-2x"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="mb-1 fw-bold">${safeTitle}</h5>
+                        <div class="badge bg-success bg-opacity-75 fs-6 mt-1">R$ ${safePrice}</div>
+                    </div>
+                    <div class="ms-3">
+                        <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" 
+                           class="btn btn-sm btn-outline-light rounded-pill px-3 search-item-button d-flex align-items-center justify-content-center">
+                            Ver <i class="fas fa-external-link-alt ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+
+    const performSearch = () => {
+        const query = $searchInput.val().trim();
+        if (!query) return;
+
+        $resultsContainer.html(renderSkeleton()).show();
         $searchBtn.prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i>');
+
         $.ajax({
             url: "/Search/SearchGame",
             method: "GET",
-            data: { query: query },
+            data: { query },
             dataType: "json",
-            success: function (data) {
-                if (!data || $.isEmptyObject(data)) {
-                    $resultsContainer.html('<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>');
-                    return;
-                }
-                const html = `
-                    <div class="search-item-card text-white overflow-hidden">
-                        <div class="d-flex align-items-center p-3">
-                            <div class="flex-shrink-0 me-3">
-                                <div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary search-item-thumb">
-                                    <i class="fas fa-gamepad fa-2x"></i>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1 fw-bold">${data.title}</h5>
-                                <div class="badge bg-success bg-opacity-75 fs-6 mt-1">R$ ${data.price}</div>
-                            </div>
-                            <div class="ms-3">
-                                <a href="${data.url}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3 search-item-button d-flex align-items-center justify-content-center">
-                                    Ver <i class="fas fa-external-link-alt ms-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            timeout: 10000,
+            success: (data) => {
+                const html = (!data || $.isEmptyObject(data)) 
+                    ? '<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>'
+                    : renderResult(data);
                 $resultsContainer.html(html);
             },
-            error: function (xhr, status, error) {
+            error: (xhr, status, error) => {
                 console.error("Erro na busca:", error);
-                $resultsContainer.html('<div class="text-center text-danger p-3">Erro ao buscar jogos. Tente novamente.</div>');
+                const errorMsg = status === 'timeout' 
+                    ? 'Tempo esgotado. Tente novamente.'
+                    : 'Erro ao buscar jogos. Tente novamente.';
+                $resultsContainer.html(`<div class="text-center text-danger p-3">${errorMsg}</div>`);
             },
-            complete: function () {
+            complete: () => {
                 $searchBtn.prop("disabled", false).html('<i class="fas fa-search"></i>');
             }
         });
     };
+
     $searchBtn.off("click").on("click", performSearch);
-    $searchInput.off("keypress").on("keypress", function (e) {
-        if (e.which === 13) performSearch();
+
+    $searchInput.off("keypress").on("keypress", (e) => {
+        if (e.which === 13) {
+            e.preventDefault();
+            performSearch();
+        }
     });
-    $searchInput.on("keydown", function (e) {
-        if (e.key === "Escape") $resultsContainer.hide();
+
+    $searchInput.off("keydown").on("keydown", (e) => {
+        if (e.key === "Escape") {
+            $resultsContainer.hide();
+        }
     });
+
+    return () => {
+        $searchBtn.off("click");
+        $searchInput.off("keypress keydown");
+    };
 }

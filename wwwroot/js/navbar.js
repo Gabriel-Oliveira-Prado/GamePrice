@@ -1,55 +1,79 @@
-document.addEventListener('DOMContentLoaded', function () {
+(function() {
+    'use strict';
+
     let lastScrollTop = 0;
-    const navbar = document.querySelector('.navbar');
     let scrollTimeout;
+    let ticking = false;
 
-    if (!navbar) return;
+    function initNavbar() {
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
 
-    if (window.scrollY < 50) {
-        navbar.classList.add('navbar-transparent');
-    }
-
-    window.addEventListener('scroll', function () {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-        clearTimeout(scrollTimeout);
-
-        if (scrollTop < 50) {
+        if (window.scrollY < 50) {
             navbar.classList.add('navbar-transparent');
-        } else {
-            navbar.classList.remove('navbar-transparent');
         }
 
-        // Verifica se o menu mobile está aberto para não esconder a navbar
-        const collapse = navbar.querySelector('.navbar-collapse');
-        if (collapse && (collapse.classList.contains('show') || collapse.classList.contains('collapsing'))) {
-            navbar.classList.remove('navbar-hidden');
-            return;
-        }
+        function handleScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    clearTimeout(scrollTimeout);
 
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            navbar.classList.add('navbar-hidden');
-        } else {
-            navbar.classList.remove('navbar-hidden');
-        }
+                    if (scrollTop < 50) {
+                        navbar.classList.add('navbar-transparent');
+                    } else {
+                        navbar.classList.remove('navbar-transparent');
+                    }
 
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        scrollTimeout = setTimeout(() => {
-            navbar.classList.remove('navbar-hidden');
-        }, 1200);
-    });
+                    const collapse = navbar.querySelector('.navbar-collapse');
+                    const isMenuOpen = collapse && 
+                        (collapse.classList.contains('show') || collapse.classList.contains('collapsing'));
 
-    const collapse = navbar.querySelector('.navbar-collapse');
-    if (collapse) {
-        collapse.addEventListener('show.bs.collapse', function () {
-            navbar.classList.add('mobile-menu-open');
-            navbar.classList.remove('navbar-transparent');
-        });
-        collapse.addEventListener('hidden.bs.collapse', function () {
-            navbar.classList.remove('mobile-menu-open');
-            if (window.scrollY < 50) {
-                navbar.classList.add('navbar-transparent');
+                    if (isMenuOpen) {
+                        navbar.classList.remove('navbar-hidden');
+                        ticking = false;
+                        return;
+                    }
+
+                    if (scrollTop > lastScrollTop && scrollTop > 100) {
+                        navbar.classList.add('navbar-hidden');
+                    } else {
+                        navbar.classList.remove('navbar-hidden');
+                    }
+
+                    lastScrollTop = Math.max(0, scrollTop);
+
+                    scrollTimeout = setTimeout(() => {
+                        navbar.classList.remove('navbar-hidden');
+                    }, 1200);
+
+                    ticking = false;
+                });
+                ticking = true;
             }
-        });
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        const collapse = navbar.querySelector('.navbar-collapse');
+        if (collapse) {
+            collapse.addEventListener('show.bs.collapse', () => {
+                navbar.classList.add('mobile-menu-open');
+                navbar.classList.remove('navbar-transparent');
+            });
+
+            collapse.addEventListener('hidden.bs.collapse', () => {
+                navbar.classList.remove('mobile-menu-open');
+                if (window.scrollY < 50) {
+                    navbar.classList.add('navbar-transparent');
+                }
+            });
+        }
     }
-});
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNavbar);
+    } else {
+        initNavbar();
+    }
+})();

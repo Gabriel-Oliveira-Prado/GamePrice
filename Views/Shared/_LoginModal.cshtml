@@ -10,7 +10,8 @@
             <div class="modal-body px-4 pb-4">
                 @* Login Form *@
                 <div id="loginForm">
-                    <form>
+                    <form method="post">
+                        @Html.AntiForgeryToken()
                         <div class="mb-3">
                             <label for="emailInput" class="form-label text-white small">Email:</label>
                             <div class="input-group">
@@ -40,7 +41,8 @@
 
                 @* Register Form *@
                 <div id="registerForm" class="d-none">
-                    <form>
+                    <form method="post">
+                        @Html.AntiForgeryToken()
                         <div class="mb-3">
                             <label for="regNameInput" class="form-label text-white small">Nome:</label>
                             <div class="input-group">

@@ -1,27 +1,86 @@
-﻿.btn-glow {
+﻿/* Botões Base */
+.btn {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.5;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    transition: all var(--transition-fast);
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+/* Botão Primary com Glow */
+.btn-primary,
+.btn-glow {
     background: var(--primary);
     color: white;
-
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-    transition: transform 0.15s ease, box-shadow 0.2s ease;
-    border: 1px solid transparent;
+    border-color: transparent;
+    box-shadow: var(--shadow-md);
 }
 
+.btn-primary:hover,
 .btn-glow:hover {
-
-    box-shadow: 0 8px 22px rgba(var(--primary-rgb), 0.10);
+    background: var(--primary-hover);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-glow);
     color: white;
-    border-color: #ffffff;
 }
 
-.btn-login,
-.navbar .btn-login {
-    transition: box-shadow 0.18s ease, border-color 0.15s ease;
+/* Botão Outline */
+.btn-outline-primary {
+    background: transparent;
+    color: var(--primary);
+    border-color: var(--primary);
 }
 
-.btn-login:hover,
-.navbar .btn-login:hover {
-    transform: none !important;
-    box-shadow: 0 8px 22px rgba(var(--primary-rgb), 0.10);
-    border: 1px solid #ffffff !important;
+.btn-outline-primary:hover {
+    background: var(--primary);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+/* Botão Light */
+.btn-light {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--bg-dark);
+    border-color: transparent;
+}
+
+.btn-light:hover {
+    background: white;
+    box-shadow: var(--shadow-md);
+}
+
+/* Tamanhos */
+.btn-sm {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: var(--spacing-md) var(--spacing-2xl);
+    font-size: 1.0625rem;
+}
+
+/* Formas */
+.rounded-pill {
+    border-radius: var(--radius-full);
+}
+
+/* Estados */
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
 }

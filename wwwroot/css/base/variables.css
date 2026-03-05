@@ -1,25 +1,94 @@
 :root {
-    --bg-dark: #07122a;
-    --bg-dark-rgb: 7, 18, 42;
-    --bg-card: #151A23;
-    --bg-card-rgb: 21, 26, 35;
-    --primary: #0d6efd;
-    --primary-rgb: 13, 110, 253;
-    --secondary: #7000FF;
-    --secondary-rgb: 112, 0, 255;
-    --accent: #FF0055;
-    --accent-rgb: 255, 0, 85;
-    --glow-cyan-rgb: 0, 229, 255;
-    --text-main: #FFFFFF;
-    --text-muted: #CBD5E1;
-    --glass: rgba(var(--bg-card-rgb), 0.7);
-    --gradient-main: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
-    --glow-color: rgba(var(--secondary-rgb), 0.15);
-    --surface-dark: var(--bg-dark);
-    --surface-border: #ffffff;
+    /* Cores Base */
+    --bg-dark: #0a0e1a;
+    --bg-dark-rgb: 10, 14, 26;
+    --bg-card: #141824;
+    --bg-card-rgb: 20, 24, 36;
 
-    --font-primary: 'Plus Jakarta Sans', sans-serif;
+    /* Cores Primárias */
+    --primary: #3b82f6;
+    --primary-rgb: 59, 130, 246;
+    --primary-hover: #2563eb;
 
-    --font-secondary: 'Inter', sans-serif;
+    /* Cores Secundárias */
+    --secondary: #8b5cf6;
+    --secondary-rgb: 139, 92, 246;
+    --accent: #f43f5e;
+    --accent-rgb: 244, 63, 94;
 
+    /* Efeitos */
+    --glow-cyan-rgb: 56, 189, 248;
+
+    /* Texto */
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-disabled: #64748b;
+
+    /* Superfícies */
+    --surface-glass: rgba(var(--bg-card-rgb), 0.6);
+    --surface-border: rgba(255, 255, 255, 0.1);
+    --surface-hover: rgba(255, 255, 255, 0.05);
+
+    /* Gradientes */
+    --gradient-main: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    --gradient-radial: radial-gradient(circle at 50% 0%, rgba(var(--primary-rgb), 0.15) 0%, transparent 50%);
+
+    /* Tipografia - Fontes Modernas */
+    --font-display: 'Inter Tight', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Pesos de Fonte */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+
+    /* Espaçamentos (Sistema 4px) */
+    --spacing-xs: 0.25rem;    /* 4px */
+    --spacing-sm: 0.5rem;     /* 8px */
+    --spacing-md: 1rem;       /* 16px */
+    --spacing-lg: 1.5rem;     /* 24px */
+    --spacing-xl: 2rem;       /* 32px */
+    --spacing-2xl: 3rem;      /* 48px */
+    --spacing-3xl: 4rem;      /* 64px */
+    --spacing-4xl: 6rem;      /* 96px */
+
+    /* Border Radius */
+    --radius-sm: 0.375rem;    /* 6px */
+    --radius-md: 0.5rem;      /* 8px */
+    --radius-lg: 0.75rem;     /* 12px */
+    --radius-xl: 1rem;        /* 16px */
+    --radius-2xl: 1.5rem;     /* 24px */
+    --radius-full: 9999px;
+
+    /* Transições */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Sombras */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+
+    /* Layout */
+    --max-width-sm: 640px;
+    --max-width-md: 768px;
+    --max-width-lg: 1024px;
+    --max-width-xl: 1280px;
+    --max-width-2xl: 1400px;
+    --max-width-container: 1320px;
+
+    /* Z-index */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
 }
