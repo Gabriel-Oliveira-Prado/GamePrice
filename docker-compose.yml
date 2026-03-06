@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  gameprice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    container_name: gameprice-web
+    restart: unless-stopped

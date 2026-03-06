@@ -1,35 +1,39 @@
 using GamePrice.Api.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-public class SearchController : Controller
-{
-    private readonly HttpClient _http;
-
-    public SearchController(HttpClient http)
+    public class SearchController : Controller
     {
-        _http = http;
-    }
+        private readonly HttpClient _http;
+        private readonly IConfiguration _configuration;
 
-    [HttpGet("Search/SearchGame")]
-    public async Task<IActionResult> SearchGame([FromQuery] string query)
-    {
-        if (string.IsNullOrEmpty(query))
-            return BadRequest("Informe o nome do jogo");
-
-        try
+        public SearchController(HttpClient http, IConfiguration configuration)
         {
-            // Chama a API GamePrice.Api na porta 5098
-            var apiUrl = $"http://localhost:5098/api/scraper/price?gameName={Uri.EscapeDataString(query)}";
-            var data = await _http.GetFromJsonAsync<GamePriceDto>(apiUrl);
-
-            if (data == null)
-                return NotFound("Jogo não encontrado");
-
-            return Json(data); // Retorna JSON para o JS
+            _http = http;
+            _configuration = configuration;
         }
-        catch
+
+        [HttpGet("Search/SearchGame")]
+        public async Task<IActionResult> SearchGame([FromQuery] string query)
         {
-            return StatusCode(500, "Erro ao buscar jogos. Tente novamente.");
+            if (string.IsNullOrEmpty(query))
+                return BadRequest("Informe o nome do jogo");
+
+            try
+            {
+                // Chama a API GamePrice.Api lendo da configuração
+                var baseUrl = _configuration["ApiSettings:GamePriceApiUrl"] ?? "http://localhost:5098";
+                var apiUrl = $"{baseUrl.TrimEnd('/')}/api/scraper/price?gameName={Uri.EscapeDataString(query)}";
+                
+                var data = await _http.GetFromJsonAsync<GamePriceDto>(apiUrl);
+
+                if (data == null)
+                    return NotFound("Jogo não encontrado");
+
+                return Json(data); // Retorna JSON para o JS
+            }
+            catch
+            {
+                return StatusCode(500, "Erro ao buscar jogos. Tente novamente.");
+            }
         }
     }
-}

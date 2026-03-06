@@ -16,7 +16,8 @@ builder.Services.AddControllers()
 // Configuração opcional do AntiForgery para fortalecer os cookies
 builder.Services.AddAntiforgery(options => 
 {
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Exige HTTPS para o cookie de CSRF
+    // Permite rodar localmente via HTTP (Docker)
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     options.Cookie.HttpOnly = true; // Impede que o JS acesse o cookie (mitiga XSS)
     options.Cookie.SameSite = SameSiteMode.Strict; // Impede envio cruzado de cookies
 });
@@ -29,9 +30,9 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.Use(async (context, next) =>
