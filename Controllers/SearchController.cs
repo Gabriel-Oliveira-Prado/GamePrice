@@ -1,4 +1,4 @@
-using GamePrice.Api.DTOs;
+using GamePrice.Api.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
     public class SearchController : Controller
