@@ -1,4 +1,4 @@
-﻿/* Search Container */
+/* Search Container */
 .search-container {
     position: relative;
     max-width: 40rem;
@@ -101,7 +101,7 @@
 
     /* Layout do card em mobile - mantém estrutura do desktop */
     .search-item-card {
-        padding: var(--spacing-md);
+        padding: 0;
         margin-bottom: var(--spacing-sm);
     }
 
@@ -113,11 +113,15 @@
 
     /* Thumb mantém proporção boa em mobile */
     .search-item-thumb-small {
-        width: 80px;
-        height: 50px;
+        width: 100px;
+        height: 100%;
+        min-height: 60px;
         flex-shrink: 0;
-        border-radius: var(--radius-md);
+        border-radius: 0;
+        border-top-left-radius: var(--radius-lg);
+        border-bottom-left-radius: var(--radius-lg);
         overflow: hidden;
+        object-fit: cover;
     }
 
     /* Área de conteúdo com espaço adequado */
@@ -194,21 +198,19 @@
         height: 34px;
         border-radius: var(--radius-md);
     }
-}
-
     .search-dropdown {
         max-height: 200px;
         margin-top: var(--spacing-xs);
     }
 
     .search-item-card {
-        padding: var(--spacing-xs);
+        padding: 0;
         margin-bottom: var(--spacing-xs);
     }
 
     .search-item-thumb-small {
-        width: 60px;
-        height: 40px;
+        width: 80px;
+        min-height: 50px;
     }
 
     .search-item-title-small {

@@ -1,4 +1,4 @@
-﻿function initSearch() {
+function initSearch() {
     const $searchInput = $(".search-input");
     const $searchBtn = $(".search-btn");
     const $resultsContainer = $("#search-results");
@@ -11,16 +11,16 @@
 
     const renderSkeleton = () => {
         return `
-            <div class="search-item-card text-white overflow-hidden">
-                <div class="d-flex align-items-center">
+            <div class="search-item-card text-white overflow-hidden d-block">
+                <div class="d-flex align-items-stretch">
                     <div class="flex-shrink-0">
-                        <div class="skeleton skeleton-shimmer search-item-thumb-small"></div>
+                        <div class="skeleton skeleton-shimmer search-item-thumb-small m-0 rounded-0" style="min-height: 100%; border-top-left-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-lg);"></div>
                     </div>
-                    <div class="flex-grow-1">
-                        <div class="skeleton skeleton-shimmer skeleton-text search-item-title-small mb-2"></div>
-                        <div class="skeleton skeleton-shimmer search-item-price-small"></div>
+                    <div class="flex-grow-1 py-3 px-3">
+                        <div class="skeleton skeleton-shimmer skeleton-text search-item-title-small mb-2 mt-1"></div>
+                        <div class="skeleton skeleton-shimmer search-item-price-small mb-1"></div>
                     </div>
-                    <div class="flex-shrink-0">
+                    <div class="flex-shrink-0 d-flex align-items-center pe-3">
                         <div class="skeleton skeleton-shimmer search-item-button-small"></div>
                     </div>
                 </div>
@@ -38,25 +38,24 @@
         const safeUrl = escapeHTML(data.url);
 
         return `
-            <div class="search-item-card text-white overflow-hidden">
-                <div class="d-flex align-items-center">
+            <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="search-item-card text-white text-decoration-none overflow-hidden d-block">
+                <div class="d-flex align-items-stretch">
                     <div class="flex-shrink-0">
-                        <div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary search-item-thumb-small">
+                        <div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary h-100 m-0 search-item-thumb-small" style="border-radius: 0; min-height: 60px;">
                             <i class="fas fa-gamepad fa-lg"></i>
                         </div>
                     </div>
-                    <div class="flex-grow-1">
-                        <h6 class="mb-1 fw-bold">${safeTitle}</h6>
-                        <div class="badge bg-success bg-opacity-75 small">R$ ${safePrice}</div>
+                    <div class="flex-grow-1 py-3 px-3 d-flex flex-column justify-content-center">
+                        <h6 class="mb-1 fw-bold text-truncate">${safeTitle}</h6>
+                        <div class="badge bg-success bg-opacity-75 small align-self-start">R$ ${safePrice}</div>
                     </div>
-                    <div class="flex-shrink-0">
-                        <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" 
-                           class="btn btn-sm btn-outline-light rounded-pill search-item-button-small">
+                    <div class="flex-shrink-0 d-flex align-items-center pe-3">
+                        <span class="btn btn-sm text-white search-item-button-small border-0 shadow-none search-btn-view transition-base d-flex align-items-center justify-content-center" style="background: transparent;">
                             Ver <i class="bi bi-box-arrow-up-right ms-1 search-result-icon"></i>
-                        </a>
+                        </span>
                     </div>
                 </div>
-            </div>
+            </a>
         `;
     };
 
