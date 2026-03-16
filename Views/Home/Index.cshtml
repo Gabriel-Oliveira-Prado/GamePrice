@@ -5,20 +5,35 @@
 <section class="hero-section text-center position-relative">
     <div id="particles-js" class="particles-container"></div>
     <div class="hero-animation-container" id="hero-animation"></div>
+
+    <div class="dropdown dropup position-absolute bottom-0 start-0 m-3 m-md-4 fade-in-up z-3 d-none d-md-inline-block">
+        <button class="badge glass-effect text-primary px-3 py-2 rounded-pill border-0 shadow-none d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+            <span class="pulse-dot"></span> Monitoramento em Tempo Real <i class="bi bi-chevron-up status-text-xs"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-dark shadow-lg rounded-4 p-3 border border-secondary status-menu-desktop status-menu-glass" id="desktop-status-menu">
+        </div>
+    </div>
+
     <div class="container position-relative hero-content-wrapper">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <div class="badge glass-effect text-primary px-3 py-2 rounded-pill mb-4 fade-in-up">
-                    <span class="pulse-dot"></span> Monitoramento em Tempo Real
+                <div class="mb-4 fade-in-up d-md-none">
+                    <button class="badge glass-effect text-primary px-3 py-2 rounded-pill border-0 shadow-none d-flex align-items-center gap-2 mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mobileStatusCollapse" aria-expanded="false" aria-controls="mobileStatusCollapse">
+                        <span class="pulse-dot"></span> Monitoramento em Tempo Real <i class="bi bi-chevron-down status-text-xs"></i>
+                    </button>
+                    <div class="collapse mt-3" id="mobileStatusCollapse">
+                        <div class="card card-body shadow-lg rounded-4 p-3 border border-secondary mx-auto text-start status-menu-mobile status-menu-glass" id="mobile-status-menu">
+                        </div>
+                    </div>
                 </div>
                 <h1 class="hero-title text-white mb-4 fade-in-up">Não pague mais caro.<br>Encontre o <span class="text-highlight">menor preço.</span></h1>
-                <div class="search-container fade-in-up mb-4">
-                    <div class="position-relative">
+                <div class="search-container fade-in-up mb-4 mx-auto">
+                    <div class="position-relative z-3">
                         <input type="text" class="search-input" placeholder="Qual jogo você está procurando?">
                         <button class="search-btn" type="button"><i class="bi bi-search"></i></button>
                     </div>
                     @* Search Results*@
-                    <div id="search-results" class="search-dropdown mt-2 text-start rounded-3 shadow-lg"></div>
+                    <div id="search-results" class="search-dropdown text-start rounded-3 shadow-lg mt-2"></div>
                 </div>
                 <p class="lead fade-in-up hero-lead-text">Comparamos preços da Steam, Epic Games, PS Store, Xbox e Nintendo Eshop em segundos. Receba alertas de promoções imperdíveis.</p>
                 <div class="mt-5 d-flex flex-wrap justify-content-center gap-3 gap-md-4 small fade-in-up">
@@ -335,6 +350,7 @@
 </section>
 
 @section Scripts {
+    <script src="~/js/status-badge.js" asp-append-version="true"></script>
     <script src="~/js/animations.js" asp-append-version="true"></script>
     <script src="~/js/deals.js" asp-append-version="true"></script>
     <script src="~/js/sections.js" asp-append-version="true"></script>

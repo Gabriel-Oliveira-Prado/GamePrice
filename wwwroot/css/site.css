@@ -21,6 +21,7 @@
 @import url('components/loader.css');
 @import url('components/search.css');
 @import url('components/LoginModal.css');
+@import url('components/status-badge.css');
 
 /* Sections */
 @import url('sections/hero.css');

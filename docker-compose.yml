@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  gameprice:
+  gameprice-web:
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,5 +9,35 @@ services:
       - "8080:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    container_name: gameprice-web
-    restart: unless-stopped
+      - ApiSettings__GamePriceApiUrl=http://gameprice-api:5200
+    depends_on:
+      - gameprice-api
+    networks:
+      - gameprice-network
+
+  gameprice-api:
+    build:
+      context: ../GamePrice.Api
+      dockerfile: Dockerfile
+    ports:
+      - "5200:5200"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ApiSettings__ScraperApiUrl=http://gameprice-scraper:8000
+    depends_on:
+      - gameprice-scraper
+    networks:
+      - gameprice-network
+
+  gameprice-scraper:
+    build:
+      context: ../GamePrice.Scraper
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - gameprice-network
+
+networks:
+  gameprice-network:
+    driver: bridge

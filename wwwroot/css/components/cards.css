@@ -692,13 +692,6 @@
         height: 180px;
     }
 
-    .search-item-card .d-flex {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: var(--spacing-md);
-    }
-
     .search-item-thumb-img {
         width: 100%;
         height: auto;

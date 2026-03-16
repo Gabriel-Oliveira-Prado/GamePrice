@@ -47,7 +47,7 @@ function initSearch() {
                     </div>
                     <div class="flex-grow-1 py-3 px-3 d-flex flex-column justify-content-center">
                         <h6 class="mb-1 fw-bold text-truncate">${safeTitle}</h6>
-                        <div class="badge bg-success bg-opacity-75 small align-self-start">R$ ${safePrice}</div>
+                        <div class="badge bg-success bg-opacity-75 small align-self-start">${safePrice}</div>
                     </div>
                     <div class="flex-shrink-0 d-flex align-items-center pe-3">
                         <span class="btn btn-sm text-white search-item-button-small border-0 shadow-none search-btn-view transition-base d-flex align-items-center justify-content-center" style="background: transparent;">
@@ -63,7 +63,7 @@ function initSearch() {
         const query = $searchInput.val().trim();
         if (!query) return;
 
-        $resultsContainer.html(renderSkeleton()).show();
+        $resultsContainer.html(renderSkeleton()).slideDown(300);
         $searchBtn.prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i>');
 
         $.ajax({
@@ -71,7 +71,7 @@ function initSearch() {
             method: "GET",
             data: { query },
             dataType: "json",
-            timeout: 10000,
+            timeout: 60000, // 60s timeout required because scraping multiple stores uses Selenium
             success: (data) => {
                 const html = (!data || $.isEmptyObject(data)) 
                     ? '<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>'
@@ -102,7 +102,7 @@ function initSearch() {
 
     $searchInput.off("keydown").on("keydown", (e) => {
         if (e.key === "Escape") {
-            $resultsContainer.hide();
+            $resultsContainer.slideUp(300);
         }
     });
 

@@ -1,16 +1,24 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-white login-modal-content">
-            <div class="modal-header border-bottom-0 pt-4 px-4">
-                <h5 class="modal-title fw-bold d-flex align-items-center" id="loginModalLabel">
-                    <i class="fas fa-user-circle text-primary me-2 fs-4"></i> <span id="authTitle">Login</span>
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content text-white login-modal-content position-relative">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header border-bottom-0 pb-0 pt-4 px-4 mt-2">
+                <nav class="w-100">
+                    <div class="nav nav-tabs auth-tabs w-100" id="authTab" role="tablist">
+                        <button class="nav-link active flex-grow-1 text-center fw-bold py-3" id="login-tab" data-bs-toggle="tab" data-bs-target="#loginForm" type="button" role="tab" aria-controls="loginForm" aria-selected="true">
+                            <i class="fas fa-sign-in-alt text-primary auth-icon me-2"></i>Login
+                        </button>
+                        <button class="nav-link flex-grow-1 text-center fw-bold py-3" id="register-tab" data-bs-toggle="tab" data-bs-target="#registerForm" type="button" role="tab" aria-controls="registerForm" aria-selected="false">
+                            <i class="fas fa-user-plus text-primary auth-icon me-2"></i>Criar Conta
+                        </button>
+                    </div>
+                </nav>
             </div>
-            <div class="modal-body px-4 pb-4">
-                @* Login Form *@
-                <div id="loginForm">
-                    <form method="post">
+            <div class="modal-body px-4 pb-4 pt-4">
+                <div class="tab-content" id="authTabContent">
+                    @* Login Form *@
+                    <div class="tab-pane fade show active" id="loginForm" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+                        <form method="post">
                         @Html.AntiForgeryToken()
                         <div class="mb-3">
                             <label for="emailInput" class="form-label text-white small">Email:</label>
@@ -37,10 +45,10 @@
                             <button type="submit" class="btn btn-primary btn-glow fw-bold auth-submit-btn">Entrar</button>
                         </div>
                     </form>
-                </div>
+                    </div>
 
-                @* Register Form *@
-                <div id="registerForm" class="d-none">
+                    @* Register Form *@
+                    <div class="tab-pane fade" id="registerForm" role="tabpanel" aria-labelledby="register-tab" tabindex="0">
                     <form method="post">
                         @Html.AntiForgeryToken()
                         <div class="mb-3">
@@ -75,6 +83,7 @@
                             <button type="submit" class="btn btn-primary btn-glow fw-bold auth-submit-btn">Cadastrar</button>
                         </div>
                     </form>
+                    </div>
                 </div>
 
                 <div class="position-relative my-4">

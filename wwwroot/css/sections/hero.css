@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-2xl) 0 120px 0;
     overflow: visible;
     background: var(--bg-dark);
 }
@@ -13,7 +13,7 @@
 /* Centralização perfeita independente do zoom */
 @media (min-width: 768px) {
     .hero-section {
-        padding: var(--spacing-3xl) 0;
+        padding: var(--spacing-3xl) 0 140px 0;
     }
 }
 
@@ -190,7 +190,7 @@
         min-height: 100svh;
         align-items: center;
         justify-content: center;
-        padding: var(--spacing-2xl) var(--spacing-md);
+        padding: var(--spacing-2xl) var(--spacing-md) 120px var(--spacing-md);
     }
 
     .hero-title {
