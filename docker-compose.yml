@@ -3,8 +3,8 @@ version: '3.8'
 services:
   gameprice-web:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: GamePrice/Dockerfile
     ports:
       - "8080:80"
     environment:
@@ -17,12 +17,13 @@ services:
 
   gameprice-api:
     build:
-      context: ../GamePrice.Api
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: GamePrice.Api/Dockerfile
     ports:
       - "5200:5200"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5200
       - ApiSettings__ScraperApiUrl=http://gameprice-scraper:8000
     depends_on:
       - gameprice-scraper
@@ -35,6 +36,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
     networks:
       - gameprice-network
 

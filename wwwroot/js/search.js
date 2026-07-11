@@ -9,6 +9,18 @@ function initSearch() {
         return $('<div>').text(str || '').html();
     };
 
+    const getStoreIcon = (store) => {
+        const s = (store || '').toLowerCase();
+        if (s.includes('steam')) return 'fab fa-steam';
+        if (s.includes('epic')) return 'fab fa-epic-games';
+        if (s.includes('playstation') || s.includes('ps')) return 'fab fa-playstation';
+        if (s.includes('xbox')) return 'fab fa-xbox';
+        if (s.includes('nintendo')) return 'bi bi-nintendo-switch';
+        if (s.includes('gog')) return 'fas fa-compact-disc';
+        if (s.includes('nuuvem')) return 'fas fa-cloud';
+        return 'fas fa-store';
+    };
+
     const renderSkeleton = () => {
         return `
             <div class="search-item-card text-white overflow-hidden d-block">
@@ -25,29 +37,42 @@ function initSearch() {
                     </div>
                 </div>
             </div>
+            <div class="text-center text-white-50 small py-2">
+                <i class="fas fa-spinner fa-spin me-1"></i> Buscando em todas as lojas...
+            </div>
         `;
     };
 
-    const renderResult = (data) => {
-        if (!data) {
+    const renderResult = (dataList) => {
+        if (!dataList || dataList.length === 0) {
             return '<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>';
         }
 
-        const safeTitle = escapeHTML(data.title);
-        const safePrice = escapeHTML(String(data.price));
-        const safeUrl = escapeHTML(data.url);
+        const cheapest = dataList[0];
+        const safeTitle = escapeHTML(cheapest.nome);
+        const safePrice = escapeHTML(String(cheapest.preco_atual || 'Indisponível'));
+        const safeStore = escapeHTML(cheapest.plataforma);
+        const safeImage = escapeHTML(cheapest.imagem);
+        const storeIcon = getStoreIcon(cheapest.plataforma);
+        const hasImage = cheapest.imagem && cheapest.imagem.length > 0;
 
         return `
-            <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="search-item-card text-white text-decoration-none overflow-hidden d-block">
+            <a href="/Search/Details?gameName=${encodeURIComponent(cheapest.nome)}" class="search-item-card text-white text-decoration-none overflow-hidden d-block">
                 <div class="d-flex align-items-stretch">
                     <div class="flex-shrink-0">
-                        <div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary h-100 m-0 search-item-thumb-small" style="border-radius: 0; min-height: 60px;">
-                            <i class="fas fa-gamepad fa-lg"></i>
-                        </div>
+                        ${hasImage
+                            ? `<img src="${safeImage}" alt="${safeTitle}" class="search-item-thumb-small m-0 rounded-0" style="object-fit: cover; min-height: 100%; border-top-left-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-lg);">`
+                            : `<div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary h-100 m-0 search-item-thumb-small" style="border-radius: 0; min-height: 60px;">
+                                <i class="fas fa-gamepad fa-lg"></i>
+                              </div>`
+                        }
                     </div>
                     <div class="flex-grow-1 py-3 px-3 d-flex flex-column justify-content-center">
                         <h6 class="mb-1 fw-bold text-truncate">${safeTitle}</h6>
-                        <div class="badge bg-success bg-opacity-75 small align-self-start">${safePrice}</div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-success bg-opacity-75 small">${safePrice}</span>
+                            <small class="text-white-50"><i class="${storeIcon} me-1"></i>${safeStore}</small>
+                        </div>
                     </div>
                     <div class="flex-shrink-0 d-flex align-items-center pe-3">
                         <span class="btn btn-sm text-white search-item-button-small border-0 shadow-none search-btn-view transition-base d-flex align-items-center justify-content-center" style="background: transparent;">
@@ -71,12 +96,14 @@ function initSearch() {
             method: "GET",
             data: { query },
             dataType: "json",
-            timeout: 60000, // 60s timeout required because scraping multiple stores uses Selenium
+            timeout: 120000,
             success: (data) => {
-                const html = (!data || $.isEmptyObject(data)) 
-                    ? '<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>'
-                    : renderResult(data);
-                $resultsContainer.html(html);
+                if (!data || data.length === 0) {
+                    $resultsContainer.html('<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>');
+                } else {
+                    const html = renderResult(data);
+                    $resultsContainer.html(html);
+                }
             },
             error: (xhr, status, error) => {
                 console.error("Erro na busca:", error);

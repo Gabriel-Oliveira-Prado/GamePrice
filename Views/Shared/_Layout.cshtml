@@ -51,8 +51,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link px-3" href="#features">Recursos</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#deals">Ofertas</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" asp-controller="Home" asp-action="Recursos">Recursos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" asp-controller="Home" asp-action="Ofertas">Ofertas</a></li>
                     <li class="nav-item dropdown ms-lg-2">
                         <a class="nav-link dropdown-toggle px-3" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Idioma" title="Idioma">
                             <i class="bi bi-globe nav-icon-globe"></i>
@@ -62,17 +62,29 @@
                             <li><a class="dropdown-item disabled" href="#">English (US)</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item ms-lg-2 mt-3 mt-lg-0">
-                        <a class="btn btn-primary btn-login" data-bs-toggle="modal" data-bs-target="#loginModal">Entrar</a>
-                    </li>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item dropdown ms-lg-2 mt-3 mt-lg-0">
+                            <a class="btn btn-outline-primary dropdown-toggle d-flex align-items-center gap-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle"></i>Olá, @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                                <li><a class="dropdown-item text-danger d-flex align-items-center gap-2" asp-controller="Account" asp-action="Logout"><i class="bi bi-box-arrow-right"></i>Sair</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item ms-lg-2 mt-3 mt-lg-0">
+                            <a class="btn btn-primary btn-login" asp-controller="Account" asp-action="Login">Entrar</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
     </nav>
 
     @RenderBody()
-
-    <partial name="_LoginModal" />
 
     @* Footer *@
     <footer class="footer">
@@ -98,8 +110,8 @@
                 <div class="col-lg-2 col-md-6 text-center text-md-start">
                     <h5 class="footer-subtitle">Navegação</h5>
                     <ul class="footer-links">
-                        <li><a href="#features">Recursos</a></li>
-                        <li><a href="#deals">Ofertas</a></li>
+                        <li><a asp-controller="Home" asp-action="Recursos">Recursos</a></li>
+                        <li><a asp-controller="Home" asp-action="Ofertas">Ofertas</a></li>
                         <li><a href="https://github.com/Gabriel-Oliveira-Prado/GamePrice.Api" target="_blank">Api</a></li>
                         <li><a href="https://github.com/Gabriel-Oliveira-Prado/GamePrice" target="_blank">Documentação</a></li>
                     </ul>

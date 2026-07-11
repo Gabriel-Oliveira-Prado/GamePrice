@@ -1,0 +1,130 @@
+@model List<GamePrice.Api.Domain.DTOs.GameDealDto>
+@{
+    ViewData["Title"] = "Ofertas em Destaque";
+}
+
+<div class="container py-5 mt-5">
+    <div class="text-center mb-5 mt-4">
+        <h1 class="fw-bold text-white mb-2">Ofertas em <span class="text-primary">Destaque</span></h1>
+        <p class="text-white-50">Os melhores descontos monitorados em tempo real nas maiores lojas de games.</p>
+    </div>
+
+    @* Filtros Rapidos *@
+    <div class="d-flex justify-content-center flex-wrap gap-2 mb-5">
+        <span class="badge rounded-pill px-4 py-2 filter-pill active" data-filter="all">Todos</span>
+        <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="pc"><i class="fas fa-desktop me-1"></i> PC</span>
+        <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="playstation"><i class="fab fa-playstation me-1"></i> PlayStation</span>
+        <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="xbox"><i class="fab fa-xbox me-1"></i> Xbox</span>
+        <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="nintendo"><i class="bi bi-nintendo-switch me-1"></i> Nintendo</span>
+        <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="under20">Abaixo de R$ 20</span>
+    </div>
+
+    @* Grid de Cards *@
+    <div class="row g-4" id="deals-grid">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var game in Model)
+            {
+                <div class="col-md-4 col-lg-3 deal-item-card" data-platform="@game.Platform" data-price="@game.Price">
+                    <div class="deal-card h-100">
+                        <div class="position-relative">
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">@game.Discount</span>
+                            <img src="@game.Image" class="card-img-top" alt="@game.Title" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=640';">
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="text-white fw-bold mb-0 text-truncate" title="@game.Title">@game.Title</h5>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="@GetStoreIconClass(game.Store) text-white-50 me-2"></i>
+                                <small class="text-white-50">@game.Store</small>
+                            </div>
+                            <a href="/Search/Details?gameName=@Uri.EscapeDataString(game.Title)" class="card-price-link text-decoration-none">
+                                <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
+                                    @if (!string.IsNullOrEmpty(game.OldPrice))
+                                    {
+                                        <small class="text-decoration-line-through text-secondary price-old-text">R$ @game.OldPrice</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-secondary price-old-text" style="visibility:hidden;">—</small>
+                                    }
+                                    <div class="price-display">
+                                        <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
+                                        <span class="text-primary fw-bold fs-4 price-value">R$ @game.Price</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center py-5 text-muted">Nenhuma oferta disponível no momento.</div>
+        }
+    </div>
+</div>
+
+@functions {
+    public string GetStoreIconClass(string store)
+    {
+        var s = (store ?? "").ToLowerInvariant();
+        if (s.Contains("steam")) return "fab fa-steam";
+        if (s.Contains("epic")) return "fab fa-epic-games";
+        if (s.Contains("playstation") || s.Contains("ps")) return "fab fa-playstation";
+        if (s.Contains("xbox")) return "fab fa-xbox";
+        if (s.Contains("nintendo")) return "fas fa-gamepad";
+        if (s.Contains("gog")) return "fas fa-compact-disc";
+        if (s.Contains("nuuvem")) return "fas fa-cloud";
+        return "fas fa-store";
+    }
+}
+
+@section Scripts {
+    <script>
+        $(function() {
+            const $grid = $("#deals-grid");
+            const $filters = $(".filter-pill");
+
+            $filters.on('click', function() {
+                const $this = $(this);
+                if ($this.hasClass('active')) return;
+
+                $filters.removeClass('active');
+                $this.addClass('active');
+
+                const filter = $this.data('filter');
+                $grid.animate({ opacity: 0 }, 200, function() {
+                    const cards = $grid.find(".deal-item-card");
+                    if (filter === "all") {
+                        cards.show();
+                    } else {
+                        cards.each(function() {
+                            const $card = $(this);
+                            const platform = $card.data("platform");
+                            const priceStr = String($card.data("price")).replace(",", ".");
+                            const price = parseFloat(priceStr);
+
+                            if (filter === "under20") {
+                                if (price < 20.0) {
+                                    $card.show();
+                                } else {
+                                    $card.hide();
+                                }
+                            } else {
+                                if (platform === filter) {
+                                    $card.show();
+                                } else {
+                                    $card.hide();
+                                }
+                            }
+                        });
+                    }
+                    $(this).animate({ opacity: 1 }, 200);
+                });
+            });
+        });
+    </script>
+}

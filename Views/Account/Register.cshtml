@@ -1,0 +1,118 @@
+@model GamePrice.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Criar Conta";
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+    <div class="auth-card-wrapper position-relative">
+        <div class="auth-glow-1"></div>
+        <div class="auth-glow-2"></div>
+        
+        <div class="card auth-card glass-effect border-secondary border-opacity-25 text-white p-4 p-md-5 rounded-4 shadow-lg">
+            <div class="text-center mb-4">
+                <a class="navbar-brand text-white fs-2 fw-bold d-inline-block mb-2" href="/">
+                    <i class="fas fa-gamepad text-primary me-2"></i>Game<span class="text-primary">Price</span>
+                </a>
+                <p class="text-white-50">Crie sua conta para alertas e muito mais</p>
+            </div>
+
+            <form asp-action="Register" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label small text-white-50">Nome</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white-50"><i class="fas fa-user"></i></span>
+                        <input asp-for="Name" class="form-control bg-dark bg-opacity-25 border-secondary border-opacity-50 text-white shadow-none" placeholder="Seu nome" />
+                    </div>
+                    <span asp-validation-for="Name" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label small text-white-50">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white-50"><i class="fas fa-envelope"></i></span>
+                        <input asp-for="Email" class="form-control bg-dark bg-opacity-25 border-secondary border-opacity-50 text-white shadow-none" placeholder="seu@email.com" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label small text-white-50">Senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white-50"><i class="fas fa-lock"></i></span>
+                        <input asp-for="Password" type="password" class="form-control bg-dark bg-opacity-25 border-secondary border-opacity-50 text-white shadow-none" placeholder="••••••" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="ConfirmPassword" class="form-label small text-white-50">Confirmar Senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white-50"><i class="fas fa-lock"></i></span>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control bg-dark bg-opacity-25 border-secondary border-opacity-50 text-white shadow-none" placeholder="••••••" />
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="d-grid mb-4">
+                    <button type="submit" class="btn btn-primary btn-glow fw-bold py-2">Registrar</button>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <p class="mb-0 text-white-50 small">Já tem uma conta? <a asp-action="Login" class="text-primary text-decoration-none fw-bold">Faça Login</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .auth-card-wrapper {
+            width: 100%;
+            max-width: 480px;
+        }
+        .auth-card {
+            background: rgba(18, 18, 24, 0.45);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 2;
+            position: relative;
+        }
+        .auth-glow-1 {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 150px;
+            height: 150px;
+            background: var(--primary-glow);
+            filter: blur(60px);
+            opacity: 0.4;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .auth-glow-2 {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            background: var(--secondary-glow);
+            filter: blur(60px);
+            opacity: 0.4;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .form-control:focus {
+            border-color: var(--primary-color) !important;
+            background: rgba(0, 0, 0, 0.4) !important;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.15) !important;
+        }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

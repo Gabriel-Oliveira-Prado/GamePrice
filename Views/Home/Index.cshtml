@@ -1,31 +1,46 @@
-﻿@{
+@model GamePrice.Models.HomeViewModel
+@{
     ViewData["Title"] = "GamePrice - O Melhor Preço para seu Jogo";
+}
+@functions {
+    public string GetStoreIconClass(string store)
+    {
+        var s = (store ?? "").ToLowerInvariant();
+        if (s.Contains("steam")) return "fab fa-steam";
+        if (s.Contains("epic")) return "fab fa-epic-games";
+        if (s.Contains("playstation") || s.Contains("ps")) return "fab fa-playstation";
+        if (s.Contains("xbox")) return "fab fa-xbox";
+        if (s.Contains("nintendo")) return "fas fa-gamepad";
+        if (s.Contains("gog")) return "fas fa-compact-disc";
+        if (s.Contains("nuuvem")) return "fas fa-cloud";
+        return "fas fa-store";
+    }
 }
 @* Hero Section *@
 <section class="hero-section text-center position-relative">
     <div id="particles-js" class="particles-container"></div>
     <div class="hero-animation-container" id="hero-animation"></div>
 
-    <div class="dropdown dropup position-absolute bottom-0 start-0 m-3 m-md-4 fade-in-up z-3 d-none d-md-inline-block">
-        <button class="badge glass-effect text-primary px-3 py-2 rounded-pill border-0 shadow-none d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-            <span class="pulse-dot"></span> Monitoramento em Tempo Real <i class="bi bi-chevron-up status-text-xs"></i>
+    <div class="dropdown dropup position-fixed bottom-0 start-0 m-3 m-md-4 z-3 d-none d-md-inline-block">
+        <button class="badge glass-effect text-primary px-3 py-2 rounded-pill border-0 shadow-none d-flex align-items-center gap-2 user-select-none" style="transition: none;" draggable="false" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+            <span class="pulse-dot"></span> Status do Sistema <i class="bi bi-chevron-up"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-dark shadow-lg rounded-4 p-3 border border-secondary status-menu-desktop status-menu-glass" id="desktop-status-menu">
+        </div>
+    </div>
+
+    @* Mobile Badge *@
+    <div class="dropdown dropup position-fixed bottom-0 start-50 translate-middle-x z-3 mb-3 d-md-none w-100 px-3 d-flex flex-column align-items-center">
+        <button class="badge glass-effect text-primary px-3 py-2 rounded-pill border-0 shadow-none d-flex align-items-center gap-2 mx-auto user-select-none" style="transition: none;" draggable="false" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+            <span class="pulse-dot"></span> Status do Sistema <i class="bi bi-chevron-up"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-dark shadow-lg rounded-4 p-3 border border-secondary status-menu-mobile status-menu-glass w-100" id="mobile-status-menu">
         </div>
     </div>
 
     <div class="container position-relative hero-content-wrapper">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <div class="mb-4 fade-in-up d-md-none">
-                    <button class="badge glass-effect text-primary px-3 py-2 rounded-pill border-0 shadow-none d-flex align-items-center gap-2 mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mobileStatusCollapse" aria-expanded="false" aria-controls="mobileStatusCollapse">
-                        <span class="pulse-dot"></span> Monitoramento em Tempo Real <i class="bi bi-chevron-down status-text-xs"></i>
-                    </button>
-                    <div class="collapse mt-3" id="mobileStatusCollapse">
-                        <div class="card card-body shadow-lg rounded-4 p-3 border border-secondary mx-auto text-start status-menu-mobile status-menu-glass" id="mobile-status-menu">
-                        </div>
-                    </div>
-                </div>
                 <h1 class="hero-title text-white mb-4 fade-in-up">Não pague mais caro.<br>Encontre o <span class="text-highlight">menor preço.</span></h1>
                 <div class="search-container fade-in-up mb-4 mx-auto">
                     <div class="position-relative z-3">
@@ -85,57 +100,52 @@
         </div>
         @* Grid de Cards *@
         <div class="row g-4" id="deals-grid">
-            @* Exemplo de Card Estático para Visualização (Substituir pela Api depois) *@
-            <div class="col-md-4 col-lg-3">
-                <div class="deal-card h-100">
-                    <div class="position-relative">
-                        <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">-50%</span>
-                        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg" class="card-img-top" alt="Cyberpunk 2077">
-                    </div>
-                    <div class="p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="text-white fw-bold mb-0 text-truncate">Cyberpunk 207732</h5>
-                        </div>
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="fab fa-steam text-white-50 me-2"></i>
-                            <small class="text-white-50">Steam</small>
-                        </div>
-                        <a href="#" class="card-price-link text-decoration-none">
-                            <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
-                                <small class="text-decoration-line-through text-secondary price-old-text">R$ 199,90</small>
-                                <div class="price-display">
-                                    <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
-                                    <span class="text-primary fw-bold fs-4 price-value">R$ 99,95</span>
-                                </div>
+            @if (Model.Deals != null && Model.Deals.Count > 0)
+            {
+                @foreach (var game in Model.Deals)
+                {
+                    <div class="col-md-4 col-lg-3 fade-in-up deal-item-card" data-platform="@game.Platform" data-price="@game.Price">
+                        <div class="deal-card h-100">
+                            <div class="position-relative">
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">@game.Discount</span>
+                                <img src="@game.Image" class="card-img-top" alt="@game.Title" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=640';">
                             </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="deal-card h-100">
-                    <div class="position-relative">
-                        <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">-75%</span>
-                        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/271590/header.jpg" class="card-img-top" alt="GTA V">
-                    </div>
-                    <div class="p-4">
-                        <h5 class="text-white fw-bold mb-2">Grand Theft Auto V</h5>
-                        <div class="d-flex align-items-center mb-3"><i class="fab fa-epic-games text-white-50 me-2"></i> <small class="text-white-50">Epic Games</small></div>
-                        <a href="#" class="card-price-link text-decoration-none">
-                            <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
-                                <small class="text-decoration-line-through text-secondary price-old-text">R$ 89,90</small>
-                                <div class="price-display">
-                                    <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
-                                    <span class="text-primary fw-bold fs-4 price-value">R$ 22,47</span>
+                            <div class="p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="text-white fw-bold mb-0 text-truncate" title="@game.Title">@game.Title</h5>
                                 </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="@GetStoreIconClass(game.Store) text-white-50 me-2"></i>
+                                    <small class="text-white-50">@game.Store</small>
+                                </div>
+                                <a href="/Search/Details?gameName=@Uri.EscapeDataString(game.Title)" class="card-price-link text-decoration-none">
+                                    <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
+                                        @if (!string.IsNullOrEmpty(game.OldPrice))
+                                        {
+                                            <small class="text-decoration-line-through text-secondary price-old-text">R$ @game.OldPrice</small>
+                                        }
+                                        else
+                                        {
+                                            <small class="text-secondary price-old-text" style="visibility:hidden;">—</small>
+                                        }
+                                        <div class="price-display">
+                                            <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
+                                            <span class="text-primary fw-bold fs-4 price-value">R$ @game.Price</span>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                </div>
-            </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center py-5 text-muted">Nenhuma oferta em destaque no momento.</div>
+            }
         </div>
         <div class="text-center mt-5">
-            <a href="#" class="btn btn-primary rounded-pill px-5 py-2 btn-glow">Ver Mais Ofertas</a>
+            <a asp-controller="Home" asp-action="Ofertas" class="btn btn-primary rounded-pill px-5 py-2 btn-glow">Ver Mais Ofertas</a>
         </div>
     </div>
 </section>
@@ -148,103 +158,47 @@
                     <h2 class="fw-bold text-white mb-1 d-flex align-items-center flex-nowrap"><i class="bi bi-gift-fill text-primary me-2 me-sm-3 flex-shrink-0"></i> <span class="text-nowrap">Jogos <span class="text-primary">Grátis</span></span></h2>
                     <p class="text-white-50 mb-0">Títulos 100% gratuitos para resgatar agora mesmo e manter para sempre.</p>
                 </div>
-                <button class="btn btn-outline-primary btn-glow rounded-pill px-4 free-games-cta">Ver todos</button>
+                <a href="/Home/FreeGames" class="btn btn-outline-primary btn-glow rounded-pill px-4 free-games-cta text-decoration-none">Ver todos</a>
             </div>
             
             <div class="row g-4 position-relative z-1" id="free-games-grid">
-            <div class="col-md-4 col-lg-3 fade-in-up">
-                <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect">
-                    <div class="position-absolute top-0 end-0 m-2">
-                        <span class="badge bg-success fw-bold shadow-sm">GRÁTIS</span>
-                    </div>
-                    <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/header.jpg" class="card-img-top" alt="Counter-Strike 2">
-                    <div class="card-body p-4 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <small class="text-white-50"><i class="fab fa-steam me-1"></i> Steam</small>
-                        </div>
-                        <h5 class="card-title fw-bold mb-auto text-white">Counter-Strike 2</h5>
-                        <a href="#" class="card-price-link text-decoration-none">
-                            <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
-                                <small class="text-success mb-1 price-old-text price-label">Melhor Preço</small>
-                                <div class="price-display">
-                                    <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
-                                    <span class="h4 fw-bold text-white mb-0 price-value">Grátis</span>
+                @if (Model.FreeGames != null && Model.FreeGames.Count > 0)
+                {
+                    @foreach (var game in Model.FreeGames)
+                    {
+                        <div class="col-md-4 col-lg-3 fade-in-up">
+                            <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect">
+                                <div class="position-absolute top-0 end-0 m-2">
+                                    <span class="badge bg-success fw-bold shadow-sm">GRÁTIS</span>
+                                </div>
+                                <img src="@game.Image" class="card-img-top" alt="@game.Title" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=640';">
+                                <div class="card-body p-4 d-flex flex-column">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <small class="text-white-50"><i class="@GetStoreIconClass(game.Store) me-1"></i> @game.Store</small>
+                                        @if (!string.IsNullOrEmpty(game.OldPrice) && game.OldPrice != "Gratuito" && game.OldPrice != "Não disponível")
+                                        {
+                                            <small class="text-decoration-line-through text-secondary">@game.OldPrice</small>
+                                        }
+                                    </div>
+                                    <h5 class="card-title fw-bold mb-auto text-white" title="@game.Title">@game.Title</h5>
+                                    <a href="/Search/Details?gameName=@Uri.EscapeDataString(game.Title)" class="card-price-link text-decoration-none">
+                                        <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
+                                            <small class="text-success mb-1 price-old-text price-label">Melhor Preço</small>
+                                            <div class="price-display">
+                                                <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
+                                                <span class="h4 fw-bold text-white mb-0 price-value">@game.Price</span>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 fade-in-up">
-                <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect">
-                    <div class="position-absolute top-0 end-0 m-2">
-                        <span class="badge bg-success fw-bold shadow-sm">GRÁTIS</span>
-                    </div>
-                    <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/381210/header.jpg" class="card-img-top" alt="Dead by Daylight">
-                    <div class="card-body p-4 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <small class="text-white-50"><i class="fab fa-epic-games me-1"></i> Epic Games</small>
-                            <small class="text-decoration-line-through text-secondary">R$ 49,99</small>
                         </div>
-                        <h5 class="card-title fw-bold mb-auto text-white">Dead by Daylight</h5>
-                        <a href="#" class="card-price-link text-decoration-none">
-                            <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
-                                <small class="text-success mb-1 price-old-text price-label">Melhor Preço</small>
-                                <div class="price-display">
-                                    <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
-                                    <span class="h4 fw-bold text-white mb-0 price-value">Grátis</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 fade-in-up">
-                <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect">
-                    <div class="position-absolute top-0 end-0 m-2">
-                        <span class="badge bg-success fw-bold shadow-sm">GRÁTIS</span>
-                    </div>
-                    <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/440/header.jpg" class="card-img-top" alt="Team Fortress 2">
-                    <div class="card-body p-4 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <small class="text-white-50"><i class="fab fa-steam me-1"></i> Steam</small>
-                        </div>
-                        <h5 class="card-title fw-bold mb-auto text-white">Team Fortress 2</h5>
-                        <a href="#" class="card-price-link text-decoration-none">
-                            <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
-                                <small class="text-success mb-1 price-old-text price-label">Melhor Preço</small>
-                                <div class="price-display">
-                                    <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
-                                    <span class="h4 fw-bold text-white mb-0 price-value">Grátis</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 fade-in-up">
-                <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect">
-                    <div class="position-absolute top-0 end-0 m-2">
-                        <span class="badge bg-success fw-bold shadow-sm">GRÁTIS</span>
-                    </div>
-                    <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/header.jpg" class="card-img-top" alt="PUBG: BATTLEGROUNDS">
-                    <div class="card-body p-4 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <small class="text-white-50"><i class="fab fa-steam me-1"></i> Steam</small>
-                        </div>
-                        <h5 class="card-title fw-bold mb-auto text-white">PUBG: BATTLEGROUNDS</h5>
-                        <a href="#" class="card-price-link text-decoration-none">
-                            <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
-                                <small class="text-success mb-1 price-old-text price-label">Melhor Preço</small>
-                                <div class="price-display">
-                                    <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
-                                    <span class="h4 fw-bold text-white mb-0 price-value">Grátis</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center py-5 text-muted">Nenhum jogo gratuito disponível no momento.</div>
+                }
             </div>
         </div>
     </div>

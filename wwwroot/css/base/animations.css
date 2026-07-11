@@ -1,6 +1,4 @@
-/* ========================================
-   Animações Globais
-   ======================================== */
+/* Animações Globais */
 
 .fade-in-up {
     opacity: 0;
@@ -26,10 +24,13 @@
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 1;
         box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.7);
     }
+
     50% {
         opacity: 0.8;
         box-shadow: 0 0 0 8px rgba(var(--primary-rgb), 0);
@@ -51,6 +52,7 @@
     from {
         transform: translateX(-100%);
     }
+
     to {
         transform: translateX(100%);
     }
@@ -60,6 +62,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -74,6 +77,7 @@
         opacity: 0;
         transform: scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: scale(1);

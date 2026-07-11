@@ -1,0 +1,144 @@
+@model GamePrice.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+    <div class="auth-card-wrapper position-relative">
+        <div class="auth-glow-1"></div>
+        <div class="auth-glow-2"></div>
+        
+        <div class="card auth-card glass-effect border-secondary border-opacity-25 text-white p-4 p-md-5 rounded-4 shadow-lg">
+            <div class="text-center mb-4">
+                <a class="navbar-brand text-white fs-2 fw-bold d-inline-block mb-2" href="/">
+                    <i class="fas fa-gamepad text-primary me-2"></i>Game<span class="text-primary">Price</span>
+                </a>
+                <p class="text-white-50">Encontre o menor preço para seus jogos</p>
+            </div>
+            
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show bg-success bg-opacity-25 text-success border border-success border-opacity-50 rounded-3 mb-4" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>@TempData["SuccessMessage"]
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <form asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label small text-white-50">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white-50"><i class="fas fa-envelope"></i></span>
+                        <input asp-for="Email" class="form-control bg-dark bg-opacity-25 border-secondary border-opacity-50 text-white shadow-none" placeholder="seu@email.com" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Password" class="form-label small text-white-50">Senha</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark bg-opacity-50 border-secondary border-opacity-50 text-white-50"><i class="fas fa-lock"></i></span>
+                        <input asp-for="Password" type="password" class="form-control bg-dark bg-opacity-25 border-secondary border-opacity-50 text-white shadow-none" placeholder="••••••" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" class="form-check-input bg-dark border-secondary shadow-none" />
+                        <label asp-for="RememberMe" class="form-check-label small text-white-50">Lembrar-me</label>
+                    </div>
+                    <a href="#" class="text-primary text-decoration-none small">Esqueceu a senha?</a>
+                </div>
+
+                <div class="d-grid mb-4">
+                    <button type="submit" class="btn btn-primary btn-glow fw-bold py-2">Entrar</button>
+                </div>
+            </form>
+
+            <div class="position-relative my-4">
+                <hr class="border-secondary opacity-25">
+                <span class="position-absolute top-50 start-50 translate-middle px-2 text-white-50 small bg-transparent" style="background-color: rgb(18, 18, 24) !important;">ou entrar com</span>
+            </div>
+
+            <div class="d-flex gap-3 mb-4">
+                <button class="btn btn-outline-light flex-grow-1 d-flex align-items-center justify-content-center gap-2 social-login-btn border-secondary border-opacity-50 bg-dark bg-opacity-25">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">
+                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                        <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                        <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                        <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                    </svg>
+                    Google
+                </button>
+                <button class="btn btn-outline-light flex-grow-1 d-flex align-items-center justify-content-center gap-2 social-login-btn border-secondary border-opacity-50 bg-dark bg-opacity-25">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 384 512" fill="currentColor">
+                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.3-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-11.4 69.5-34.3z" />
+                    </svg>
+                    Apple
+                </button>
+            </div>
+
+            <div class="text-center">
+                <p class="mb-0 text-white-50 small">Não tem uma conta? <a asp-action="Register" class="text-primary text-decoration-none fw-bold">Cadastre-se</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .auth-card-wrapper {
+            width: 100%;
+            max-width: 480px;
+        }
+        .auth-card {
+            background: rgba(18, 18, 24, 0.45);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 2;
+            position: relative;
+        }
+        .auth-glow-1 {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 150px;
+            height: 150px;
+            background: var(--primary-glow);
+            filter: blur(60px);
+            opacity: 0.4;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .auth-glow-2 {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            background: var(--secondary-glow);
+            filter: blur(60px);
+            opacity: 0.4;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .social-login-btn:hover {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            color: #fff;
+        }
+        .form-control:focus {
+            border-color: var(--primary-color) !important;
+            background: rgba(0, 0, 0, 0.4) !important;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.15) !important;
+        }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

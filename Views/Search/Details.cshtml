@@ -1,0 +1,185 @@
+@model List<GamePrice.Api.Domain.DTOs.PythonStoreResultDto>
+@{
+    var gameName = ViewBag.GameName as string ?? (Model != null && Model.Count > 0 ? Model[0].Nome : "Detalhes do Jogo");
+    ViewData["Title"] = $"{gameName} - Comparação de Preços";
+    
+    var gameImage = Model?.FirstOrDefault(x => !string.IsNullOrEmpty(x.Imagem))?.Imagem;
+    if (string.IsNullOrEmpty(gameImage))
+    {
+        gameImage = "https://via.placeholder.com/600x340?text=Sem+Imagem";
+    }
+}
+
+@functions {
+    public string CleanPrice(string price)
+    {
+        if (string.IsNullOrEmpty(price)) return "";
+        return price
+            .Replace("Preço normal:", "")
+            .Replace("Preço promocional:", "")
+            .Replace("Preço normal\r\n", "")
+            .Replace("Preço promocional\r\n", "")
+            .Replace("Preço normal\n", "")
+            .Replace("Preço promocional\n", "")
+            .Trim();
+    }
+
+    public string GetStoreIcon(string store)
+    {
+        var s = (store ?? "").ToLowerInvariant();
+        if (s.Contains("steam")) return "fab fa-steam";
+        if (s.Contains("epic")) return "fab fa-epic-games";
+        if (s.Contains("playstation") || s.Contains("ps")) return "fab fa-playstation";
+        if (s.Contains("xbox")) return "fab fa-xbox";
+        if (s.Contains("nintendo")) return "bi bi-nintendo-switch";
+        if (s.Contains("gog")) return "fas fa-compact-disc";
+        if (s.Contains("nuuvem")) return "fas fa-cloud";
+        return "fas fa-store";
+    }
+
+    public string GetDiscountPercentage(string originalPrice, string currentPrice)
+    {
+        try
+        {
+            var origCleaned = CleanPrice(originalPrice);
+            var currCleaned = CleanPrice(currentPrice);
+
+            if (string.IsNullOrEmpty(origCleaned) || string.IsNullOrEmpty(currCleaned) || origCleaned == currCleaned)
+                return "";
+
+            var cleanNum = new Func<string, double>(str => {
+                var clean = str.Replace("R$", "").Replace("BRL", "").Replace(" ", "").Replace(",", ".").Trim();
+                return double.Parse(clean, System.Globalization.CultureInfo.InvariantCulture);
+            });
+
+            var orig = cleanNum(origCleaned);
+            var curr = cleanNum(currCleaned);
+
+            if (orig > 0 && curr < orig)
+            {
+                var pct = Math.Round((1 - (curr / orig)) * 100);
+                return $"-{pct}%";
+            }
+        }
+        catch {}
+        return "";
+    }
+}
+
+@{
+    // Sort model by price from lowest to highest
+    var sortedModel = Model != null ? Model.OrderBy(x => {
+        try {
+            var cleaned = CleanPrice(x.PrecoAtual);
+            if (string.IsNullOrEmpty(cleaned) || cleaned.ToLowerInvariant().Contains("grátis") || cleaned.ToLowerInvariant().Contains("gratuito"))
+                return 0.0;
+            var clean = cleaned.Replace("R$", "").Replace("BRL", "").Replace(" ", "").Replace(",", ".").Trim();
+            return double.Parse(clean, System.Globalization.CultureInfo.InvariantCulture);
+        } catch {
+            return 999999.0;
+        }
+    }).ToList() : new List<GamePrice.Api.Domain.DTOs.PythonStoreResultDto>();
+}
+
+<section class="details-page-section hero-section position-relative overflow-hidden w-100">
+    @* Background elements for hero section look *@
+    <div id="particles-js" class="particles-container"></div>
+    <div class="hero-bg-glow"></div>
+
+    <div class="container position-relative z-3">
+        <a href="/" class="btn-back-home mb-4">
+            <i class="bi bi-arrow-left"></i> Voltar para o Início
+        </a>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <div class="details-card details-error-card">
+                <i class="bi bi-exclamation-triangle-fill details-error-icon"></i>
+                <h2 class="text-white fw-bold mb-2">Jogo Não Encontrado</h2>
+                <p class="text-white-50 mb-4">Infelizmente não encontramos nenhuma oferta ou preço para "@gameName" no momento.</p>
+                <a href="/" class="btn btn-primary rounded-pill px-4">Tentar Outro Jogo</a>
+            </div>
+        }
+        else
+        {
+            @* Combined Card: Info above, Stores list below *@
+            <div class="details-card">
+                @* Top Row: Image & Description/Metadata *@
+                <div class="row g-4 align-items-start mb-5">
+                    <div class="col-md-5 col-lg-5">
+                        <div class="details-image-wrapper">
+                            <img src="@gameImage" alt="@gameName" class="details-image">
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-lg-7 text-start">
+                        <h1 class="details-title mb-3">@gameName</h1>
+                        
+                        <div class="details-meta-block mb-3">
+                            <div class="details-genre mb-2">
+                                <span class="meta-title text-primary"><i class="fas fa-tags me-1"></i> Gênero:</span>
+                                <span class="text-white-50">Ação, Aventura, RPG (Exemplo)</span>
+                            </div>
+                        </div>
+
+                        <div class="details-synopsis">
+                            <span class="meta-title text-primary"><i class="fas fa-file-alt me-1"></i> Sinopse:</span>
+                            <p class="text-white-50 text-justify mb-0">
+                                (Descrição)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                @* Bottom Row: Stores Comparison Table inside the same card *@
+                <div class="text-start border-top border-secondary pt-4">
+                    <h4 class="text-white fw-bold mb-4 d-flex align-items-center gap-2">
+                        <i class="fas fa-shopping-cart text-primary"></i> Lojas e Comparação de Preços
+                    </h4>
+
+                    <div class="details-store-list">
+                        @foreach (var store in sortedModel)
+                        {
+                            var storeIcon = GetStoreIcon(store.Plataforma);
+                            var cleanedCurrentPrice = CleanPrice(store.PrecoAtual);
+                            var cleanedOriginalPrice = CleanPrice(store.PrecoOriginal);
+                            var discount = GetDiscountPercentage(cleanedOriginalPrice, cleanedCurrentPrice);
+                            
+                            <div class="details-store-row">
+                                <div class="details-store-info">
+                                    <div class="details-store-icon">
+                                        <i class="@storeIcon"></i>
+                                    </div>
+                                    <div>
+                                        <span class="details-store-name">@store.Plataforma</span>
+                                    </div>
+                                </div>
+                                <div class="details-price-info">
+                                    <div class="details-price-wrapper">
+                                        @if (!string.IsNullOrEmpty(cleanedOriginalPrice) && cleanedOriginalPrice != cleanedCurrentPrice)
+                                        {
+                                            <span class="details-price-old">@cleanedOriginalPrice</span>
+                                        }
+                                        <span class="details-price-current">
+                                            @if (!string.IsNullOrEmpty(discount))
+                                            {
+                                                <span class="details-discount-badge">@discount</span>
+                                            }
+                                            @cleanedCurrentPrice
+                                        </span>
+                                    </div>
+                                    <a href="@store.Link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary rounded-pill px-4 py-2">
+                                        Ir para a loja <i class="bi bi-box-arrow-up-right ms-1 fs-6"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/hero.js" asp-append-version="true"></script>
+}

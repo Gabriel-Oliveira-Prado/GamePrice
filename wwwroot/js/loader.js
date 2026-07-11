@@ -63,7 +63,6 @@
             { fn: window.initScrollReveal, name: 'initScrollReveal' },
             { fn: window.initSearch, name: 'initSearch' },
             { fn: window.initDeals, name: 'initDeals' },
-            { fn: window.initBadgeInteractivity, name: 'initBadgeInteractivity' },
             { fn: window.initScrollEffects, name: 'initScrollEffects' },
             { fn: window.initBackgroundGlow, name: 'initBackgroundGlow' }
         ];

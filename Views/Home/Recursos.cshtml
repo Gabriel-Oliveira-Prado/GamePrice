@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Recursos";
+}
+
+<div class="container py-5 mt-5">
+    <div class="text-center mb-5 mt-4">
+        <h1 class="fw-bold text-white mb-3">Nossos <span class="text-primary">Recursos</span></h1>
+        <p class="lead text-white-50">Ferramentas de ponta projetadas para economizar seu dinheiro.</p>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-detail-card glass-effect border-secondary border-opacity-25 p-4 rounded-4 h-100 text-white position-relative overflow-hidden">
+                <div class="icon-box mb-3 text-primary"><i class="bi bi-search fs-1"></i></div>
+                <h4 class="fw-bold mb-2">Busca Unificada</h4>
+                <p class="text-white-50 small mb-0">Pesquise o título de um jogo e, em segundos, nossos crawlers comparam os preços na Steam, Epic Games, GOG, Nuuvem, PlayStation Store, Xbox e Nintendo Eshop.</p>
+                <div class="card-glow bg-primary"></div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-detail-card glass-effect border-secondary border-opacity-25 p-4 rounded-4 h-100 text-white position-relative overflow-hidden">
+                <div class="icon-box mb-3 text-primary"><i class="bi bi-bell-fill fs-1"></i></div>
+                <h4 class="fw-bold mb-2">Alertas de Preço</h4>
+                <p class="text-white-50 small mb-0">Não quer comprar agora? Defina seu preço ideal! Receba uma notificação por e-mail ou WhatsApp no instante em que o jogo atingir ou ficar abaixo da sua meta.</p>
+                <div class="card-glow bg-secondary"></div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-detail-card glass-effect border-secondary border-opacity-25 p-4 rounded-4 h-100 text-white position-relative overflow-hidden">
+                <div class="icon-box mb-3 text-primary"><i class="bi bi-graph-up fs-1"></i></div>
+                <h4 class="fw-bold mb-2">Histórico de Preços</h4>
+                <p class="text-white-50 small mb-0">Analise o gráfico de variação histórica para saber se o desconto atual realmente vale a pena ou se o jogo já esteve mais barato anteriormente.</p>
+                <div class="card-glow bg-primary"></div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-detail-card glass-effect border-secondary border-opacity-25 p-4 rounded-4 h-100 text-white position-relative overflow-hidden">
+                <div class="icon-box mb-3 text-primary"><i class="bi bi-gift-fill fs-1"></i></div>
+                <h4 class="fw-bold mb-2">Curadoria Gratuita</h4>
+                <p class="text-white-50 small mb-0">Monitore os jogos gratuitos semanais da Epic Games e outros canais oficiais em uma interface centralizada e rápida, sem perder o prazo de resgate.</p>
+                <div class="card-glow bg-secondary"></div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-detail-card glass-effect border-secondary border-opacity-25 p-4 rounded-4 h-100 text-white position-relative overflow-hidden">
+                <div class="icon-box mb-3 text-primary"><i class="bi bi-code-slash fs-1"></i></div>
+                <h4 class="fw-bold mb-2">API Pública</h4>
+                <p class="text-white-50 small mb-0">Disponibilizamos endpoints RESTful de alta performance para desenvolvedores criarem seus próprios bots de Discord, extensões ou painéis de monitoramento.</p>
+                <div class="card-glow bg-primary"></div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-detail-card glass-effect border-secondary border-opacity-25 p-4 rounded-4 h-100 text-white position-relative overflow-hidden">
+                <div class="icon-box mb-3 text-primary"><i class="bi bi-shield-check fs-1"></i></div>
+                <h4 class="fw-bold mb-2">Apenas Lojas Oficiais</h4>
+                <p class="text-white-50 small mb-0">Nós não indexamos mercados de chaves cinzas ou revendedores não autorizados. Todos os links apontam para distribuidores e lojas 100% oficiais e seguras.</p>
+                <div class="card-glow bg-secondary"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .feature-detail-card {
+            background: rgba(18, 18, 24, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .feature-detail-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.1);
+        }
+        .card-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            opacity: 0.02;
+            transition: opacity 0.3s ease;
+            border-radius: 40%;
+        }
+        .feature-detail-card:hover .card-glow {
+            opacity: 0.06;
+        }
+        .icon-box i {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+}

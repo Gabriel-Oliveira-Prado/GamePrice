@@ -1,0 +1,67 @@
+@model List<GamePrice.Api.Domain.DTOs.GameDealDto>
+@{
+    ViewData["Title"] = "Jogos Grátis";
+}
+
+<div class="container py-5 mt-5">
+    <div class="text-center mb-5 mt-4">
+        <h1 class="fw-bold text-white mb-2">Jogos <span class="text-primary">Gratuitos</span></h1>
+        <p class="text-white-50">Títulos gratuitos disponíveis para resgatar na Epic Games e no Steam agora mesmo.</p>
+    </div>
+
+    @* Grid de Cards *@
+    <div class="row g-4 mb-5" id="free-games-grid">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var game in Model)
+            {
+                <div class="col-md-4 col-lg-3 fade-in-up">
+                    <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success fw-bold shadow-sm">GRÁTIS</span>
+                        </div>
+                        <img src="@game.Image" class="card-img-top" alt="@game.Title" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=640';">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <small class="text-white-50"><i class="@GetStoreIconClass(game.Store) me-1"></i> @game.Store</small>
+                                @if (!string.IsNullOrEmpty(game.OldPrice) && game.OldPrice != "Gratuito" && game.OldPrice != "Não disponível")
+                                {
+                                    <small class="text-decoration-line-through text-secondary">@game.OldPrice</small>
+                                }
+                            </div>
+                            <h5 class="card-title fw-bold mb-auto text-white" title="@game.Title">@game.Title</h5>
+                            <a href="/Search/Details?gameName=@Uri.EscapeDataString(game.Title)" class="card-price-link text-decoration-none">
+                                <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
+                                    <small class="text-success mb-1 price-old-text price-label">Melhor Preço</small>
+                                    <div class="price-display">
+                                        <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
+                                        <span class="h4 fw-bold text-white mb-0 price-value">@game.Price</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center py-5 text-muted">Nenhum jogo gratuito disponível no momento.</div>
+        }
+    </div>
+</div>
+
+@functions {
+    public string GetStoreIconClass(string store)
+    {
+        var s = (store ?? "").ToLowerInvariant();
+        if (s.Contains("steam")) return "fab fa-steam";
+        if (s.Contains("epic")) return "fab fa-epic-games";
+        if (s.Contains("playstation") || s.Contains("ps")) return "fab fa-playstation";
+        if (s.Contains("xbox")) return "fab fa-xbox";
+        if (s.Contains("nintendo")) return "fas fa-gamepad";
+        if (s.Contains("gog")) return "fas fa-compact-disc";
+        if (s.Contains("nuuvem")) return "fas fa-cloud";
+        return "fas fa-store";
+    }
+}
