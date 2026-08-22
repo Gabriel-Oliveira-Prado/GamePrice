@@ -63,52 +63,6 @@ namespace GamePrice.Controllers
             return View(model);
         }
 
-        public IActionResult Recursos()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> Ofertas()
-        {
-            var baseApiUrl = _configuration["ApiSettings:GamePriceApiUrl"] ?? "http://localhost:5098";
-            var deals = new List<GameDealDto>();
-
-            try
-            {
-                var dealsUrl = $"{baseApiUrl.TrimEnd('/')}/api/scraper/deals";
-                deals = await _http.GetFromJsonAsync<List<GameDealDto>>(dealsUrl) ?? new List<GameDealDto>();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao carregar a página de Ofertas");
-            }
-
-            return View(deals);
-        }
-
-        public async Task<IActionResult> FreeGames()
-        {
-            var baseApiUrl = _configuration["ApiSettings:GamePriceApiUrl"] ?? "http://localhost:5098";
-            var freeGames = new List<GameDealDto>();
-
-            try
-            {
-                var freeUrl = $"{baseApiUrl.TrimEnd('/')}/api/scraper/free-games";
-                freeGames = await _http.GetFromJsonAsync<List<GameDealDto>>(freeUrl) ?? new List<GameDealDto>();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao carregar a página de Jogos Grátis");
-            }
-
-            return View(freeGames);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

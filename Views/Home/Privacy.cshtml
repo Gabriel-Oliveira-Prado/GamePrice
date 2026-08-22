@@ -1,53 +1,33 @@
-﻿@{
-    ViewData["Title"] = "Política de Privacidade";
+@{
+    ViewData["Title"] = "Política de privacidade";
 }
 
-<section class="hero-section">
-    <div class="container position-relative z-1">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="glass-effect p-5 rounded-4 position-relative overflow-hidden gs-reveal">
-                    
-                    <div class="text-center mb-5">
-                        <div class="mb-4 text-primary">
-                            <i class="fas fa-user-shield fa-4x"></i>
-                        </div>
-                        <h1 class="fw-bold text-white mb-3">Política de Privacidade</h1>
-                        <p class="lead text-muted">
-                            Sua segurança é nossa prioridade. Entenda como o <strong>GamePrice</strong> cuida dos seus dados.
-                        </p>
-                    </div>
+<section class="page-shell">
+    <div class="container site-container">
+        <header class="page-header">
+            <p class="eyebrow">Legal</p>
+            <h1>Política de privacidade</h1>
+            <p>Como o GamePrice trata os dados usados na navegação e nos alertas.</p>
+        </header>
 
-                    <div class="text-white-50">
-                        <h4 class="text-white mb-3"><i class="fas fa-database me-2 text-primary"></i>Coleta de Dados</h4>
-                        <p>
-                            Nós coletamos apenas o necessário para melhorar sua experiência de busca de preços. 
-                            Isso pode incluir cookies de preferência e dados anônimos de navegação para estatísticas de acesso.
-                        </p>
-
-                        <hr class="border-secondary my-4 opacity-25">
-
-                        <h4 class="text-white mb-3"><i class="fas fa-link me-2 text-primary"></i>Links Externos</h4>
-                        <p>
-                            O GamePrice atua como um comparador. Ao clicar em uma oferta, você será redirecionado para lojas parceiras 
-                            (Steam, Epic Games, PS Store, etc.). Recomendamos ler a política de privacidade dessas plataformas ao realizar uma compra.
-                        </p>
-
-                        <hr class="border-secondary my-4 opacity-25">
-
-                        <h4 class="text-white mb-3"><i class="fas fa-envelope me-2 text-primary"></i>Contato</h4>
-                        <p>
-                            Se tiver dúvidas sobre seus dados ou quiser solicitar a exclusão de informações, entre em contato conosco pelo email: 
-                            <a href="mailto:privacidade@gameprice.com" class="text-primary text-decoration-none">privacidade@gameprice.com</a>
-                        </p>
-                    </div>
-
-                    <div class="mt-5 text-center">
-                        <small class="text-muted">Última atualização: @DateTime.Now.ToString("MMMM yyyy")</small>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        <article class="legal-content">
+            <section>
+                <h2>Dados coletados</h2>
+                <p>Coletamos os dados necessários para autenticação, preferências de conta e alertas solicitados pelo usuário. Informações técnicas de acesso podem ser usadas para segurança e diagnóstico do serviço.</p>
+            </section>
+            <section>
+                <h2>Uso das informações</h2>
+                <p>Os dados são usados para manter a conta, entregar alertas configurados e melhorar a estabilidade do comparador. O GamePrice não vende informações pessoais.</p>
+            </section>
+            <section>
+                <h2>Lojas externas</h2>
+                <p>Ao abrir uma oferta, você acessa o site da loja responsável pela venda. A compra passa a seguir os termos e a política de privacidade desse serviço.</p>
+            </section>
+            <section>
+                <h2>Solicitações</h2>
+                <p>Para consultar, corrigir ou excluir dados da conta, envie uma mensagem para <a href="mailto:privacidade@gameprice.com">privacidade@gameprice.com</a>.</p>
+            </section>
+            <p class="legal-meta">Última atualização: agosto de 2026.</p>
+        </article>
     </div>
 </section>

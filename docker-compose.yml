@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   gameprice-web:
     build:
@@ -25,6 +23,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5200
       - ApiSettings__ScraperApiUrl=http://gameprice-scraper:8000
+      - "ConnectionStrings__GamePrice=Data Source=/app/data/gameprice.db;Cache=Shared;Foreign Keys=True"
+    volumes:
+      - gameprice-data:/app/data
     depends_on:
       - gameprice-scraper
     networks:
@@ -44,3 +45,6 @@ services:
 networks:
   gameprice-network:
     driver: bridge
+
+volumes:
+  gameprice-data:

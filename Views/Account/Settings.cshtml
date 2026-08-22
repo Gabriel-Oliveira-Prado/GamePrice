@@ -1,0 +1,84 @@
+@model GamePrice.Models.ProfilePageViewModel
+@{
+    ViewData["Title"] = "Configurações da conta";
+}
+
+<section class="page-shell">
+    <div class="container site-container account-page">
+        @await Html.PartialAsync("_Breadcrumb", "Configurações")
+
+        <header class="page-header account-page-header">
+            <p class="eyebrow">Sua conta</p>
+            <h1>Configurações</h1>
+        </header>
+
+        <dl class="account-summary">
+            <div>
+                <dt>Membro desde</dt>
+                <dd>@Model.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy")</dd>
+            </div>
+            <div>
+                <dt>Último acesso</dt>
+                <dd>@(Model.LastLoginAt?.ToLocalTime().ToString("dd/MM/yyyy 'às' HH:mm") ?? "Primeiro acesso")</dd>
+            </div>
+            <div>
+                <dt>Lista de desejos</dt>
+                <dd>@Model.WishlistCount @(Model.WishlistCount == 1 ? "jogo" : "jogos")</dd>
+            </div>
+        </dl>
+
+        <section class="settings-section" aria-labelledby="profile-settings-title">
+            <header><h2 id="profile-settings-title">Dados do perfil</h2></header>
+            <form asp-controller="Profile" asp-action="UpdateProfile" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+                <div class="settings-form-grid">
+                    <div>
+                        <label asp-for="Profile.Name" class="form-label">Nome</label>
+                        <input asp-for="Profile.Name" class="form-control" autocomplete="name" />
+                        <span asp-validation-for="Profile.Name" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Profile.Email" class="form-label">Email</label>
+                        <input asp-for="Profile.Email" class="form-control" autocomplete="email" />
+                        <span asp-validation-for="Profile.Email" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-floppy" aria-hidden="true"></i>
+                    Salvar alterações
+                </button>
+            </form>
+        </section>
+
+        <section class="settings-section" aria-labelledby="password-settings-title">
+            <header><h2 id="password-settings-title">Alterar senha</h2></header>
+            <form asp-controller="Profile" asp-action="ChangePassword" method="post" novalidate>
+                <div class="settings-form-grid password-grid">
+                    <div>
+                        <label asp-for="Password.CurrentPassword" class="form-label">Senha atual</label>
+                        <input asp-for="Password.CurrentPassword" type="password" class="form-control" autocomplete="current-password" />
+                        <span asp-validation-for="Password.CurrentPassword" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Password.NewPassword" class="form-label">Nova senha</label>
+                        <input asp-for="Password.NewPassword" type="password" class="form-control" autocomplete="new-password" />
+                        <span asp-validation-for="Password.NewPassword" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Password.ConfirmNewPassword" class="form-label">Confirmar nova senha</label>
+                        <input asp-for="Password.ConfirmNewPassword" type="password" class="form-control" autocomplete="new-password" />
+                        <span asp-validation-for="Password.ConfirmNewPassword" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-key" aria-hidden="true"></i>
+                    Atualizar senha
+                </button>
+            </form>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

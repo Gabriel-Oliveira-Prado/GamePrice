@@ -1,0 +1,89 @@
+@model GamePrice.Models.WishlistPageViewModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Lista de desejos";
+}
+
+<section class="page-shell">
+    <div class="container site-container account-page">
+        @await Html.PartialAsync("_Breadcrumb", "Lista de desejos")
+
+        <header class="page-header account-page-header">
+            <p class="eyebrow">Sua coleção</p>
+            <h1>Lista de desejos</h1>
+            <p>@Model.Items.Count @(Model.Items.Count == 1 ? "jogo salvo" : "jogos salvos")</p>
+        </header>
+
+        @if (Model.Items.Count == 0)
+        {
+            <div class="empty-state wishlist-empty">
+                <span class="wishlist-empty-icon" aria-hidden="true"><i class="bi bi-bookmark"></i></span>
+                <div class="wishlist-empty-copy">
+                    <h2>Sua lista está vazia</h2>
+                    <p>Pesquise um jogo e salve-o para acompanhar o melhor preço encontrado.</p>
+                </div>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Pesquisar jogos</a>
+            </div>
+        }
+        else
+        {
+            <div class="wishlist-list">
+                @foreach (var item in Model.Items)
+                {
+                    <article class="wishlist-row">
+                        <a class="wishlist-cover" href="/Search/Details?gameName=@Uri.EscapeDataString(item.Title)" aria-label="Comparar preços de @item.Title">
+                            @if (!string.IsNullOrWhiteSpace(item.Image))
+                            {
+                                <img src="@item.Image" alt="Capa de @item.Title" loading="lazy" onerror="this.parentElement.classList.add('image-missing'); this.remove();" />
+                            }
+                        </a>
+
+                        <div class="wishlist-copy">
+                            <h2><a href="/Search/Details?gameName=@Uri.EscapeDataString(item.Title)">@item.Title</a></h2>
+                            <p>
+                                @if (!string.IsNullOrWhiteSpace(item.Store))
+                                {
+                                    <span>@item.Store</span>
+                                }
+                                <span>@item.OfferCount @(item.OfferCount == 1 ? "loja" : "lojas")</span>
+                            </p>
+                            @if (item.TargetReached)
+                            {
+                                <strong class="target-reached">Preço desejado atingido</strong>
+                            }
+                        </div>
+
+                        <div class="wishlist-price">
+                            <span>Melhor preço</span>
+                            <strong>@item.CurrentPrice</strong>
+                        </div>
+
+                        <form asp-controller="Wishlist" asp-action="UpdateTarget" method="post" class="target-price-form">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <label for="target-@item.Id">Preço desejado</label>
+                            <div>
+                                <span>R$</span>
+                                <input id="target-@item.Id" name="targetPrice" type="number" min="0.01" max="99999" step="0.01"
+                                       value="@(item.TargetPrice?.ToString("0.00", CultureInfo.InvariantCulture))" placeholder="0,00" />
+                                <button type="submit" class="btn btn-outline-secondary btn-sm" title="Salvar preço desejado">
+                                    <i class="bi bi-floppy" aria-hidden="true"></i>
+                                    <span class="visually-hidden">Salvar preço desejado</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="wishlist-actions">
+                            <a href="/Search/Details?gameName=@Uri.EscapeDataString(item.Title)" class="btn btn-primary btn-sm">Comparar</a>
+                            <form asp-controller="Wishlist" asp-action="Remove" method="post">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" class="icon-button danger" title="Remover da lista" aria-label="Remover @item.Title da lista">
+                                    <i class="bi bi-trash" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+    </div>
+</section>

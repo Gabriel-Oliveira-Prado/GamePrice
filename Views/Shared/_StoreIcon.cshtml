@@ -1,0 +1,44 @@
+@model string
+@{
+    var store = (Model ?? string.Empty).ToLowerInvariant();
+    var slug = store switch
+    {
+        var value when value.Contains("steam") => "steam",
+        var value when value.Contains("epic") => "epic-games",
+        var value when value.Contains("playstation") || value.Contains("ps store") => "playstation",
+        var value when value.Contains("xbox") => "xbox",
+        var value when value.Contains("nintendo") => "nintendo",
+        var value when value.Contains("gog") => "gog",
+        var value when value.Contains("nuuvem") => "nuuvem",
+        var value when value.Contains("itch") => "itch-io",
+        _ => string.Empty
+    };
+    var iconSource = slug switch
+    {
+        "steam" => Url.Content("~/img/stores/steam.svg"),
+        "epic-games" => Url.Content("~/img/stores/epic-games.svg"),
+        "playstation" => Url.Content("~/img/stores/playstation.svg"),
+        "xbox" => Url.Content("~/img/stores/xbox.svg"),
+        "nintendo" => Url.Content("~/img/stores/nintendo.svg"),
+        "gog" => Url.Content("~/img/stores/gog.svg"),
+        "nuuvem" => Url.Content("~/img/stores/nuuvem.svg"),
+        "itch-io" => Url.Content("~/img/stores/itch-io.svg"),
+        _ => string.Empty
+    };
+    var markClass = slug switch
+    {
+        "nuuvem" => "store-mark store-mark-wide",
+        "nintendo" => "store-mark store-mark-word",
+        _ => "store-mark"
+    };
+}
+<span class="@markClass" aria-hidden="true">
+    @if (!string.IsNullOrEmpty(iconSource))
+    {
+        <img src="@iconSource" alt="" loading="lazy" />
+    }
+    else
+    {
+        <i class="bi bi-shop"></i>
+    }
+</span>

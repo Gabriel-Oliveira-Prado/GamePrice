@@ -1,140 +1,206 @@
-function initSearch() {
-    const $searchInput = $(".search-input");
-    const $searchBtn = $(".search-btn");
-    const $resultsContainer = $("#search-results");
+(function () {
+    "use strict";
 
-    if (!$searchInput.length || !$searchBtn.length || !$resultsContainer.length) return;
-
-    const escapeHTML = (str) => {
-        return $('<div>').text(str || '').html();
+    const escapeHtml = (value) => {
+        const element = document.createElement("div");
+        element.textContent = value || "";
+        return element.innerHTML;
     };
 
-    const getStoreIcon = (store) => {
-        const s = (store || '').toLowerCase();
-        if (s.includes('steam')) return 'fab fa-steam';
-        if (s.includes('epic')) return 'fab fa-epic-games';
-        if (s.includes('playstation') || s.includes('ps')) return 'fab fa-playstation';
-        if (s.includes('xbox')) return 'fab fa-xbox';
-        if (s.includes('nintendo')) return 'bi bi-nintendo-switch';
-        if (s.includes('gog')) return 'fas fa-compact-disc';
-        if (s.includes('nuuvem')) return 'fas fa-cloud';
-        return 'fas fa-store';
+    const getStoreSlug = (store) => {
+        const value = (store || "").toLowerCase();
+        if (value.includes("steam")) return "steam";
+        if (value.includes("epic")) return "epic-games";
+        if (value.includes("playstation") || value.includes("ps store")) return "playstation";
+        if (value.includes("xbox")) return "xbox";
+        if (value.includes("nintendo")) return "nintendo";
+        if (value.includes("gog")) return "gog";
+        if (value.includes("nuuvem")) return "nuuvem";
+        if (value.includes("itch")) return "itch-io";
+        return "";
     };
 
-    const renderSkeleton = () => {
-        return `
-            <div class="search-item-card text-white overflow-hidden d-block">
-                <div class="d-flex align-items-stretch">
-                    <div class="flex-shrink-0">
-                        <div class="skeleton skeleton-shimmer search-item-thumb-small m-0 rounded-0" style="min-height: 100%; border-top-left-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-lg);"></div>
-                    </div>
-                    <div class="flex-grow-1 py-3 px-3">
-                        <div class="skeleton skeleton-shimmer skeleton-text search-item-title-small mb-2 mt-1"></div>
-                        <div class="skeleton skeleton-shimmer search-item-price-small mb-1"></div>
-                    </div>
-                    <div class="flex-shrink-0 d-flex align-items-center pe-3">
-                        <div class="skeleton skeleton-shimmer search-item-button-small"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center text-white-50 small py-2">
-                <i class="fas fa-spinner fa-spin me-1"></i> Buscando em todas as lojas...
-            </div>
-        `;
+    const getStoreIconUrl = (slug) => {
+        const localIcons = {
+            steam: "/img/stores/steam.svg",
+            "epic-games": "/img/stores/epic-games.svg",
+            playstation: "/img/stores/playstation.svg",
+            xbox: "/img/stores/xbox.svg",
+            nintendo: "/img/stores/nintendo.svg",
+            gog: "/img/stores/gog.svg",
+            nuuvem: "/img/stores/nuuvem.svg",
+            "itch-io": "/img/stores/itch-io.svg"
+        };
+        return localIcons[slug] || "";
     };
 
-    const renderResult = (dataList) => {
-        if (!dataList || dataList.length === 0) {
-            return '<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>';
-        }
+    function initSearch() {
+        const input = document.querySelector(".search-input");
+        const button = document.querySelector(".search-btn");
+        const results = document.getElementById("search-results");
 
-        const cheapest = dataList[0];
-        const safeTitle = escapeHTML(cheapest.nome);
-        const safePrice = escapeHTML(String(cheapest.preco_atual || 'Indisponível'));
-        const safeStore = escapeHTML(cheapest.plataforma);
-        const safeImage = escapeHTML(cheapest.imagem);
-        const storeIcon = getStoreIcon(cheapest.plataforma);
-        const hasImage = cheapest.imagem && cheapest.imagem.length > 0;
+        if (!input || !button || !results || input.dataset.searchReady === "true") return;
+        input.dataset.searchReady = "true";
 
-        return `
-            <a href="/Search/Details?gameName=${encodeURIComponent(cheapest.nome)}" class="search-item-card text-white text-decoration-none overflow-hidden d-block">
-                <div class="d-flex align-items-stretch">
-                    <div class="flex-shrink-0">
-                        ${hasImage
-                            ? `<img src="${safeImage}" alt="${safeTitle}" class="search-item-thumb-small m-0 rounded-0" style="object-fit: cover; min-height: 100%; border-top-left-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-lg);">`
-                            : `<div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center text-primary h-100 m-0 search-item-thumb-small" style="border-radius: 0; min-height: 60px;">
-                                <i class="fas fa-gamepad fa-lg"></i>
-                              </div>`
-                        }
-                    </div>
-                    <div class="flex-grow-1 py-3 px-3 d-flex flex-column justify-content-center">
-                        <h6 class="mb-1 fw-bold text-truncate">${safeTitle}</h6>
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-success bg-opacity-75 small">${safePrice}</span>
-                            <small class="text-white-50"><i class="${storeIcon} me-1"></i>${safeStore}</small>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 d-flex align-items-center pe-3">
-                        <span class="btn btn-sm text-white search-item-button-small border-0 shadow-none search-btn-view transition-base d-flex align-items-center justify-content-center" style="background: transparent;">
-                            Ver <i class="bi bi-box-arrow-up-right ms-1 search-result-icon"></i>
+        let debounceTimer = 0;
+        let activeController = null;
+
+        const setVisible = (visible) => {
+            results.style.display = visible ? "block" : "none";
+            input.setAttribute("aria-expanded", visible ? "true" : "false");
+        };
+
+        const setButtonBusy = (busy) => {
+            button.disabled = busy;
+            button.innerHTML = busy
+                ? '<i class="bi bi-hourglass" aria-hidden="true"></i><span>Buscando</span>'
+                : '<i class="bi bi-search" aria-hidden="true"></i><span>Comparar</span>';
+        };
+
+        const renderState = (message, isError) => {
+            results.innerHTML = `<div class="search-state${isError ? " error" : ""}">${escapeHtml(message)}</div>`;
+            setVisible(true);
+        };
+
+        const renderResults = (items) => {
+            const games = (items || []).filter((item) => item && item.title).slice(0, 8);
+            if (games.length === 0) {
+                renderState("Nenhum jogo encontrado. Tente outro nome.", false);
+                return;
+            }
+
+            results.innerHTML = games.map((game) => {
+                const rawTitle = String(game.title || "").trim();
+                const title = escapeHtml(rawTitle);
+                const price = escapeHtml(game.isFree ? "Grátis" : (game.price || "Ver ofertas"));
+                const store = escapeHtml(game.store || "Catálogo");
+                const image = escapeHtml(game.image || "");
+                const slug = getStoreSlug(game.store);
+                const iconUrl = getStoreIconUrl(slug);
+                const offerCount = Math.max(Number(game.offerCount) || 0, game.store ? 1 : 0);
+                const additionalStores = Math.max(offerCount - 1, 0);
+                const storeMarkClass = slug === "nuuvem"
+                    ? " search-store-mark-wide"
+                    : (slug === "nintendo" ? " search-store-mark-word" : "");
+                const storeMark = iconUrl
+                    ? `<span class="search-store-mark${storeMarkClass}"><img src="${iconUrl}" alt=""></span>`
+                    : '<i class="bi bi-shop" aria-hidden="true"></i>';
+                const storeCount = additionalStores > 0
+                    ? `<span class="search-store-count" aria-label="Mais ${additionalStores} ${additionalStores === 1 ? "loja encontrada" : "lojas encontradas"}">+${additionalStores} ${additionalStores === 1 ? "loja" : "lojas"}</span>`
+                    : "";
+                const cover = image
+                    ? `<img src="${image}" alt="Capa de ${title}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'), { className: 'search-result-cover' }))">`
+                    : '<span class="search-result-cover"></span>';
+
+                return `
+                    <a class="search-result" role="option" href="/Search/Details?gameName=${encodeURIComponent(rawTitle)}">
+                        ${cover}
+                        <span class="search-result-copy">
+                            <strong>${title}</strong>
+                            <span class="search-result-meta">
+                                <span class="search-result-price">${price}</span>
+                                <span>${storeMark}${store}</span>
+                                ${storeCount}
+                            </span>
                         </span>
-                    </div>
-                </div>
-            </a>
-        `;
-    };
+                        <i class="bi bi-chevron-right search-result-action" aria-hidden="true"></i>
+                    </a>`;
+            }).join("");
+            setVisible(true);
+        };
 
-    const performSearch = () => {
-        const query = $searchInput.val().trim();
-        if (!query) return;
+        const performSearch = async (showButtonBusy) => {
+            const query = input.value.trim();
+            if (query.length < 2) {
+                setVisible(false);
+                return;
+            }
 
-        $resultsContainer.html(renderSkeleton()).slideDown(300);
-        $searchBtn.prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i>');
+            if (activeController) activeController.abort();
+            const controller = new AbortController();
+            activeController = controller;
+            const timeout = window.setTimeout(() => controller.abort(), 20000);
 
-        $.ajax({
-            url: "/Search/SearchGame",
-            method: "GET",
-            data: { query },
-            dataType: "json",
-            timeout: 120000,
-            success: (data) => {
-                if (!data || data.length === 0) {
-                    $resultsContainer.html('<div class="text-center text-muted p-3">Nenhum jogo encontrado.</div>');
-                } else {
-                    const html = renderResult(data);
-                    $resultsContainer.html(html);
+            if (showButtonBusy) setButtonBusy(true);
+            renderState("Buscando jogos...", false);
+
+            try {
+                const response = await fetch(`/Search/SearchGame?query=${encodeURIComponent(query)}`, {
+                    headers: { Accept: "application/json" },
+                    signal: controller.signal
+                });
+
+                if (!response.ok) throw new Error(`Search failed with ${response.status}`);
+                renderResults(await response.json());
+            } catch (error) {
+                if (error.name !== "AbortError" || activeController === controller) {
+                    const message = error.name === "AbortError"
+                        ? "A consulta demorou demais. Tente novamente."
+                        : "Não foi possível pesquisar agora.";
+                    renderState(message, true);
                 }
-            },
-            error: (xhr, status, error) => {
-                console.error("Erro na busca:", error);
-                const errorMsg = status === 'timeout' 
-                    ? 'Tempo esgotado. Tente novamente.'
-                    : 'Erro ao buscar jogos. Tente novamente.';
-                $resultsContainer.html(`<div class="text-center text-danger p-3">${errorMsg}</div>`);
-            },
-            complete: () => {
-                $searchBtn.prop("disabled", false).html('<i class="fas fa-search"></i>');
+            } finally {
+                window.clearTimeout(timeout);
+                if (activeController === controller) activeController = null;
+                if (showButtonBusy) setButtonBusy(false);
+            }
+        };
+
+        button.addEventListener("click", () => performSearch(true));
+
+        input.addEventListener("input", () => {
+            window.clearTimeout(debounceTimer);
+            if (input.value.trim().length < 2) {
+                if (activeController) activeController.abort();
+                setVisible(false);
+                return;
+            }
+            debounceTimer = window.setTimeout(() => performSearch(false), 320);
+        });
+
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                performSearch(true);
+            }
+            if (event.key === "Escape") setVisible(false);
+            if (event.key === "ArrowDown") {
+                const firstResult = results.querySelector(".search-result");
+                if (firstResult) {
+                    event.preventDefault();
+                    firstResult.focus();
+                }
             }
         });
-    };
 
-    $searchBtn.off("click").on("click", performSearch);
+        results.addEventListener("keydown", (event) => {
+            const links = Array.from(results.querySelectorAll(".search-result"));
+            const currentIndex = links.indexOf(document.activeElement);
+            if (event.key === "ArrowDown" && currentIndex < links.length - 1) {
+                event.preventDefault();
+                links[currentIndex + 1].focus();
+            }
+            if (event.key === "ArrowUp") {
+                event.preventDefault();
+                if (currentIndex > 0) links[currentIndex - 1].focus();
+                else input.focus();
+            }
+            if (event.key === "Escape") {
+                setVisible(false);
+                input.focus();
+            }
+        });
 
-    $searchInput.off("keypress").on("keypress", (e) => {
-        if (e.which === 13) {
-            e.preventDefault();
-            performSearch();
-        }
-    });
+        document.addEventListener("click", (event) => {
+            if (!event.target.closest(".search-container")) setVisible(false);
+        });
+    }
 
-    $searchInput.off("keydown").on("keydown", (e) => {
-        if (e.key === "Escape") {
-            $resultsContainer.slideUp(300);
-        }
-    });
+    window.initSearch = initSearch;
 
-    return () => {
-        $searchBtn.off("click");
-        $searchInput.off("keypress keydown");
-    };
-}
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initSearch);
+    } else {
+        initSearch();
+    }
+})();

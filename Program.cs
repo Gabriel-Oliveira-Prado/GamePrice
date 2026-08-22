@@ -1,17 +1,30 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews(options => 
+var mvcBuilder = builder.Services.AddControllersWithViews(options =>
 {
     // Adiciona validação de CSRF globalmente para todos os métodos POST/PUT/DELETE/PATCH
     options.Filters.Add(new Microsoft.AspNetCore.Mvc.AutoValidateAntiforgeryTokenAttribute());
+})
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
 });
+
+// O projeto web referencia a API apenas para compartilhar os contratos. Sem esta
+// exclusão, o MVC também tenta ativar os controllers da API dentro do processo web.
+mvcBuilder.ConfigureApplicationPartManager(manager =>
+{
+    var apiParts = manager.ApplicationParts
+        .Where(part => string.Equals(part.Name, "GamePrice.Api", StringComparison.Ordinal))
+        .ToList();
+
+    foreach (var apiPart in apiParts)
+        manager.ApplicationParts.Remove(apiPart);
+});
+
 builder.Services.AddHttpClient();
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-    });
+builder.Services.AddScoped<GamePrice.Services.AccountSessionService>();
 
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

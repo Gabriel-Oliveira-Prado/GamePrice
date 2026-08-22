@@ -1,19 +1,15 @@
 @model List<GamePrice.Api.Domain.DTOs.PythonStoreResultDto>
 @{
-    var gameName = ViewBag.GameName as string ?? (Model != null && Model.Count > 0 ? Model[0].Nome : "Detalhes do Jogo");
-    ViewData["Title"] = $"{gameName} - Comparação de Preços";
-    
-    var gameImage = Model?.FirstOrDefault(x => !string.IsNullOrEmpty(x.Imagem))?.Imagem;
-    if (string.IsNullOrEmpty(gameImage))
-    {
-        gameImage = "https://via.placeholder.com/600x340?text=Sem+Imagem";
-    }
+    var gameName = ViewBag.GameName as string ?? Model?.FirstOrDefault()?.Nome ?? "Detalhes do jogo";
+    ViewData["Title"] = $"{gameName}, comparação de preços";
+    var gameImage = Model?.FirstOrDefault(item => !string.IsNullOrWhiteSpace(item.Imagem))?.Imagem;
+    var gameDescription = Model?.FirstOrDefault(item => !string.IsNullOrWhiteSpace(item.Descricao))?.Descricao;
 }
 
 @functions {
-    public string CleanPrice(string price)
+    public string CleanPrice(string? price)
     {
-        if (string.IsNullOrEmpty(price)) return "";
+        if (string.IsNullOrWhiteSpace(price)) return "Preço indisponível";
         return price
             .Replace("Preço normal:", "")
             .Replace("Preço promocional:", "")
@@ -24,162 +20,132 @@
             .Trim();
     }
 
-    public string GetStoreIcon(string store)
-    {
-        var s = (store ?? "").ToLowerInvariant();
-        if (s.Contains("steam")) return "fab fa-steam";
-        if (s.Contains("epic")) return "fab fa-epic-games";
-        if (s.Contains("playstation") || s.Contains("ps")) return "fab fa-playstation";
-        if (s.Contains("xbox")) return "fab fa-xbox";
-        if (s.Contains("nintendo")) return "bi bi-nintendo-switch";
-        if (s.Contains("gog")) return "fas fa-compact-disc";
-        if (s.Contains("nuuvem")) return "fas fa-cloud";
-        return "fas fa-store";
-    }
-
-    public string GetDiscountPercentage(string originalPrice, string currentPrice)
+    public double PriceValue(string? price)
     {
         try
         {
-            var origCleaned = CleanPrice(originalPrice);
-            var currCleaned = CleanPrice(currentPrice);
-
-            if (string.IsNullOrEmpty(origCleaned) || string.IsNullOrEmpty(currCleaned) || origCleaned == currCleaned)
-                return "";
-
-            var cleanNum = new Func<string, double>(str => {
-                var clean = str.Replace("R$", "").Replace("BRL", "").Replace(" ", "").Replace(",", ".").Trim();
-                return double.Parse(clean, System.Globalization.CultureInfo.InvariantCulture);
-            });
-
-            var orig = cleanNum(origCleaned);
-            var curr = cleanNum(currCleaned);
-
-            if (orig > 0 && curr < orig)
-            {
-                var pct = Math.Round((1 - (curr / orig)) * 100);
-                return $"-{pct}%";
-            }
+            var cleaned = CleanPrice(price);
+            if (cleaned.Contains("grátis", StringComparison.OrdinalIgnoreCase)
+                || cleaned.Contains("gratuito", StringComparison.OrdinalIgnoreCase)) return 0;
+            var match = System.Text.RegularExpressions.Regex.Match(
+                cleaned,
+                @"\d{1,3}(?:\.\d{3})*,\d{2}|\d+(?:[.,]\d{1,2})?");
+            if (!match.Success) return double.MaxValue;
+            return double.Parse(match.Value, System.Globalization.CultureInfo.GetCultureInfo("pt-BR"));
         }
-        catch {}
-        return "";
+        catch
+        {
+            return double.MaxValue;
+        }
     }
 }
 
 @{
-    // Sort model by price from lowest to highest
-    var sortedModel = Model != null ? Model.OrderBy(x => {
-        try {
-            var cleaned = CleanPrice(x.PrecoAtual);
-            if (string.IsNullOrEmpty(cleaned) || cleaned.ToLowerInvariant().Contains("grátis") || cleaned.ToLowerInvariant().Contains("gratuito"))
-                return 0.0;
-            var clean = cleaned.Replace("R$", "").Replace("BRL", "").Replace(" ", "").Replace(",", ".").Trim();
-            return double.Parse(clean, System.Globalization.CultureInfo.InvariantCulture);
-        } catch {
-            return 999999.0;
-        }
-    }).ToList() : new List<GamePrice.Api.Domain.DTOs.PythonStoreResultDto>();
+    var stores = Model?
+        .Where(item => !string.IsNullOrWhiteSpace(item.Plataforma))
+        .GroupBy(item => item.Plataforma!.Trim(), StringComparer.OrdinalIgnoreCase)
+        .Select(group => group.OrderBy(item => PriceValue(item.PrecoAtual)).First())
+        .OrderBy(item => PriceValue(item.PrecoAtual))
+        .ToList()
+        ?? new List<GamePrice.Api.Domain.DTOs.PythonStoreResultDto>();
 }
 
-<section class="details-page-section hero-section position-relative overflow-hidden w-100">
-    @* Background elements for hero section look *@
-    <div id="particles-js" class="particles-container"></div>
-    <div class="hero-bg-glow"></div>
+<section class="page-shell">
+    <div class="container site-container">
+        @await Html.PartialAsync("_Breadcrumb", gameName)
 
-    <div class="container position-relative z-3">
-        <a href="/" class="btn-back-home mb-4">
-            <i class="bi bi-arrow-left"></i> Voltar para o Início
-        </a>
-
-        @if (Model == null || Model.Count == 0)
+        @if (stores.Count == 0)
         {
-            <div class="details-card details-error-card">
-                <i class="bi bi-exclamation-triangle-fill details-error-icon"></i>
-                <h2 class="text-white fw-bold mb-2">Jogo Não Encontrado</h2>
-                <p class="text-white-50 mb-4">Infelizmente não encontramos nenhuma oferta ou preço para "@gameName" no momento.</p>
-                <a href="/" class="btn btn-primary rounded-pill px-4">Tentar Outro Jogo</a>
+            <div class="error-panel">
+                <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+                <h1>Preço não encontrado</h1>
+                <p>Não encontramos uma oferta oficial para "@gameName" neste momento.</p>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Buscar outro jogo</a>
             </div>
         }
         else
         {
-            @* Combined Card: Info above, Stores list below *@
-            <div class="details-card">
-                @* Top Row: Image & Description/Metadata *@
-                <div class="row g-4 align-items-start mb-5">
-                    <div class="col-md-5 col-lg-5">
-                        <div class="details-image-wrapper">
-                            <img src="@gameImage" alt="@gameName" class="details-image">
-                        </div>
-                    </div>
-                    <div class="col-md-7 col-lg-7 text-start">
-                        <h1 class="details-title mb-3">@gameName</h1>
-                        
-                        <div class="details-meta-block mb-3">
-                            <div class="details-genre mb-2">
-                                <span class="meta-title text-primary"><i class="fas fa-tags me-1"></i> Gênero:</span>
-                                <span class="text-white-50">Ação, Aventura, RPG (Exemplo)</span>
-                            </div>
-                        </div>
-
-                        <div class="details-synopsis">
-                            <span class="meta-title text-primary"><i class="fas fa-file-alt me-1"></i> Sinopse:</span>
-                            <p class="text-white-50 text-justify mb-0">
-                                (Descrição)
-                            </p>
-                        </div>
-                    </div>
+            <div class="details-layout">
+                <div class="game-cover details-image">
+                    @if (!string.IsNullOrWhiteSpace(gameImage))
+                    {
+                        <img src="@gameImage" alt="Capa de @gameName" onerror="this.parentElement.classList.add('image-missing'); this.remove();" />
+                    }
                 </div>
-
-                @* Bottom Row: Stores Comparison Table inside the same card *@
-                <div class="text-start border-top border-secondary pt-4">
-                    <h4 class="text-white fw-bold mb-4 d-flex align-items-center gap-2">
-                        <i class="fas fa-shopping-cart text-primary"></i> Lojas e Comparação de Preços
-                    </h4>
-
-                    <div class="details-store-list">
-                        @foreach (var store in sortedModel)
+                <div class="details-copy">
+                    <p class="eyebrow">@stores.Count @(stores.Count == 1 ? "loja encontrada" : "lojas encontradas")</p>
+                    <h1>@gameName</h1>
+                    @if (!string.IsNullOrWhiteSpace(gameDescription))
+                    {
+                        <p class="game-description">@gameDescription</p>
+                    }
+                    <p class="details-purchase-note">Compare os valores abaixo e confirme preço, edição e disponibilidade no site da loja antes da compra.</p>
+                    <div class="details-actions">
+                        @if (User.Identity?.IsAuthenticated == true)
                         {
-                            var storeIcon = GetStoreIcon(store.Plataforma);
-                            var cleanedCurrentPrice = CleanPrice(store.PrecoAtual);
-                            var cleanedOriginalPrice = CleanPrice(store.PrecoOriginal);
-                            var discount = GetDiscountPercentage(cleanedOriginalPrice, cleanedCurrentPrice);
-                            
-                            <div class="details-store-row">
-                                <div class="details-store-info">
-                                    <div class="details-store-icon">
-                                        <i class="@storeIcon"></i>
-                                    </div>
-                                    <div>
-                                        <span class="details-store-name">@store.Plataforma</span>
-                                    </div>
-                                </div>
-                                <div class="details-price-info">
-                                    <div class="details-price-wrapper">
-                                        @if (!string.IsNullOrEmpty(cleanedOriginalPrice) && cleanedOriginalPrice != cleanedCurrentPrice)
-                                        {
-                                            <span class="details-price-old">@cleanedOriginalPrice</span>
-                                        }
-                                        <span class="details-price-current">
-                                            @if (!string.IsNullOrEmpty(discount))
-                                            {
-                                                <span class="details-discount-badge">@discount</span>
-                                            }
-                                            @cleanedCurrentPrice
-                                        </span>
-                                    </div>
-                                    <a href="@store.Link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary rounded-pill px-4 py-2">
-                                        Ir para a loja <i class="bi bi-box-arrow-up-right ms-1 fs-6"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            <form asp-controller="Wishlist" asp-action="Add" method="post">
+                                <input type="hidden" name="gameName" value="@gameName" />
+                                <input type="hidden" name="returnUrl" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-bookmark-plus" aria-hidden="true"></i>
+                                    Salvar na lista
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Login" asp-action="Login" asp-route-returnUrl="@($"{Context.Request.Path}{Context.Request.QueryString}")" class="btn btn-primary">
+                                <i class="bi bi-bookmark" aria-hidden="true"></i>
+                                Entrar para salvar
+                            </a>
                         }
                     </div>
                 </div>
             </div>
+
+            <div class="section-heading compact-heading">
+                <div>
+                    <p class="eyebrow">Do menor para o maior</p>
+                    <h2>Comparação de preços</h2>
+                </div>
+            </div>
+
+            <div class="comparison-list">
+                <div class="comparison-header" aria-hidden="true">
+                    <span>Loja</span>
+                    <span class="comparison-price-heading">Preço</span>
+                    <span>Acesso</span>
+                </div>
+                @foreach (var store in stores)
+                {
+                    var currentPrice = CleanPrice(store.PrecoAtual);
+                    var originalPrice = CleanPrice(store.PrecoOriginal);
+                    <div class="comparison-row">
+                        <div class="comparison-store">
+                            @await Html.PartialAsync("_StoreIcon", store.Plataforma ?? string.Empty)
+                            <span>@store.Plataforma</span>
+                        </div>
+                        <div class="comparison-price">
+                            @if (originalPrice != "Preço indisponível" && originalPrice != currentPrice)
+                            {
+                                <del>@originalPrice</del>
+                            }
+                            <strong>@currentPrice</strong>
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(store.Link))
+                        {
+                            <a href="@store.Link" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                                Abrir loja
+                                <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="btn btn-outline-secondary btn-sm disabled" aria-disabled="true">Link indisponível</span>
+                        }
+                    </div>
+                }
+            </div>
         }
     </div>
 </section>
-
-@section Scripts {
-    <script src="~/js/hero.js" asp-append-version="true"></script>
-}

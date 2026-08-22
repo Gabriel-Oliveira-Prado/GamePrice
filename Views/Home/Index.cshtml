@@ -1,313 +1,216 @@
 @model GamePrice.Models.HomeViewModel
 @{
-    ViewData["Title"] = "GamePrice - O Melhor Preço para seu Jogo";
+    ViewData["Title"] = "Compare preços de jogos";
 }
-@functions {
-    public string GetStoreIconClass(string store)
-    {
-        var s = (store ?? "").ToLowerInvariant();
-        if (s.Contains("steam")) return "fab fa-steam";
-        if (s.Contains("epic")) return "fab fa-epic-games";
-        if (s.Contains("playstation") || s.Contains("ps")) return "fab fa-playstation";
-        if (s.Contains("xbox")) return "fab fa-xbox";
-        if (s.Contains("nintendo")) return "fas fa-gamepad";
-        if (s.Contains("gog")) return "fas fa-compact-disc";
-        if (s.Contains("nuuvem")) return "fas fa-cloud";
-        return "fas fa-store";
-    }
-}
-@* Hero Section *@
-<section class="hero-section text-center position-relative">
-    <div id="particles-js" class="particles-container"></div>
-    <div class="hero-animation-container" id="hero-animation"></div>
 
-    <div class="dropdown dropup position-fixed bottom-0 start-0 m-3 m-md-4 z-3 d-none d-md-inline-block">
-        <button class="badge glass-effect text-primary px-3 py-2 rounded-pill border-0 shadow-none d-flex align-items-center gap-2 user-select-none" style="transition: none;" draggable="false" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-            <span class="pulse-dot"></span> Status do Sistema <i class="bi bi-chevron-up"></i>
-        </button>
-        <div class="dropdown-menu dropdown-menu-dark shadow-lg rounded-4 p-3 border border-secondary status-menu-desktop status-menu-glass" id="desktop-status-menu">
+<section class="hero-section">
+    <div class="container site-container hero-content">
+        <p class="eyebrow">Comparador de lojas oficiais</p>
+        <h1>Encontre o menor preço do seu próximo jogo.</h1>
+        <p class="hero-copy">Pesquise uma vez e compare ofertas de PC e consoles em um só lugar.</p>
+
+        <div class="search-container">
+            <label class="visually-hidden" for="game-search">Nome do jogo</label>
+            <div class="search-control">
+                <input id="game-search" type="search" class="search-input" placeholder="Digite o nome de um jogo..." autocomplete="off"
+                       role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" />
+                <button class="search-btn" type="button" aria-label="Buscar jogo">
+                    <i class="bi bi-search" aria-hidden="true"></i>
+                    <span>Comparar</span>
+                </button>
+            </div>
+            <div id="search-results" class="search-dropdown" role="listbox" aria-label="Jogos encontrados" aria-live="polite"></div>
         </div>
-    </div>
 
-    @* Mobile Badge *@
-    <div class="dropdown dropup position-fixed bottom-0 start-50 translate-middle-x z-3 mb-3 d-md-none w-100 px-3 d-flex flex-column align-items-center">
-        <button class="badge glass-effect text-primary px-3 py-2 rounded-pill border-0 shadow-none d-flex align-items-center gap-2 mx-auto user-select-none" style="transition: none;" draggable="false" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-            <span class="pulse-dot"></span> Status do Sistema <i class="bi bi-chevron-up"></i>
-        </button>
-        <div class="dropdown-menu dropdown-menu-dark shadow-lg rounded-4 p-3 border border-secondary status-menu-mobile status-menu-glass w-100" id="mobile-status-menu">
-        </div>
+        <dl class="hero-facts">
+            <div><dt>8</dt><dd>lojas monitoradas</dd></div>
+            <div><dt>PC e consoles</dt><dd>em uma mesma busca</dd></div>
+            <div><dt>Lojas oficiais</dt><dd>links diretos para compra</dd></div>
+        </dl>
     </div>
+</section>
 
-    <div class="container position-relative hero-content-wrapper">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <h1 class="hero-title text-white mb-4 fade-in-up">Não pague mais caro.<br>Encontre o <span class="text-highlight">menor preço.</span></h1>
-                <div class="search-container fade-in-up mb-4 mx-auto">
-                    <div class="position-relative z-3">
-                        <input type="text" class="search-input" placeholder="Qual jogo você está procurando?">
-                        <button class="search-btn" type="button"><i class="bi bi-search"></i></button>
-                    </div>
-                    @* Search Results*@
-                    <div id="search-results" class="search-dropdown text-start rounded-3 shadow-lg mt-2"></div>
-                </div>
-                <p class="lead fade-in-up hero-lead-text">Comparamos preços da Steam, Epic Games, PS Store, Xbox e Nintendo Eshop em segundos. Receba alertas de promoções imperdíveis.</p>
-                <div class="mt-5 d-flex flex-wrap justify-content-center gap-3 gap-md-4 small fade-in-up">
-                    <span class="stat-item gs-reveal"><i class="fas fa-store text-primary me-1 fs-5"></i> <strong><span class="counter" data-target="8">0</span></strong> Lojas</span>
-                    <span class="stat-item gs-reveal"><i class="fas fa-gamepad text-primary me-1 fs-5"></i> <strong>+<span class="counter" data-target="15000">0</span></strong> Jogos</span>
-                    <span class="stat-item gs-reveal"><i class="fas fa-bell text-primary me-1 fs-5"></i> Alertas via <strong>Email e WhatsApp</strong></span>
-                </div>
+<section class="store-strip" aria-labelledby="stores-title">
+    <div class="container site-container">
+        <div class="section-heading compact-heading">
+            <div>
+                <p class="eyebrow">Cobertura</p>
+                <h2 id="stores-title">Lojas comparadas</h2>
             </div>
         </div>
-    </div> 
-    @* Scroll Down Indicator *@
-    <a href="#deals" class="scroll-indicator d-flex text-decoration-none">
-        <span class="scroll-text">Descobrir</span>
-        <div class="scroll-arrows">
-            <i class="bi bi-chevron-down arrow-1"></i>
-            <i class="bi bi-chevron-down arrow-2"></i>
-            <i class="bi bi-chevron-down arrow-3"></i>
+
+        <div class="store-list">
+            <a href="https://store.steampowered.com" target="_blank" rel="noopener noreferrer" class="store-link">
+                <img src="~/img/stores/steam.svg" alt="" width="24" height="24" loading="lazy" />
+                <span>Steam</span>
+            </a>
+            <a href="https://store.epicgames.com" target="_blank" rel="noopener noreferrer" class="store-link">
+                <img src="~/img/stores/epic-games.svg" alt="" width="24" height="24" loading="lazy" />
+                <span>Epic Games</span>
+            </a>
+            <a href="https://www.playstation.com" target="_blank" rel="noopener noreferrer" class="store-link">
+                <img src="~/img/stores/playstation.svg" alt="" width="24" height="24" loading="lazy" />
+                <span>PlayStation</span>
+            </a>
+            <a href="https://www.xbox.com" target="_blank" rel="noopener noreferrer" class="store-link">
+                <img src="~/img/stores/xbox.svg" alt="" width="24" height="24" loading="lazy" />
+                <span>Xbox</span>
+            </a>
+            <a href="https://www.nintendo.com" target="_blank" rel="noopener noreferrer" class="store-link" aria-label="Nintendo">
+                <img class="store-logo-nintendo" src="~/img/stores/nintendo.svg" alt="Nintendo" width="84" height="22" loading="lazy" />
+            </a>
+            <a href="https://www.gog.com" target="_blank" rel="noopener noreferrer" class="store-link">
+                <img src="~/img/stores/gog.svg" alt="" width="24" height="24" loading="lazy" />
+                <span>GOG</span>
+            </a>
+            <a href="https://www.nuuvem.com" target="_blank" rel="noopener noreferrer" class="store-link" aria-label="Nuuvem">
+                <img class="store-logo-wide" src="~/img/stores/nuuvem.svg" alt="Nuuvem" width="106" height="20" loading="lazy" />
+            </a>
+            <a href="https://itch.io" target="_blank" rel="noopener noreferrer" class="store-link">
+                <img src="~/img/stores/itch-io.svg" alt="" width="24" height="24" loading="lazy" />
+                <span>itch.io</span>
+            </a>
         </div>
-    </a>
-</section>
-@* Brands Marquee *@
-<section class="brands-section">
-    <div class="marquee-content marquee-content-hover">
-        <a href="https://store.steampowered.com" target="_blank" class="brand-item brand-steam text-decoration-none">STEAM</a>
-        <a href="https://www.playstation.com" target="_blank" class="brand-item brand-ps text-decoration-none">PLAYSTATION</a>
-        <a href="https://www.xbox.com" target="_blank" class="brand-item brand-xbox text-decoration-none">XBOX</a>
-        <a href="https://www.epicgames.com/store" target="_blank" class="brand-item brand-epic text-decoration-none">EPIC GAMES</a>
-        <a href="https://itch.io" target="_blank" class="brand-item brand-itch text-decoration-none">ITCH.IO</a>
-        <a href="https://www.gog.com" target="_blank" class="brand-item brand-gog text-decoration-none">GOG.COM</a>
-        <a href="https://www.nuuvem.com" target="_blank" class="brand-item brand-nuuvem text-decoration-none">NUUVEM</a>
-        <a href="https://www.nintendo.com" target="_blank" class="brand-item brand-nintendo text-decoration-none">NINTENDO</a>
     </div>
 </section>
-@* Deals Section (Grid de Ofertas) *@
-<section id="deals" class="py-5 position-relative">
-    <div class="container py-4">
-        <div class="text-center mb-5 gs-reveal">
-            <h2 class="fw-bold text-white mb-2">Ofertas em <span class="text-primary">Destaques</span></h2>
-            <p class="text-white">Os maiores descontos encontrados pelos nossos bots hoje.</p>
+
+<section id="deals" class="content-section deals-section">
+    <div class="container site-container">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Atualizado hoje</p>
+                <h2>Ofertas em destaque</h2>
+                <p>Uma seleção direta dos menores preços encontrados.</p>
+            </div>
+            <a asp-controller="Ofertas" asp-action="Ofertas" class="btn btn-outline-secondary">
+                Ver todas
+                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
         </div>
-        @* Filtros Rapidos *@
-        <div class="d-flex justify-content-center flex-wrap gap-2 mb-5 gs-reveal">
-            <span class="badge rounded-pill px-4 py-2 filter-pill active" data-filter="all">Todos</span>
-            <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="pc"><i class="fas fa-desktop me-1"></i> PC</span>
-            <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="playstation"><i class="fab fa-playstation me-1"></i> PlayStation</span>
-            <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="xbox"><i class="fab fa-xbox me-1"></i> Xbox</span>
-            <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="nintendo"><i class="bi bi-nintendo-switch me-1"></i> Nintendo</span>
-            <span class="badge rounded-pill px-4 py-2 filter-pill" data-filter="under20">Abaixo de R$ 20</span>
+
+        <div class="filter-bar" role="group" aria-label="Filtrar ofertas">
+            <button type="button" class="filter-pill active" data-filter="all" aria-pressed="true">Todos</button>
+            <button type="button" class="filter-pill" data-filter="pc" aria-pressed="false">PC</button>
+            <button type="button" class="filter-pill" data-filter="playstation" aria-pressed="false">PlayStation</button>
+            <button type="button" class="filter-pill" data-filter="xbox" aria-pressed="false">Xbox</button>
+            <button type="button" class="filter-pill" data-filter="nintendo" aria-pressed="false">Nintendo</button>
+            <button type="button" class="filter-pill" data-filter="under20" aria-pressed="false">Até R$ 20</button>
         </div>
-        @* Grid de Cards *@
-        <div class="row g-4" id="deals-grid">
-            @if (Model.Deals != null && Model.Deals.Count > 0)
+
+        <div class="product-grid" id="deals-grid">
+            @if (Model.Deals?.Count > 0)
             {
                 @foreach (var game in Model.Deals)
                 {
-                    <div class="col-md-4 col-lg-3 fade-in-up deal-item-card" data-platform="@game.Platform" data-price="@game.Price">
-                        <div class="deal-card h-100">
-                            <div class="position-relative">
-                                <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">@game.Discount</span>
-                                <img src="@game.Image" class="card-img-top" alt="@game.Title" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=640';">
+                    <article class="deal-item-card product-card" data-platform="@game.Platform" data-price="@game.Price">
+                        <a href="/Search/Details?gameName=@Uri.EscapeDataString(game.Title)" class="product-link" aria-label="Comparar preços de @game.Title">
+                            <div class="game-cover">
+                                <img src="@game.Image" alt="Capa de @game.Title" loading="lazy" onerror="this.parentElement.classList.add('image-missing'); this.remove();" />
+                                @if (!string.IsNullOrWhiteSpace(game.Discount))
+                                {
+                                    <span class="discount-label">@game.Discount</span>
+                                }
                             </div>
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="text-white fw-bold mb-0 text-truncate" title="@game.Title">@game.Title</h5>
+                            <div class="product-body">
+                                <div class="store-line">
+                                    @await Html.PartialAsync("_StoreIcon", game.Store)
+                                    <span>@game.Store</span>
                                 </div>
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="@GetStoreIconClass(game.Store) text-white-50 me-2"></i>
-                                    <small class="text-white-50">@game.Store</small>
-                                </div>
-                                <a href="/Search/Details?gameName=@Uri.EscapeDataString(game.Title)" class="card-price-link text-decoration-none">
-                                    <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
-                                        @if (!string.IsNullOrEmpty(game.OldPrice))
+                                <h3>@game.Title</h3>
+                                <div class="price-block">
+                                    <div>
+                                        @if (!string.IsNullOrWhiteSpace(game.OldPrice))
                                         {
-                                            <small class="text-decoration-line-through text-secondary price-old-text">R$ @game.OldPrice</small>
+                                            <span class="old-price">R$ @game.OldPrice</span>
                                         }
-                                        else
-                                        {
-                                            <small class="text-secondary price-old-text" style="visibility:hidden;">—</small>
-                                        }
-                                        <div class="price-display">
-                                            <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
-                                            <span class="text-primary fw-bold fs-4 price-value">R$ @game.Price</span>
-                                        </div>
+                                        <strong>R$ @game.Price</strong>
                                     </div>
-                                </a>
+                                    <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </a>
+                    </article>
                 }
             }
             else
             {
-                <div class="col-12 text-center py-5 text-muted">Nenhuma oferta em destaque no momento.</div>
+                <div class="empty-state">
+                    <i class="bi bi-tag" aria-hidden="true"></i>
+                    <p>Nenhuma oferta em destaque no momento.</p>
+                </div>
             }
         </div>
-        <div class="text-center mt-5">
-            <a asp-controller="Home" asp-action="Ofertas" class="btn btn-primary rounded-pill px-5 py-2 btn-glow">Ver Mais Ofertas</a>
-        </div>
     </div>
 </section>
-@* Free Games *@
-<section id="free-games" class="pt-4 pb-5 position-relative">
-    <div class="container">
-        <div class="free-games-container p-4 rounded-4 position-relative overflow-hidden">
-            <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between align-items-center align-items-md-start gap-3 mb-4">
-                <div>
-                    <h2 class="fw-bold text-white mb-1 d-flex align-items-center flex-nowrap"><i class="bi bi-gift-fill text-primary me-2 me-sm-3 flex-shrink-0"></i> <span class="text-nowrap">Jogos <span class="text-primary">Grátis</span></span></h2>
-                    <p class="text-white-50 mb-0">Títulos 100% gratuitos para resgatar agora mesmo e manter para sempre.</p>
-                </div>
-                <a href="/Home/FreeGames" class="btn btn-outline-primary btn-glow rounded-pill px-4 free-games-cta text-decoration-none">Ver todos</a>
+
+<section class="content-section free-section">
+    <div class="container site-container">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Para resgatar</p>
+                <h2>Jogos gratuitos</h2>
+                <p>Títulos gratuitos e campanhas por tempo limitado.</p>
             </div>
-            
-            <div class="row g-4 position-relative z-1" id="free-games-grid">
-                @if (Model.FreeGames != null && Model.FreeGames.Count > 0)
+            <a asp-controller="FreeGames" asp-action="FreeGames" class="btn btn-outline-secondary">
+                Ver todos
+                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div class="product-grid free-grid">
+            @if (Model.FreeGames?.Count > 0)
+            {
+                @foreach (var game in Model.FreeGames)
                 {
-                    @foreach (var game in Model.FreeGames)
-                    {
-                        <div class="col-md-4 col-lg-3 fade-in-up">
-                            <div class="card deal-card h-100 border-0 bg-dark text-white rounded-4 overflow-hidden position-relative glass-effect">
-                                <div class="position-absolute top-0 end-0 m-2">
-                                    <span class="badge bg-success fw-bold shadow-sm">GRÁTIS</span>
+                    <article class="product-card">
+                        <a href="/Search/Details?gameName=@Uri.EscapeDataString(game.Title)"
+                           class="product-link" aria-label="Ver detalhes de @game.Title">
+                            <div class="game-cover">
+                                <img src="@game.Image" alt="Capa de @game.Title" loading="lazy" onerror="this.parentElement.classList.add('image-missing'); this.remove();" />
+                                <span class="free-label">Grátis</span>
+                            </div>
+                            <div class="product-body">
+                                <div class="store-line">
+                                    @await Html.PartialAsync("_StoreIcon", game.Store)
+                                    <span>@game.Store</span>
                                 </div>
-                                <img src="@game.Image" class="card-img-top" alt="@game.Title" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=640';">
-                                <div class="card-body p-4 d-flex flex-column">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <small class="text-white-50"><i class="@GetStoreIconClass(game.Store) me-1"></i> @game.Store</small>
-                                        @if (!string.IsNullOrEmpty(game.OldPrice) && game.OldPrice != "Gratuito" && game.OldPrice != "Não disponível")
-                                        {
-                                            <small class="text-decoration-line-through text-secondary">@game.OldPrice</small>
-                                        }
-                                    </div>
-                                    <h5 class="card-title fw-bold mb-auto text-white" title="@game.Title">@game.Title</h5>
-                                    <a href="/Search/Details?gameName=@Uri.EscapeDataString(game.Title)" class="card-price-link text-decoration-none">
-                                        <div class="text-center mt-3 border-top border-secondary pt-3 price-hover-container">
-                                            <small class="text-success mb-1 price-old-text price-label">Melhor Preço</small>
-                                            <div class="price-display">
-                                                <i class="bi bi-box-arrow-up-right me-2 price-icon"></i>
-                                                <span class="h4 fw-bold text-white mb-0 price-value">@game.Price</span>
-                                            </div>
-                                        </div>
-                                    </a>
+                                <h3>@game.Title</h3>
+                                <div class="price-block">
+                                    <strong>@game.Price</strong>
+                                    <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        </a>
+                    </article>
                 }
-                else
-                {
-                    <div class="col-12 text-center py-5 text-muted">Nenhum jogo gratuito disponível no momento.</div>
-                }
-            </div>
-        </div>
-    </div>
-</section>
-
-@* Premium Glowing Divider *@
-<div class="container gs-reveal"><div class="section-divider"></div></div>
-
-<section id="features" class="py-5 mb-4 position-relative">
-    <div class="container gs-reveal">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-5 text-center text-lg-start">
-                <h2 class="fw-bold text-white mb-4">Por que usar o <span class="text-primary">GamePrice</span>?</h2>
-                <p class="text-white-50 mb-4">Nossa plataforma foi construída para garantir que você tenha as melhores ferramentas de economia no mundo dos games, sem complicação e em tempo real.</p>
-                
-                <ul class="list-unstyled mb-0 feature-check-list text-start d-inline-block d-lg-block">
-                    <li class="mb-3 d-flex align-items-center text-white"><i class="bi bi-check-circle-fill text-primary fs-5 me-3"></i> Comparação em 8 lojas digitais</li>
-                    <li class="mb-3 d-flex align-items-center text-white"><i class="bi bi-check-circle-fill text-primary fs-5 me-3"></i> Curadoria de descontos reais</li>
-                    <li class="mb-3 d-flex align-items-center text-white"><i class="bi bi-check-circle-fill text-primary fs-5 me-3"></i> Alertas de preço personalizados</li>
-                    <li class="d-flex align-items-center text-white"><i class="bi bi-check-circle-fill text-primary fs-5 me-3"></i> API Pública e Gratuita</li>
-                </ul>
-            </div>           
-            <div class="col-lg-7">
-                <div class="accordion custom-accordion" id="featuresAccordion">                
-                    @* Item 1 *@
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <i class="bi bi-lightning-charge me-2 text-primary fs-5"></i> Comparação Instantânea
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#featuresAccordion">
-                            <div class="accordion-body text-white-50">Nossos bots monitoram múltiplas lojas digitais simultaneamente para garantir que você encontre sempre a melhor cotação em tempo real.</div>
-                        </div>
-                    </div>                 
-                    @* Item 2 *@
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <i class="bi bi-tags me-2 text-primary fs-5"></i> Economia Real
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#featuresAccordion">
-                            <div class="accordion-body text-white-50">Aproveite descontos imperdíveis através da nossa curadoria automática, agrupando a melhor disponibilidade com o menor custo no mercado.</div>
-                        </div>
-                    </div>                   
-                    @* Item 3 *@
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <i class="bi bi-bell me-2 text-primary fs-5"></i> Alertas Inteligentes
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#featuresAccordion">
-                            <div class="accordion-body text-white-50">Defina o seu preço ideal, ative o sino de notificação e seja o primeiro a saber (via E-mail ou WhatsApp) quando o jogo da sua wishlist atingir esse exato valor.</div>
-                        </div>
-                    </div>
-                    @* Item 4 *@
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                <i class="bi bi-code-slash me-2 text-primary fs-5"></i> API Pública para Desenvolvedores
-                            </button>
-                        </h2>
-                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#featuresAccordion">
-                            <div class="accordion-body text-white-50">Desenvolvedor? Nós disponibilizamos nossa própria API RESTful de forma gratuita e pública. Integre nossos dados de preços de jogos em tempo real diretamente em seus aplicativos, bots de Discord ou projetos pessoais.</div>
-                        </div>
-                    </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class="bi bi-controller" aria-hidden="true"></i>
+                    <p>Nenhum jogo gratuito disponível no momento.</p>
                 </div>
-            </div>
+            }
+        </div>
+    </div>
+</section>
 
-        </div>
-    </div>
-</section>
-@* Newsletter *@
-<section class="newsletter-section mb-5 pb-5">
-    <div class="container">
-        <div class="newsletter-card text-center gs-reveal">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="mb-4">
-                        <i class="fas fa-paper-plane fa-3x text-primary mb-3"></i>
-                        <h2 class="text-white fw-bold mb-3">Não perca nenhuma promoção</h2>
-                        <p class="text-white-50 mb-4">Receba alertas de preços baixos diretamente no seu email.</p>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <form action="#" method="POST" class="d-grid w-100">
-                                @Html.AntiForgeryToken()
-                                <div class="input-group mb-3 bg-white bg-opacity-10 rounded-pill p-1">
-                                    <span class="input-group-text bg-transparent border-0 text-primary ps-3"><i class="fas fa-envelope"></i></span><input type="email" class="form-control bg-transparent border-0 text-white py-2 shadow-none newsletter-input" placeholder="Digite seu melhor email...">
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary btn-glow rounded-pill py-2 fw-bold">Inscrever-se</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+@if (User.Identity?.IsAuthenticated != true)
+{
+    <section class="account-callout">
+        <div class="container site-container account-callout-inner">
+            <div>
+                <p class="eyebrow">Lista de desejos</p>
+                <h2>Guarde seus jogos e acompanhe a próxima queda de preço.</h2>
             </div>
+            <a class="btn btn-primary" asp-controller="Register" asp-action="Register">
+                Criar conta
+                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
         </div>
-    </div>
-</section>
+    </section>
+}
 
 @section Scripts {
-    <script src="~/js/status-badge.js" asp-append-version="true"></script>
-    <script src="~/js/animations.js" asp-append-version="true"></script>
     <script src="~/js/deals.js" asp-append-version="true"></script>
-    <script src="~/js/sections.js" asp-append-version="true"></script>
-    <script src="~/js/hero.js" asp-append-version="true"></script>
-    <script src="~/js/brands.js" asp-append-version="true"></script>
 }
